@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane styleClass="background-active" stylesheets="/bootstrap3.css, /mystyle.css"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ru.kamuzta.rollfactorymgr.ui.menu.HeaderMenuView">
+    <top>
+        <VBox>
+            <HBox styleClass="menuPane">
+                <SplitMenuButton fx:id="rollSplitMenuButton" mnemonicParsing="false" text="Ассортимент">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onRollRegistry" text="Каталог роликов" />
+                        <MenuItem mnemonicParsing="false" onAction="#onRollFind" text="Найти ролик" />
+                        <MenuItem mnemonicParsing="false" onAction="#onRollCreate" text="Создать ролик" />
+                    </items>
+                    <styleClass>
+                        <String fx:value="primary" />
+                        <String fx:value="first" />
+                    </styleClass>
+                </SplitMenuButton>
+                <SplitMenuButton fx:id="clientSplitMenuButton" mnemonicParsing="false" text="Клиенты">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onClientRegistry" text="Справочник клиентов" />
+                        <MenuItem mnemonicParsing="false" onAction="#onClientFind" text="Найти клиента" />
+                        <MenuItem mnemonicParsing="false" onAction="#onClientCreate" text="Создать клиента" />
+                    </items>
+                    <styleClass>
+                        <String fx:value="primary" />
+                        <String fx:value="middle" />
+                    </styleClass>
+                </SplitMenuButton>
+                <SplitMenuButton fx:id="orderSplitMenuButton" mnemonicParsing="false" text="Заказы">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onOrderRegistry" text="Заказы в работе" />
+                        <MenuItem mnemonicParsing="false" onAction="#onOrderFind" text="Найти заказ" />
+                        <MenuItem mnemonicParsing="false" onAction="#onOrderCreate" text="Разместить заказ" />
+                    </items>
+                    <styleClass>
+                        <String fx:value="primary" />
+                        <String fx:value="middle" />
+                    </styleClass>
+                </SplitMenuButton>
+                <SplitMenuButton fx:id="configSplitMenuButton" mnemonicParsing="false" text="Настройки">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onConfigManager" text="Данные менеджера" />
+                        <MenuItem mnemonicParsing="false" onAction="#onConfigWorkplace"
+                                  text="Настройки рабочего места" />
+                        <MenuItem mnemonicParsing="false" onAction="#onConfigConnection" text="Настройки подключения" />
+                        <MenuItem mnemonicParsing="false" onAction="#onAbout" text="О программе" />
+                    </items>
+                    <styleClass>
+                        <String fx:value="primary" />
+                        <String fx:value="middle" />
+                    </styleClass>
+                </SplitMenuButton>
+                <Button fx:id="exitButton" onAction="#onExit" text="Выход">
+                    <styleClass>
+                        <String fx:value="primary" />
+                        <String fx:value="last" />
+                    </styleClass>
+                </Button>
+            </HBox>
+            <Separator prefWidth="200.0"/>
+        </VBox>
+    </top>
+</BorderPane>

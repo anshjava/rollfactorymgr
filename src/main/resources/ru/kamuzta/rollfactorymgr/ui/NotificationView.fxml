@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<StackPane xmlns="http://javafx.com/javafx/8"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="ru.kamuzta.rollfactorymgr.ui.NotificationView"
+           fx:id="mainPane"
+           stylesheets="/bootstrap3.css, /mystyle.css"
+           styleClass="background-active">
+    <children>
+        <HBox styleClass="center-left">
+            <Label fx:id="textLabel" styleClass="big-text-label"/>
+        </HBox>
+        <HBox styleClass="center-right">
+            <ImageView fx:id="closeImageView" pickOnBounds="true" styleClass="close-button" onMousePressed="#onClosePressed"/>
+        </HBox>
+    </children>
+</StackPane>

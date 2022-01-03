@@ -1,0 +1,254 @@
+[
+	{
+		"id": 1,
+		"sku": "LEN5710",
+		"rollType": "LENGTH",
+		"paper": "NTC48",
+		"widthType": "WIDTH_57",
+		"coreType": "CORE_12",
+		"value": 10.0
+	},
+	{
+		"id": 2,
+		"sku": "LEN5715",
+		"rollType": "LENGTH",
+		"paper": "NTC48",
+		"widthType": "WIDTH_57",
+		"coreType": "CORE_12",
+		"value": 15.0
+	},
+	{
+		"id": 3,
+		"sku": "LEN5717",
+		"rollType": "LENGTH",
+		"paper": "NTC48",
+		"widthType": "WIDTH_57",
+		"coreType": "CORE_12",
+		"value": 17.0
+	},
+	{
+		"id": 4,
+		"sku": "LEN5719",
+		"rollType": "LENGTH",
+		"paper": "NTC48",
+		"widthType": "WIDTH_57",
+		"coreType": "CORE_12",
+		"value": 19.0
+	},
+	{
+		"id": 5,
+		"sku": "LEN5721",
+		"rollType": "LENGTH",
+		"paper": "NTC48",
+		"widthType": "WIDTH_57",
+		"coreType": "CORE_12",
+		"value": 21.0
+	},
+	{
+		"id": 6,
+		"sku": "LEN5723",
+		"rollType": "LENGTH",
+		"paper": "NTC44",
+		"widthType": "WIDTH_57",
+		"coreType": "CORE_12",
+		"value": 23.0
+	},
+	{
+		"id": 7,
+		"sku": "LEN5725",
+		"rollType": "LENGTH",
+		"paper": "NTC44",
+		"widthType": "WIDTH_57",
+		"coreType": "CORE_12",
+		"value": 25.0
+	},
+	{
+		"id": 8,
+		"sku": "LEN5727",
+		"rollType": "LENGTH",
+		"paper": "NTC44",
+		"widthType": "WIDTH_57",
+		"coreType": "CORE_12",
+		"value": 27.0
+	},
+	{
+		"id": 9,
+		"sku": "LEN5729",
+		"rollType": "LENGTH",
+		"paper": "NTC44",
+		"widthType": "WIDTH_57",
+		"coreType": "CORE_12",
+		"value": 29.0
+	},
+	{
+		"id": 10,
+		"sku": "LEN5730",
+		"rollType": "LENGTH",
+		"paper": "NTC44",
+		"widthType": "WIDTH_57",
+		"coreType": "CORE_12",
+		"value": 30.0
+	},
+	{
+		"id": 11,
+		"sku": "LEN5735",
+		"rollType": "LENGTH",
+		"paper": "NTC44",
+		"widthType": "WIDTH_57",
+		"coreType": "CORE_12",
+		"value": 35.0
+	},
+	{
+		"id": 12,
+		"sku": "LEN5740",
+		"rollType": "LENGTH",
+		"paper": "NTC44",
+		"widthType": "WIDTH_57",
+		"coreType": "CORE_12",
+		"value": 40.0
+	},
+	{
+		"id": 13,
+		"sku": "LEN8050",
+		"rollType": "LENGTH",
+		"paper": "NTC44",
+		"widthType": "WIDTH_80",
+		"coreType": "CORE_12",
+		"value": 50.0
+	},
+	{
+		"id": 14,
+		"sku": "LEN8053",
+		"rollType": "LENGTH",
+		"paper": "NTC44",
+		"widthType": "WIDTH_80",
+		"coreType": "CORE_12",
+		"value": 53.0
+	},
+	{
+		"id": 15,
+		"sku": "LEN8058",
+		"rollType": "LENGTH",
+		"paper": "NTC44",
+		"widthType": "WIDTH_80",
+		"coreType": "CORE_12",
+		"value": 58.0
+	},
+	{
+		"id": 16,
+		"sku": "LEN8069",
+		"rollType": "LENGTH",
+		"paper": "NTC44",
+		"widthType": "WIDTH_80",
+		"coreType": "CORE_12",
+		"value": 69.0
+	},
+	{
+		"id": 17,
+		"sku": "LEN8072",
+		"rollType": "LENGTH",
+		"paper": "NTC44",
+		"widthType": "WIDTH_80",
+		"coreType": "CORE_12",
+		"value": 72.0
+	},
+	{
+		"id": 18,
+		"sku": "LEN8080",
+		"rollType": "LENGTH",
+		"paper": "NTC44",
+		"widthType": "WIDTH_80",
+		"coreType": "CORE_12",
+		"value": 80.0
+	},
+	{
+		"id": 19,
+		"sku": "LEN8045",
+		"rollType": "LENGTH",
+		"paper": "NTC44",
+		"widthType": "WIDTH_80",
+		"coreType": "CORE_18",
+		"value": 45.0
+	},
+	{
+		"id": 20,
+		"sku": "LEN8061",
+		"rollType": "LENGTH",
+		"paper": "NTC44",
+		"widthType": "WIDTH_80",
+		"coreType": "CORE_18",
+		"value": 61.0
+	},
+	{
+		"id": 21,
+		"sku": "LEN8073",
+		"rollType": "LENGTH",
+		"paper": "NTC44",
+		"widthType": "WIDTH_80",
+		"coreType": "CORE_18",
+		"value": 73.0
+	},
+	{
+		"id": 22,
+		"sku": "DIA8018",
+		"rollType": "DIAMETER",
+		"paper": "NTC58",
+		"widthType": "WIDTH_80",
+		"coreType": "CORE_18",
+		"value": 80.0
+	},
+	{
+		"id": 23,
+		"sku": "DIA10026",
+		"rollType": "DIAMETER",
+		"paper": "NTC58",
+		"widthType": "WIDTH_80",
+		"coreType": "CORE_26",
+		"value": 100.0
+	},
+	{
+		"id": 24,
+		"sku": "DIA12026",
+		"rollType": "DIAMETER",
+		"paper": "NTC58",
+		"widthType": "WIDTH_80",
+		"coreType": "CORE_26",
+		"value": 120.0
+	},
+	{
+		"id": 25,
+		"sku": "DIA15026",
+		"rollType": "DIAMETER",
+		"paper": "NTC58",
+		"widthType": "WIDTH_80",
+		"coreType": "CORE_26",
+		"value": 150.0
+	},
+	{
+		"id": 26,
+		"sku": "DIA11026",
+		"rollType": "DIAMETER",
+		"paper": "NTC55",
+		"widthType": "WIDTH_80",
+		"coreType": "CORE_26",
+		"value": 110.0
+	},
+	{
+		"id": 27,
+		"sku": "DIA18026",
+		"rollType": "DIAMETER",
+		"paper": "NTC55",
+		"widthType": "WIDTH_80",
+		"coreType": "CORE_26",
+		"value": 180.0
+	},
+	{
+		"id": 28,
+		"sku": "DIA20018",
+		"rollType": "DIAMETER",
+		"paper": "NTC55",
+		"widthType": "WIDTH_80",
+		"coreType": "CORE_18",
+		"value": 200.0
+	}
+]

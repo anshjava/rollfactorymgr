@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Properties>
+        <Property name="logs_dir">log</Property>
+    </Properties>
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout pattern="%style{%date{MM.dd HH:mm:ss.SSS}}{yellow} %highlight{%-5level}{FATAL=bg_red, ERROR=red, WARN=yellow, INFO=green} [%t-%threadId] %-40logger{40} : %msg%n" />
+        </Console>
+        <RollingFile name="RollingFileAppender" fileName="${logs_dir}/mgrlog.log" filePattern="${logs_dir}/mgrlog_%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{MM.dd HH:mm:ss.SSS} %-5level [%t-%threadId] %-40logger{40} : %msg%n"/>
+            <Policies>
+                <OnStartupTriggeringPolicy />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>

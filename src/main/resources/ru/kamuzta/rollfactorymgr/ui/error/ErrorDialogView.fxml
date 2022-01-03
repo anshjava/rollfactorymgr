@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import ru.kamuzta.rollfactorymgr.ui.KeyBoundButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextArea?>
+<BorderPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ru.kamuzta.rollfactorymgr.ui.error.ErrorDialogView"
+            fx:id="mainPanel"
+            stylesheets="/bootstrap3.css, /mystyle.css"
+            styleClass="background-active, standard-padding" id="mainPanel">
+    <top>
+        <VBox styleClass="standard-padding-spacing">
+            <AnchorPane>
+                <Label text="ggg" styleClass="big-text-label" />
+            </AnchorPane>
+        </VBox>
+    </top>
+    <center>
+        <VBox styleClass="standard-padding-spacing">
+            <TextArea fx:id="errorMessageField" styleClass="error-message, flat-scroll" />
+            <TextArea fx:id="errorDetailsField" styleClass="error-message, flat-scroll" />
+        </VBox>
+    </center>
+    <bottom>
+        <HBox styleClass="standard-padding-spacing">
+            <KeyBoundButton text="ggggg" styleClass="middleButton, dialog-footer-button"
+                            onAction="#onClosePressed">
+                <KeyCodeCombination code="ENTER">
+                    <modifiers />
+                </KeyCodeCombination>
+            </KeyBoundButton>
+            <KeyBoundButton text="hgjhg"
+                            styleClass="middleButton, dialog-footer-button"
+                            onAction="#onShowHideDetailsPressed">
+                <KeyCodeCombination code="SPACE">
+                    <modifiers />
+                </KeyCodeCombination>
+            </KeyBoundButton>
+        </HBox>
+    </bottom>
+</BorderPane>

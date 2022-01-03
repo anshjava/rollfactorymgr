@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<BorderPane styleClass="background-active" stylesheets="/bootstrap3.css, /mystyle.css"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ru.kamuzta.rollfactorymgr.ui.menu.MenuView">
+    <top>
+        <fx:include fx:id="headerPane" source="HeaderMenuView.fxml"/>
+    </top>
+    <center>
+        <VBox alignment="CENTER">
+            <Pane VBox.vgrow="ALWAYS"/>
+            <ImageView fx:id="backgroundImage" styleClass="background-image" />
+        </VBox>
+    </center>
+</BorderPane>

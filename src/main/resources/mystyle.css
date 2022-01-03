@@ -1,0 +1,38 @@
+.background-active {
+    -fx-background-color: white;
+}
+
+.background-inactive {
+    -fx-background-color: #d5cece;
+}
+
+.wo-padding {
+    -fx-padding: 0px;
+}
+
+.standard-padding, .standard-padding-spacing {
+    -fx-padding: 10px;
+}
+
+.standard-spacing, .standard-padding-spacing {
+    -fx-spacing: 10px;
+}
+
+/**
+  Подложка
+**/
+.underlay-pane {
+    -fx-background-color: #d5cece;
+    -fx-opacity: 0.9;
+}
+
+.menuPane {
+    -fx-padding: 3px;
+    -fx-spacing: 0px;
+    -fx-border-insets: 5,5,5,5;
+    -fx-alignment: top-center;
+}
+
+.background-image {
+    -fx-image: url("./img/roll.jpg");
+}

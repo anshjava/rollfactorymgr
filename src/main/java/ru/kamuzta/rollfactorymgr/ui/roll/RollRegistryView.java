@@ -2,6 +2,7 @@ package ru.kamuzta.rollfactorymgr.ui.roll;
 
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -87,7 +88,7 @@ public class RollRegistryView implements FxmlView<RollRegistryViewModel>, Initia
     void onEditRoll() {
         int selectedIndex = rollRegistryTableView.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            viewModel.onEditRoll(rollRegistryTableView.getItems().get(selectedIndex).getSku().getValue());
+            viewModel.onEditRoll(rollRegistryTableView.getItems().get(selectedIndex));
         }
     }
 

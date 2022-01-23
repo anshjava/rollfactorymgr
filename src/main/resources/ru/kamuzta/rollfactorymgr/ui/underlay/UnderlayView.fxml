@@ -2,7 +2,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <BorderPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ru.kamuzta.rollfactorymgr.underlay.UnderlayView"
+            fx:controller="ru.kamuzta.rollfactorymgr.ui.underlay.UnderlayView"
             stylesheets="/bootstrap3.css, /mystyle.css"
             styleClass="background-inactive">
 </BorderPane>

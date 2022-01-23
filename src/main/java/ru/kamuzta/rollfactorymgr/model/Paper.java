@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 /**
  * Raw materials (paper) with parameters
@@ -28,6 +29,12 @@ public enum Paper {
         return name();
     }
 
+    public static Paper byWeight(BigDecimal weight) {
+        return Arrays.stream(values())
+                .filter(p -> p.getWeight().compareTo(weight) == 0)
+                .findFirst()
+                .orElseThrow(() -> new EnumConstantNotPresentException(Paper.class, weight.toString()));
+    }
 }
 
 

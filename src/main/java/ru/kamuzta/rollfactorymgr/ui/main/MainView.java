@@ -53,8 +53,9 @@ import ru.kamuzta.rollfactorymgr.ui.javafx.PlatformUtil;
 import ru.kamuzta.rollfactorymgr.ui.menu.MenuView;
 import ru.kamuzta.rollfactorymgr.ui.message.MessageDialogView;
 import ru.kamuzta.rollfactorymgr.ui.message.MessageDialogViewModel;
-import ru.kamuzta.rollfactorymgr.ui.roll.RollRegistryView;
-import ru.kamuzta.rollfactorymgr.underlay.UnderlayView;
+import ru.kamuzta.rollfactorymgr.ui.roll.RollEditView;
+import ru.kamuzta.rollfactorymgr.ui.roll.RollEditViewModel;
+import ru.kamuzta.rollfactorymgr.ui.underlay.UnderlayView;
 import ru.kamuzta.rollfactorymgr.utils.exception.ExceptionUtils;
 import ru.kamuzta.rollfactorymgr.model.IdentityPair;
 import ru.kamuzta.rollfactorymgr.model.Pair;
@@ -160,14 +161,14 @@ public class MainView {
 
     @SuppressWarnings("SameParameterValue")
     private <V extends FxmlView<M>, M extends ViewModel> void showScreenWithoutUnderlay(Screen screen, Class<V> viewClass) {
-        showScreen(screen, viewClass, false);
+        showFullScreen(screen, viewClass, false);
     }
 
-    private <V extends FxmlView<M>, M extends ViewModel> void showScreen(Screen screen, Class<V> viewClass) {
-        showScreen(screen, viewClass, true);
+    private <V extends FxmlView<M>, M extends ViewModel> void showFullScreen(Screen screen, Class<V> viewClass) {
+        showFullScreen(screen, viewClass, true);
     }
 
-    private <V extends FxmlView<M>, M extends ViewModel> void showScreen(Screen screen, Class<V> viewClass, boolean forceUnderlay) {
+    private <V extends FxmlView<M>, M extends ViewModel> void showFullScreen(Screen screen, Class<V> viewClass, boolean forceUnderlay) {
         ofNullable(getCurrentViewAndViewModel()).ifPresent(vAndVM -> vAndVM.getFocusController().setLastFocusedNodeBeforeHide(stage.getScene().getFocusOwner()));
 
         removeOtherView(screen);
@@ -183,7 +184,24 @@ public class MainView {
 
         log.info("Screen [{}] showed. Provided by {}", screen, newViewAndModel.getModel().getClass());
         newViewAndModel.getView().toFront();
-        eventBus.post(new ScreenChangedEvent(screen));
+
+        if (screen.isFullScreen()) {
+            eventBus.post(new ScreenChangedEvent(screen));
+        }
+    }
+
+    private <V extends FxmlView<M>, M extends ViewModel> M showDialog(Screen screen, Class<V> viewClass) {
+        ofNullable(getCurrentViewAndViewModel()).ifPresent(vAndVM -> vAndVM.getFocusController().setLastFocusedNodeBeforeHide(stage.getScene().getFocusOwner()));
+
+        final ViewAndViewModel rawVVM = loadView(screen, viewClass);
+        final ViewAndViewModel newViewAndModel = underlay(rawVVM);
+
+        addScreen(newViewAndModel);
+        Parent view = newViewAndModel.getView();
+        rootPane.getChildren().add(view);
+        log.info("Dialog [{}] showed. Provided by {}", screen, newViewAndModel.getModel().getClass());
+        view.toFront();
+        return (M) newViewAndModel.getModel();
     }
 
     private <V extends FxmlView<M>, M extends ViewModel> ViewAndViewModel loadView(Screen screen, Class<V> viewClass) {
@@ -382,13 +400,19 @@ public class MainView {
     @Subscribe
     public void onEvent(@NotNull MainMenuOpenEvent event) {
         Platform.runLater(() -> {
-            showScreen(Screen.MENU, MenuView.class);
+            showFullScreen(Screen.MENU, MenuView.class);
         });
     }
 
     @Subscribe
-    public void onEvent(@NotNull RollRegistryOpenEvent event) {
-        showScreen(Screen.ROLL_REGISTRY, RollRegistryView.class);
+    public <V extends FxmlView<M>, M extends ViewModel> void onEvent(@NotNull ShowFullScreenEvent<V,M> event) {
+        showFullScreen(event.getScreen(), event.getClazz());
+    }
+
+    @Subscribe
+    public void onEvent(@NotNull ShowEditRollEvent event) {
+        RollEditViewModel model = showDialog(Screen.ROLL_EDIT, RollEditView.class);
+        model.setRollProperty(event.getRollProperty());
     }
 
     @Subscribe
@@ -406,7 +430,7 @@ public class MainView {
     @Subscribe
     public void onEvent(@NotNull ErrorDialogOpenEvent event) {
         try {
-            showScreen(Screen.ERROR_DIALOG, ErrorDialogView.class);
+            showDialog(Screen.ERROR_DIALOG, ErrorDialogView.class);
 
             ErrorDialogViewModel viewModel = (ErrorDialogViewModel) getCurrentViewModel();
             viewModel.onError(event);
@@ -422,7 +446,7 @@ public class MainView {
     public void onEvent(@NotNull MessageDialogOpenEvent event) {
         PlatformUtil.executeInJavaFxThreadSilent(() -> {
             if (event.getDialog() == null) {
-                showScreen(Screen.MESSAGE_DIALOG, MessageDialogView.class);
+                showFullScreen(Screen.MESSAGE_DIALOG, MessageDialogView.class);
                 MessageDialogViewModel viewModel = (MessageDialogViewModel) getCurrentViewModel();
                 viewModel.onMessageOpen(event);
             } else {
@@ -434,7 +458,7 @@ public class MainView {
     @Subscribe
     public void onEvent(@NotNull WaitDialogOpenEvent event) {
         if (event.getDialog() == null) {
-            showScreen(Screen.WAIT_DIALOG, WaitDialogView.class);
+            showFullScreen(Screen.WAIT_DIALOG, WaitDialogView.class);
 
             WaitDialogViewModel waitDialogViewModel = (WaitDialogViewModel) getCurrentViewModel();
             waitDialogViewModel.onLongtimeOperation(event);
@@ -445,7 +469,7 @@ public class MainView {
 
     @Subscribe
     public void onEvent(@NotNull UnderlayOpenEvent event) {
-        showScreen(Screen.UNDERLAY, UnderlayView.class);
+        showFullScreen(Screen.UNDERLAY, UnderlayView.class);
     }
 
     @Subscribe
@@ -472,7 +496,7 @@ public class MainView {
 
     private <V extends FxmlView<M>, M extends ViewModel> void initDialog(DialogAlert dialog, String title, Screen screen,
                                                                          Class<V> viewClass, Consumer<M> initModelAction) {
-        showScreen(Screen.UNDERLAY, UnderlayView.class);
+        showFullScreen(Screen.UNDERLAY, UnderlayView.class);
         ViewAndViewModel<M> viewAndViewModel = loadView(screen, viewClass);
         viewAndViewModel.setDialog(dialog);
         addScreen(viewAndViewModel);

@@ -1,18 +1,24 @@
 package ru.kamuzta.rollfactorymgr.ui;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public enum Screen {
     ANY,
 
-    ROLL_REGISTRY,
+    ROLL_REGISTRY(true),
+
+    ROLL_EDIT,
 
     ROLL_FIND,
 
     ROLL_CREATE,
 
-    CLIENT_REGISTRY,
+    CLIENT_REGISTRY(true),
 
     CLIENT_FIND,
 
@@ -22,7 +28,7 @@ public enum Screen {
 
     HEADER_MENU,
 
-    ORDER_REGISTRY,
+    ORDER_REGISTRY(true),
 
     ORDER_FIND,
 
@@ -45,4 +51,6 @@ public enum Screen {
     UNDERLAY,
 
     WAIT_DIALOG;
+
+    private boolean fullScreen;
 }

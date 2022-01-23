@@ -5,6 +5,7 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Arrays;
 
 /**
  * Roll Core
@@ -21,6 +22,13 @@ public enum CoreType {
     @Override
     public String toString() {
         return name();
+    }
+
+    public static CoreType byDiameter(BigDecimal diameter) {
+        return Arrays.stream(values())
+                .filter(ct -> ct.getDiameter().compareTo(diameter) == 0)
+                .findFirst()
+                .orElseThrow(() -> new EnumConstantNotPresentException(CoreType.class, diameter.toString()));
     }
 
 }

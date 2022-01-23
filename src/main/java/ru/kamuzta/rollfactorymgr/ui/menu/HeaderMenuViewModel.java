@@ -7,27 +7,29 @@ import de.saxsys.mvvmfx.ViewModel;
 import javafx.application.Platform;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import ru.kamuzta.rollfactorymgr.event.DisposableByEvent;
-import ru.kamuzta.rollfactorymgr.event.DisposeEvent;
-import ru.kamuzta.rollfactorymgr.event.RollRegistryOpenEvent;
+import ru.kamuzta.rollfactorymgr.event.*;
 import ru.kamuzta.rollfactorymgr.ui.Screen;
+import ru.kamuzta.rollfactorymgr.ui.dialog.DialogHelper;
+import ru.kamuzta.rollfactorymgr.ui.roll.RollRegistryView;
 
 @Slf4j
 public class HeaderMenuViewModel implements ViewModel, DisposableByEvent {
 
     private final EventBus eventBus;
     private final Screen screen;
+    private final DialogHelper dialogHelper;
 
     @Inject
-    HeaderMenuViewModel(EventBus eventBus) {
+    HeaderMenuViewModel(EventBus eventBus, DialogHelper dialogHelper) {
         this.eventBus = eventBus;
+        this.dialogHelper = dialogHelper;
         this.screen = Screen.HEADER_MENU;
         eventBus.register(this);
     }
 
     void onRollRegistry() {
         log.info("Screen ["+screen+"] Action: " + "onRollRegistry");
-        eventBus.post(new RollRegistryOpenEvent());
+        eventBus.post(new ShowFullScreenEvent<>(Screen.ROLL_REGISTRY, RollRegistryView.class));
     }
 
     void onRollFind() {

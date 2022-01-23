@@ -1,9 +1,104 @@
+.root {
+    -fx-font-size: 14px;
+    -fx-font-family: "Tahoma";
+    -fx-base: -color-base;
+    -fx-padding: 10px 10px 10px 10px;
+
+    /* Основной выделительный цвет */
+    -color-base: white;
+    /* Фоновый цвет */
+    -color-background-base: rgb(225, 220, 205);
+    /* Фоновый цвет */
+    -color-background-inactive: rgba(213, 206, 206, 0.32);
+    /* Фон, слабый акцент */
+    -color-background-accented: rgb(240, 235, 220);
+    /* Фон, затемнённый */
+    -color-background-dark: rgb(180, 175, 160);
+    /* Цвет кнопки при наведении */
+    -color-background-hovered: rgb(255, 255, 230);
+    /* Цвет заблокированных элементов */
+    -color-disabled: rgb(184, 186, 188);
+    /* Цвет элементов, на которых установлен фокус */
+    -color-border-focused: rgb(163, 221, 243);
+    /* Цвет кнопок, приглашающих к действию */
+    -color-inviting: rgb(77, 203, 77);
+    /* Цвет кнопок, приглашающих к действию, при наведении */
+    -color-inviting-hovered: rgb(120, 240, 120);
+    /* Цвет кнопок, приглашающих к действию, при прожимании */
+    -color-inviting-pressed: rgb(77, 182, 77);
+    /* Цвет подсвеченного элемента */
+    -color-highlighted: rgb(255, 245, 160);
+    /* Цвет подсвеченного элемента, который будет выбран по умолчанию*/
+    -color-highlighted-other: rgb(166, 218, 138);
+    /* Цвет нажатой кнопки */
+    -color-button-pressed: rgb(255, 245, 160);
+    /* Цвет подсказок для горячих клавиш (светлый фон) */
+    -color-hotkeys-for-light-background: rgb(51, 181, 229);
+    /* Цвет подсказок для горячих клавиш (тёмный фон) */
+    -color-hotkeys-for-dark-background: rgb(23, 105, 134);
+    /* Цвет блоков с советами */
+    -color-hint: rgb(255, 180, 0);
+    /* Цвет текста на заблокированных элементах */
+    -color-text-disabled: rgb(128, 128, 128);
+    /* Цвет текста на кнопках, приглашающих к действию */
+    -color-text-inviting: rgb(255, 255, 255);
+    /* Красный цвет ошибок */
+    -color-text-warning: rgb(240, 56, 51);
+    /* Цвет рамки кнопок */
+    -color-border: rgb(97, 98, 95);
+    /* Цвет рамки невыделенного комбобокса */
+    -color-combobox-border: rgb(214, 214, 205);
+    /* Цвет "разрешения" действия */
+    -color-role-allow: rgb(77, 202, 157);
+    /* Цвет "запрета" действия */
+    -color-role-deny: rgb(246, 77, 77);
+    /* Цвет "разрешения" действия с обязательной подписью */
+    -color-role-signature: rgb(241, 255, 77);
+    /* Цвет для выделенной строки таблицы */
+    -color-selected-row: rgb(249, 240, 169);
+    /* Цвет для скидки*/
+    -color-discount: rgb(51, 195, 51);
+
+    /* Цвет статуса корзины NEW */
+    -color-basket-new: rgb(0, 180, 115);
+    /* Цвет статуса корзины UNLOADING */
+    -color-basket-unloading: rgb(0, 180, 115);
+    /* Цвет статуса корзины UNLOADED */
+    -color-basket-unloaded: rgb(97, 98, 95);
+    /* Цвет статуса корзины CANCELED */
+    -color-basket-canceled: -color-background-dark;
+    /* Цвет статуса корзины STORNED */
+    -color-basket-storned: #8B0000;
+    /* Цвет статуса корзины STORNING */
+    -color-basket-storning: #900090;
+    /* Цвет статуса корзины TO_BE_RETURNED */
+    -color-basket-to-be-returned: -color-hint;
+    /* Цвет статуса корзины RETURNING */
+    -color-basket-returning: -color-hint;
+    /* Цвет ДРУГОГО статуса корзины */
+    -color-basket-other: -color-border;
+
+    /* Цвет строки таблицы "Красный"*/
+    -color-table-row-background-red: rgb(252,191,190);
+    /* Цвет строки таблицы "Желтый"*/
+    -color-table-row-background-yellow: rgb(254,244,126);
+    /* Цвет строки таблицы "Зеленый"*/
+    -color-table-row-background-green: rgb(168,255,138);
+
+    /* Максимальный размер, используется для "растягивания" компоненты*/
+    -max-length: 100000000000px;
+}
+
 .background-active {
-    -fx-background-color: white;
+    -fx-background-color: -color-base;
 }
 
 .background-inactive {
-    -fx-background-color: #d5cece;
+    -fx-background-color: -color-background-inactive;
+}
+
+.background-warning {
+    -fx-background-color: rgba(245, 5, 5, 0.32);
 }
 
 .wo-padding {
@@ -36,3 +131,87 @@
 .background-image {
     -fx-image: url("./img/roll.jpg");
 }
+
+.dialog-active {
+    -fx-border-insets: 140,150,140,150;
+    -fx-pref-width: 300;
+    -fx-max-width: 300;
+    -fx-alignment: center;
+    -fx-border-color: grey;
+    -fx-text-fill: black;
+}
+
+.error-dialog-active {
+    -fx-pref-width: 400px;
+    -fx-max-width: -fx-pref-width;
+    -fx-min-width: -fx-pref-width;
+    -fx-pref-height: 500px;
+    -fx-max-height: -fx-pref-height;
+    -fx-min-height: -fx-pref-height;
+    -fx-alignment: center;
+    -fx-border-color: red;
+    -fx-background-color: rgba(245, 5, 5, 0.32);
+}
+
+.error-label {
+    -fx-font-size: 22px;
+}
+.error-message,
+.error-message:focused {
+    -fx-pref-height: 170px;
+    -fx-max-height: -fx-pref-height;
+    -fx-min-height: -fx-pref-height;
+
+    -fx-border-color: -color-border;
+
+    -fx-highlight-fill: -color-disabled;
+
+    -fx-background-insets: 0;
+
+    -fx-wrap-text: true;
+}
+
+.error-message .scroll-pane  {
+    -fx-padding: 0;
+    -fx-border-width: 0;
+}
+
+.error-message .scroll-pane .content {
+    -fx-background-insets: 0;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * ScrollPane with flat scrolling                                                                *
+ *                                                                             *
+ ******************************************************************************/
+
+.flat-scroll,
+.flat-scroll:focused,
+.flat-scroll .viewport {
+    -fx-fit-to-width: true;
+    -fx-hbar-policy: never;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-color: rgba(211, 155, 155, 0.56);
+}
+
+.flat-scroll .scroll-bar:vertical .track {
+    -fx-background-color: rgba(229, 183, 183, 0.32);
+    -fx-background-radius: 0em;
+    -fx-border-radius: 0em;
+    -fx-border-width: 0;
+}
+
+.flat-scroll .scroll-bar:vertical .thumb {
+    -fx-background-color: rgba(117, 55, 55, 0.89);
+    -fx-background-radius: 0em;
+    -fx-background-insets: 0;
+}
+
+.flat-scroll .scroll-bar:vertical .increment-button,
+.flat-scroll .scroll-bar:vertical .decrement-button {
+    -fx-pref-height: 0;
+    -fx-opacity: 0;
+}
+

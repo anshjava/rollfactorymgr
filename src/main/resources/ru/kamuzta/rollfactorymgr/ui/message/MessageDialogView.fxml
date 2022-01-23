@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Button?>
+<BorderPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ru.kamuzta.rollfactorymgr.ui.message.MessageDialogView"
+            fx:id="mainPanel"
+            stylesheets="/bootstrap3.css, /mystyle.css"
+            styleClass="background-active, standard-padding, main-pane">
+    <top>
+        <VBox styleClass="standard-padding-spacing">
+            <AnchorPane>
+                <Label fx:id="titleLabel" styleClass="big-text-label"/>
+            </AnchorPane>
+        </VBox>
+    </top>
+    <center>
+        <VBox styleClass="standard-padding-spacing">
+            <Label fx:id="messageLabel" styleClass="middle-text-label"/>
+            <HBox fx:id="moreDetailsBox" styleClass="standard-padding-spacing">
+                <Label fx:id="moreDetailsLabel" styleClass="middle-text-label, flat-scroll" />
+                <Hyperlink fx:id="errorHyperLink"
+                           AnchorPane.rightAnchor="0" styleClass="help-hyperlink"
+                           onAction="#onManualReferenceClick" />
+            </HBox>
+        </VBox>
+    </center>
+    <bottom>
+        <HBox styleClass="standard-padding-spacing">
+            <Button fx:id="choiceOneButton" styleClass="middleButton, dialog-footer-button"
+                    onAction="#onChoiceOnePressed"/>
+            <Button fx:id="choiceTwoButton" styleClass="middleButton, dialog-footer-button"
+                    onAction="#onChoiceTwoPressed"/>
+        </HBox>
+    </bottom>
+</BorderPane>

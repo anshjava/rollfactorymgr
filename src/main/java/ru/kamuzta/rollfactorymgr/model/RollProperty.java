@@ -31,7 +31,7 @@ public class RollProperty {
                 new SimpleObjectProperty<>(),
                 new SimpleObjectProperty<>(),
                 new SimpleObjectProperty<>()
-                );
+        );
     }
 
     public static RollProperty getSample() {
@@ -65,6 +65,18 @@ public class RollProperty {
 
     public ObjectProperty<BigDecimal> calculateWeight() {
         return new SimpleObjectProperty<>(constructRoll().calculateWeight());
+    }
+
+    @Override
+    public RollProperty clone() {
+        return new RollProperty(new SimpleObjectProperty<>(id.getValue()),
+                new SimpleStringProperty(sku.getValue()),
+                new SimpleObjectProperty<>(rollType.getValue()),
+                new SimpleObjectProperty<>(paper.getValue()),
+                new SimpleObjectProperty<>(widthType.getValue()),
+                new SimpleObjectProperty<>(coreType.getValue()),
+                new SimpleObjectProperty<>(mainValue.getValue())
+        );
     }
 
 }

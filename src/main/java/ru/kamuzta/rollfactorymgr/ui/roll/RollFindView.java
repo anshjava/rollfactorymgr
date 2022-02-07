@@ -5,6 +5,7 @@ import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
@@ -16,13 +17,19 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class RollRegistryView implements FxmlView<RollRegistryViewModel>, Initializable {
+public class RollFindView implements FxmlView<RollFindViewModel>, Initializable {
 
     @FXML
     public BorderPane headerPane;
 
     @FXML
     private HeaderMenuView headerMenuView;
+
+    @FXML
+    private ListView<RollFilter> availableFilters;
+
+    @FXML
+    private ListView<RollFilter> selectedFilters;
 
     @FXML
     private Button updateRollRegistryButton;
@@ -55,12 +62,14 @@ public class RollRegistryView implements FxmlView<RollRegistryViewModel>, Initia
     private TableColumn<RollProperty, BigDecimal> weightColumn;
 
     @InjectViewModel
-    private RollRegistryViewModel viewModel;
+    private RollFindViewModel viewModel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //update roll registry
-        viewModel.onUpdateRollRegistry();
+        //configure filters
+        availableFilters.itemsProperty().bindBidirectional(viewModel.getAvailableFiltersProperty());
+        selectedFilters.itemsProperty().bindBidirectional(viewModel.getSelectedFiltersProperty());
+
         //configure table
         rollRegistryTableView.itemsProperty().bind(viewModel.rollPropertiesProperty());
         idColumn.setCellValueFactory(column -> column.getValue().getId());

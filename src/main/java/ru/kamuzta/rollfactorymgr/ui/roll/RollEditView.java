@@ -198,12 +198,23 @@ public class RollEditView implements FxmlView<RollEditViewModel>, Initializable 
 
     public void reCalculateAll() {
         rollWeight.textProperty().set(viewModel.calculateWeight().toString());
+        BigDecimal parsedValue;
         if (rollType.getValue().isLength()) {
+            try {
+                parsedValue = new BigDecimal(rollLength.textProperty().getValue());
+            } catch (NumberFormatException e) {
+                parsedValue = BigDecimal.ZERO;
+            }
+            viewModel.getRollProperty().getValue().getMainValue().set(parsedValue);
             rollDiameter.textProperty().set(viewModel.calculateDiameter().toString());
-            viewModel.getRollProperty().getValue().getMainValue().set(new BigDecimal(rollLength.textProperty().getValue()));
         } else {
+            try {
+                parsedValue = new BigDecimal(rollDiameter.textProperty().getValue());
+            } catch (NumberFormatException e) {
+                parsedValue = BigDecimal.ZERO;
+            }
+            viewModel.getRollProperty().getValue().getMainValue().set(parsedValue);
             rollLength.textProperty().set(viewModel.calculateLength().toString());
-            viewModel.getRollProperty().getValue().getMainValue().set(new BigDecimal(rollDiameter.textProperty().getValue()));
         }
     }
 }

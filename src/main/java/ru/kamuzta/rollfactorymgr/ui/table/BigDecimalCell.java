@@ -18,7 +18,7 @@ public class BigDecimalCell<T> extends TableCell<T, BigDecimal> {
     protected void updateItem(BigDecimal item, boolean empty) {
         super.updateItem(item, empty);
         if (item == null || empty) {
-            setText(StringUtils.EMPTY);
+            setText("0.0");
             return;
         }
         setText(item.setScale(scale, RoundingMode.HALF_UP).toString());

@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import ru.kamuzta.rollfactorymgr.event.*;
 import ru.kamuzta.rollfactorymgr.ui.Screen;
 import ru.kamuzta.rollfactorymgr.ui.dialog.DialogHelper;
+import ru.kamuzta.rollfactorymgr.ui.roll.RollFindView;
 import ru.kamuzta.rollfactorymgr.ui.roll.RollRegistryView;
 
 @Slf4j
@@ -34,6 +35,7 @@ public class HeaderMenuViewModel implements ViewModel, DisposableByEvent {
 
     void onRollFind() {
         log.info("Screen ["+screen+"] Action: " + "onRollFind");
+        eventBus.post(new ShowFullScreenEvent<>(Screen.ROLL_FIND, RollFindView.class));
     }
 
     void onRollCreate() {

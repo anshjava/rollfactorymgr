@@ -17,6 +17,7 @@ import ru.kamuzta.rollfactorymgr.model.*;
 
 import java.math.BigDecimal;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class RollCreateView implements FxmlView<RollCreateViewModel>, Initializable {
@@ -165,12 +166,23 @@ public class RollCreateView implements FxmlView<RollCreateViewModel>, Initializa
 
     public void reCalculateAll() {
         rollWeight.textProperty().set(viewModel.calculateWeight().toString());
+        BigDecimal parsedValue;
         if (rollType.getValue().isLength()) {
+            try {
+                parsedValue = new BigDecimal(rollLength.textProperty().getValue());
+            } catch (NumberFormatException e) {
+                parsedValue = BigDecimal.ZERO;
+            }
+            viewModel.getRollProperty().getMainValue().set(parsedValue);
             rollDiameter.textProperty().set(viewModel.calculateDiameter().toString());
-            viewModel.getRollProperty().getMainValue().set(new BigDecimal(rollLength.textProperty().getValue()));
         } else {
+            try {
+                parsedValue = new BigDecimal(rollDiameter.textProperty().getValue());
+            } catch (NumberFormatException e) {
+                parsedValue = BigDecimal.ZERO;
+            }
+            viewModel.getRollProperty().getMainValue().set(parsedValue);
             rollLength.textProperty().set(viewModel.calculateLength().toString());
-            viewModel.getRollProperty().getMainValue().set(new BigDecimal(rollDiameter.textProperty().getValue()));
         }
     }
 }

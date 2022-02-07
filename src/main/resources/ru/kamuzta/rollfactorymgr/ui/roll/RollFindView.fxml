@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane styleClass="background-active" stylesheets="/bootstrap3.css, /mystyle.css"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ru.kamuzta.rollfactorymgr.ui.roll.RollFindView">
+    <top>
+        <fx:include fx:id="headerPane" source="../menu/HeaderMenuView.fxml" />
+    </top>
+    <center>
+        <VBox alignment="TOP_CENTER" styleClass="standard-padding-spacing">
+            <TitledPane prefHeight="200.0" styleClass="info" text="Select filters">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="20.0" prefWidth="770.0">
+                    <HBox styleClass="standard-padding" alignment="CENTER" prefHeight="180.0"
+                          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <ListView fx:id="availableFilters" />
+                        <ListView fx:id="selectedFilters" />
+                    </HBox>
+                </AnchorPane>
+            </TitledPane>
+            <TitledPane prefHeight="100.0" styleClass="info" text="Setup filters values">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="770.0">
+                    <HBox styleClass="standard-padding">
+                        <Button fx:id="updateRollRegistryButton" onAction="#onUpdateRollRegistry"
+                                text="Update Roll Registry" styleClass="warning" />
+                        <Pane HBox.hgrow="ALWAYS" />
+                        <Button fx:id="editRollButton" onAction="#onEditRoll" text="Edit" styleClass="success, first" />
+                        <Button fx:id="removeRollButton" onAction="#onRemoveRoll" text="Remove"
+                                styleClass="success, last" />
+                    </HBox>
+                </AnchorPane>
+            </TitledPane>
+            <TitledPane prefHeight="200.0" styleClass="success" text="View search result">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="20.0" prefWidth="770" maxWidth="770">
+                    <TableView fx:id="rollRegistryTableView" layoutX="53.0" layoutY="-71.0" prefHeight="100.0"
+                               prefWidth="770.0"
+                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+                               tableMenuButtonVisible="true">
+                        <columns>
+                            <TableColumn fx:id="idColumn" prefWidth="30.0" text="#" />
+                            <TableColumn fx:id="skuColumn" prefWidth="80.0" text="SKU" />
+                            <TableColumn fx:id="typeColumn" prefWidth="105.0" text="type" />
+                            <TableColumn fx:id="paperColumn" prefWidth="105.0" text="paper, g/m2" />
+                            <TableColumn fx:id="widthColumn" prefWidth="100.0" text="width, mm" />
+                            <TableColumn fx:id="coreColumn" prefWidth="90.0" text="core, mm" />
+                            <TableColumn fx:id="lengthColumn" prefWidth="80.0" text="length, m" />
+                            <TableColumn fx:id="diameterColumn" prefWidth="80.0" text="d, mm" />
+                            <TableColumn fx:id="weightColumn" prefWidth="95.0" text="weight, kg" />
+                        </columns>
+                    </TableView>
+                </AnchorPane>
+            </TitledPane>
+        </VBox>
+    </center>
+</BorderPane>

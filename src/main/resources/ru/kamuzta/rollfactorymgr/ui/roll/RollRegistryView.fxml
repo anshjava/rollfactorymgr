@@ -12,23 +12,22 @@
     <center>
         <VBox alignment="TOP_CENTER" styleClass="standard-padding-spacing">
             <HBox styleClass="standard-padding">
-                <Button fx:id="updateRollRegistryButton" onAction="#onUpdateRollRegistry" text="Обновить реестр роликов" styleClass="warning"/>
+                <Button fx:id="updateRollRegistryButton" onAction="#onUpdateRollRegistry" text="Update Roll Registry" styleClass="warning"/>
                 <Pane HBox.hgrow="ALWAYS"/>
-                <Button fx:id="editRollButton" onAction="#onEditRoll" text="Редактировать" styleClass="success, first"/>
-                <Button fx:id="removeRollButton" onAction="#onRemoveRoll" text="Удалить" styleClass="success, last"/>
+                <Button fx:id="editRollButton" onAction="#onEditRoll" text="Edit" styleClass="success, first"/>
+                <Button fx:id="removeRollButton" onAction="#onRemoveRoll" text="Remove" styleClass="success, last"/>
             </HBox>
-            <Pane VBox.vgrow="ALWAYS"/>
-            <TableView fx:id="rollRegistryTableView" prefHeight="490" prefWidth="750" maxWidth="750" tableMenuButtonVisible="true">
+            <TableView fx:id="rollRegistryTableView" prefHeight="450" prefWidth="770" maxWidth="770" tableMenuButtonVisible="true">
                 <columns>
                     <TableColumn fx:id="idColumn" prefWidth="30.0" text="#"/>
                     <TableColumn fx:id="skuColumn" prefWidth="80.0" text="SKU"/>
-                    <TableColumn fx:id="typeColumn" prefWidth="105.0" text="тип"/>
-                    <TableColumn fx:id="paperColumn" prefWidth="100.0" text="бумага, г/м2"/>
-                    <TableColumn fx:id="widthColumn" prefWidth="100.0" text="ширина, мм"/>
-                    <TableColumn fx:id="coreColumn" prefWidth="90.0" text="втулка, мм"/>
-                    <TableColumn fx:id="lengthColumn" prefWidth="80.0" text="намот, м"/>
-                    <TableColumn fx:id="diameterColumn" prefWidth="80.0" text="диам, мм"/>
-                    <TableColumn fx:id="weightColumn" prefWidth="80.0" text="вес, кг"/>
+                    <TableColumn fx:id="typeColumn" prefWidth="105.0" text="type"/>
+                    <TableColumn fx:id="paperColumn" prefWidth="105.0" text="paper, g/m2"/>
+                    <TableColumn fx:id="widthColumn" prefWidth="100.0" text="width, mm"/>
+                    <TableColumn fx:id="coreColumn" prefWidth="90.0" text="core, mm"/>
+                    <TableColumn fx:id="lengthColumn" prefWidth="80.0" text="length, m"/>
+                    <TableColumn fx:id="diameterColumn" prefWidth="80.0" text="d, mm"/>
+                    <TableColumn fx:id="weightColumn" prefWidth="95.0" text="weight, kg"/>
                 </columns>
             </TableView>
         </VBox>

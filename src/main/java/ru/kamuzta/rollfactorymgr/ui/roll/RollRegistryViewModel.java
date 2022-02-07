@@ -15,9 +15,7 @@ import ru.kamuzta.rollfactorymgr.model.*;
 import ru.kamuzta.rollfactorymgr.service.webservice.RollService;
 import ru.kamuzta.rollfactorymgr.ui.Screen;
 import ru.kamuzta.rollfactorymgr.ui.dialog.DialogHelper;
-import ru.kamuzta.rollfactorymgr.ui.menu.MenuView;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,9 +38,6 @@ public class RollRegistryViewModel implements ViewModel, DisposableByEvent {
         eventBus.register(this);
     }
 
-    public ObservableList<RollProperty> getRollProperties() {
-        return rollProperties.get();
-    }
 
     public ListProperty<RollProperty> rollPropertiesProperty() {
         return rollProperties;
@@ -58,13 +53,11 @@ public class RollRegistryViewModel implements ViewModel, DisposableByEvent {
                 .map(r -> new RollProperty(
                         new SimpleObjectProperty<>(r.getId()),
                         new SimpleStringProperty(r.getSku()),
-                        new SimpleStringProperty(r.getRollType().getTypeName()),
-                        new SimpleObjectProperty<>(r.getPaper().getWeight()),
-                        new SimpleObjectProperty<>(r.getWidthType().getWidth()),
-                        new SimpleObjectProperty<>(r.getCoreType().getDiameter()),
-                        new SimpleObjectProperty<>(r.calculateLength()),
-                        new SimpleObjectProperty<>(r.calculateDiameter()),
-                        new SimpleObjectProperty<>(r.calculateWeight())
+                        new SimpleObjectProperty<>(r.getRollType()),
+                        new SimpleObjectProperty<>(r.getPaper()),
+                        new SimpleObjectProperty<>(r.getWidthType()),
+                        new SimpleObjectProperty<>(r.getCoreType()),
+                        new SimpleObjectProperty<>(r.getMainValue())
                 )).collect(Collectors.toList());
         setRollProperties(FXCollections.observableArrayList(rollPropertyList));
     }

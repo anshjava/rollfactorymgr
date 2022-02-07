@@ -5,7 +5,6 @@ import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.application.Platform;
-import javafx.beans.property.*;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import lombok.Getter;
@@ -15,34 +14,37 @@ import ru.kamuzta.rollfactorymgr.event.DisposableByEvent;
 import ru.kamuzta.rollfactorymgr.event.DisposeEvent;
 import ru.kamuzta.rollfactorymgr.event.ScreenEvent;
 import ru.kamuzta.rollfactorymgr.event.UpdateRollRegistryEvent;
-import ru.kamuzta.rollfactorymgr.model.Roll;
-import ru.kamuzta.rollfactorymgr.model.RollProperty;
+import ru.kamuzta.rollfactorymgr.model.*;
 import ru.kamuzta.rollfactorymgr.service.webservice.RollService;
 import ru.kamuzta.rollfactorymgr.ui.Screen;
 
 import java.math.BigDecimal;
 
 @Slf4j
-public class RollEditViewModel implements ViewModel, DisposableByEvent {
+public class RollCreateViewModel implements ViewModel, DisposableByEvent {
 
     private final RollService rollService;
     private final EventBus eventBus;
     private final Screen screen;
-
     @Getter
-    private ObjectProperty<RollProperty> rollProperty = new SimpleObjectProperty<>();
+    private RollProperty rollProperty = RollProperty.getSample();
 
     @Inject
-    RollEditViewModel(EventBus eventBus, RollService rollService) {
+    RollCreateViewModel(EventBus eventBus, RollService rollService) {
         this.rollService = rollService;
         this.eventBus = eventBus;
-        this.screen = Screen.ROLL_EDIT;
+        this.screen = Screen.ROLL_CREATE;
         eventBus.register(this);
     }
 
-    void editRoll(Roll editedRoll) {
-        log.info("Screen [" + screen + "] Action: " + "editRoll");
-        rollService.updateRoll(editedRoll);
+    void createRoll() {
+        log.info("Screen [" + screen + "] Action: " + "createRoll");
+        rollService.createRoll(rollProperty.getSku().getValue(),
+                rollProperty.getRollType().getValue(),
+                rollProperty.getPaper().getValue(),
+                rollProperty.getWidthType().getValue(),
+                rollProperty.getCoreType().getValue(),
+                rollProperty.getMainValue().getValue());
         Platform.runLater(() -> eventBus.post(new UpdateRollRegistryEvent()));
     }
 
@@ -59,19 +61,15 @@ public class RollEditViewModel implements ViewModel, DisposableByEvent {
         }
     }
 
-    public void setRollProperty(RollProperty rollProperty) {
-        this.rollProperty.set(rollProperty);
-    }
-
     public BigDecimal calculateWeight() {
-        return rollProperty.getValue().calculateWeight().getValue();
+        return rollProperty.calculateWeight().getValue();
     }
 
     public BigDecimal calculateLength() {
-        return rollProperty.getValue().calculateLength().getValue();
+        return rollProperty.calculateLength().getValue();
     }
 
     public BigDecimal calculateDiameter() {
-        return rollProperty.getValue().calculateDiameter().getValue();
+        return rollProperty.calculateDiameter().getValue();
     }
 }

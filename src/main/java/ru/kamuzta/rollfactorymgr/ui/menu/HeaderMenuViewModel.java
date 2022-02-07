@@ -38,6 +38,7 @@ public class HeaderMenuViewModel implements ViewModel, DisposableByEvent {
 
     void onRollCreate() {
         log.info("Screen ["+screen+"] Action: " + "onRollCreate");
+        eventBus.post(new ShowCreateRollEvent());
     }
 
     void onClientRegistry() {

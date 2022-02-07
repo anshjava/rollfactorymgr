@@ -256,7 +256,7 @@ public class RollServiceTest {
         Roll roll2 = rollService.findRollBySku("LEN5717");
         assertNotNull(roll2);
         System.out.println(roll2);
-        roll2.setValue(BigDecimal.valueOf(19.0));
+        roll2.setMainValue(BigDecimal.valueOf(19.0));
         Roll roll2AfterUpdate = null;
         try {
             roll2AfterUpdate = rollService.updateRoll(roll2);
@@ -273,7 +273,7 @@ public class RollServiceTest {
         assertNotNull(roll3);
         System.out.println(roll3);
         Roll roll3Cloned = roll3.clone();
-        roll3Cloned.setValue(BigDecimal.valueOf(12.0));
+        roll3Cloned.setMainValue(BigDecimal.valueOf(12.0));
         Roll roll3AfterUpdate = rollService.updateRoll(roll3Cloned);
         assertNotNull(roll3AfterUpdate);
         assertEquals(roll3Cloned.getSku(),roll3AfterUpdate.getSku());

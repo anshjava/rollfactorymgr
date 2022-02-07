@@ -13,7 +13,7 @@ import java.math.RoundingMode;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Builder
-@JsonPropertyOrder({"id", "sku", "rollType", "paper", "widthType", "coreType", "value"})
+@JsonPropertyOrder({"id", "sku", "rollType", "paper", "widthType", "coreType", "mainValue"})
 public class Roll implements Comparable<Roll> {
     private static BigDecimal PI = BigDecimal.valueOf(Math.PI);
     @NotNull
@@ -29,19 +29,19 @@ public class Roll implements Comparable<Roll> {
     @NotNull
     private CoreType coreType;
     @NotNull
-    private BigDecimal value;
+    private BigDecimal mainValue;
 
     @Override
     public Roll clone() {
-        return new Roll(this.id, this.sku, this.rollType, this.paper, this.widthType, this.coreType, this.value);
+        return new Roll(this.id, this.sku, this.rollType, this.paper, this.widthType, this.coreType, this.mainValue);
     }
 
     public BigDecimal calculateLength() {
         switch (rollType) {
             case LENGTH:
-                return value.setScale(1, RoundingMode.HALF_UP);
+                return mainValue.setScale(1, RoundingMode.HALF_UP);
             case DIAMETER:
-                return value.setScale(3,RoundingMode.HALF_UP).pow(2)
+                return mainValue.setScale(3,RoundingMode.HALF_UP).pow(2)
                         .subtract(coreType.getDiameter().pow(2))
                         .divide(paper.getThickness().multiply(BigDecimal.valueOf(4)), RoundingMode.HALF_UP)
                         .multiply(PI)
@@ -56,12 +56,12 @@ public class Roll implements Comparable<Roll> {
             case LENGTH:
                 return sqrt(BigDecimal.valueOf(4).setScale(3,RoundingMode.HALF_UP)
                         .multiply(paper.getThickness())
-                        .multiply(value)
+                        .multiply(mainValue)
                         .divide(PI, RoundingMode.HALF_UP)
                         .add(coreType.getDiameter().pow(2))
                 ).setScale(0, RoundingMode.HALF_UP);
             case DIAMETER:
-                return value.setScale(0, RoundingMode.HALF_UP);
+                return mainValue.setScale(0, RoundingMode.HALF_UP);
             default:
                 throw new IllegalArgumentException("Wrong rollType");
         }
@@ -112,7 +112,7 @@ public class Roll implements Comparable<Roll> {
             if ((result = this.paper.compareTo(that.getPaper())) == 0) {
                 if ((result = this.widthType.compareTo(that.getWidthType())) == 0) {
                     if ((result = this.coreType.compareTo(that.getCoreType())) == 0) {
-                        if ((result = this.value.compareTo(that.getValue())) == 0) {
+                        if ((result = this.mainValue.compareTo(that.getMainValue())) == 0) {
                             result = this.sku.compareTo(that.getSku());
                         }
                     }

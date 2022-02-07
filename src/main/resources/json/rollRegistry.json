@@ -6,7 +6,7 @@
 		"paper": "NTC48",
 		"widthType": "WIDTH_57",
 		"coreType": "CORE_12",
-		"value": 10.0
+		"mainValue": 10.0
 	},
 	{
 		"id": 2,
@@ -15,7 +15,7 @@
 		"paper": "NTC48",
 		"widthType": "WIDTH_57",
 		"coreType": "CORE_12",
-		"value": 15.0
+		"mainValue": 15.0
 	},
 	{
 		"id": 3,
@@ -24,7 +24,7 @@
 		"paper": "NTC48",
 		"widthType": "WIDTH_57",
 		"coreType": "CORE_12",
-		"value": 17.0
+		"mainValue": 17.0
 	},
 	{
 		"id": 4,
@@ -33,7 +33,7 @@
 		"paper": "NTC48",
 		"widthType": "WIDTH_57",
 		"coreType": "CORE_12",
-		"value": 19.0
+		"mainValue": 19.0
 	},
 	{
 		"id": 5,
@@ -42,7 +42,7 @@
 		"paper": "NTC48",
 		"widthType": "WIDTH_57",
 		"coreType": "CORE_12",
-		"value": 21.0
+		"mainValue": 21.0
 	},
 	{
 		"id": 6,
@@ -51,7 +51,7 @@
 		"paper": "NTC44",
 		"widthType": "WIDTH_57",
 		"coreType": "CORE_12",
-		"value": 23.0
+		"mainValue": 23.0
 	},
 	{
 		"id": 7,
@@ -60,7 +60,7 @@
 		"paper": "NTC44",
 		"widthType": "WIDTH_57",
 		"coreType": "CORE_12",
-		"value": 25.0
+		"mainValue": 25.0
 	},
 	{
 		"id": 8,
@@ -69,7 +69,7 @@
 		"paper": "NTC44",
 		"widthType": "WIDTH_57",
 		"coreType": "CORE_12",
-		"value": 27.0
+		"mainValue": 27.0
 	},
 	{
 		"id": 9,
@@ -78,7 +78,7 @@
 		"paper": "NTC44",
 		"widthType": "WIDTH_57",
 		"coreType": "CORE_12",
-		"value": 29.0
+		"mainValue": 29.0
 	},
 	{
 		"id": 10,
@@ -87,7 +87,7 @@
 		"paper": "NTC44",
 		"widthType": "WIDTH_57",
 		"coreType": "CORE_12",
-		"value": 30.0
+		"mainValue": 30.0
 	},
 	{
 		"id": 11,
@@ -96,7 +96,7 @@
 		"paper": "NTC44",
 		"widthType": "WIDTH_57",
 		"coreType": "CORE_12",
-		"value": 35.0
+		"mainValue": 35.0
 	},
 	{
 		"id": 12,
@@ -105,7 +105,7 @@
 		"paper": "NTC44",
 		"widthType": "WIDTH_57",
 		"coreType": "CORE_12",
-		"value": 40.0
+		"mainValue": 40.0
 	},
 	{
 		"id": 13,
@@ -114,7 +114,7 @@
 		"paper": "NTC44",
 		"widthType": "WIDTH_80",
 		"coreType": "CORE_12",
-		"value": 50.0
+		"mainValue": 50.0
 	},
 	{
 		"id": 14,
@@ -123,7 +123,7 @@
 		"paper": "NTC44",
 		"widthType": "WIDTH_80",
 		"coreType": "CORE_12",
-		"value": 53.0
+		"mainValue": 53.0
 	},
 	{
 		"id": 15,
@@ -132,7 +132,7 @@
 		"paper": "NTC44",
 		"widthType": "WIDTH_80",
 		"coreType": "CORE_12",
-		"value": 58.0
+		"mainValue": 58.0
 	},
 	{
 		"id": 16,
@@ -141,7 +141,7 @@
 		"paper": "NTC44",
 		"widthType": "WIDTH_80",
 		"coreType": "CORE_12",
-		"value": 69.0
+		"mainValue": 69.0
 	},
 	{
 		"id": 17,
@@ -150,7 +150,7 @@
 		"paper": "NTC44",
 		"widthType": "WIDTH_80",
 		"coreType": "CORE_12",
-		"value": 72.0
+		"mainValue": 72.0
 	},
 	{
 		"id": 18,
@@ -159,7 +159,7 @@
 		"paper": "NTC44",
 		"widthType": "WIDTH_80",
 		"coreType": "CORE_12",
-		"value": 80.0
+		"mainValue": 80.0
 	},
 	{
 		"id": 19,
@@ -168,7 +168,7 @@
 		"paper": "NTC44",
 		"widthType": "WIDTH_80",
 		"coreType": "CORE_18",
-		"value": 45.0
+		"mainValue": 45.0
 	},
 	{
 		"id": 20,
@@ -177,7 +177,7 @@
 		"paper": "NTC44",
 		"widthType": "WIDTH_80",
 		"coreType": "CORE_18",
-		"value": 61.0
+		"mainValue": 61.0
 	},
 	{
 		"id": 21,
@@ -186,7 +186,7 @@
 		"paper": "NTC44",
 		"widthType": "WIDTH_80",
 		"coreType": "CORE_18",
-		"value": 73.0
+		"mainValue": 73.0
 	},
 	{
 		"id": 22,
@@ -195,7 +195,7 @@
 		"paper": "NTC58",
 		"widthType": "WIDTH_80",
 		"coreType": "CORE_18",
-		"value": 80.0
+		"mainValue": 80.0
 	},
 	{
 		"id": 23,
@@ -204,7 +204,7 @@
 		"paper": "NTC58",
 		"widthType": "WIDTH_80",
 		"coreType": "CORE_26",
-		"value": 100.0
+		"mainValue": 100.0
 	},
 	{
 		"id": 24,
@@ -213,7 +213,7 @@
 		"paper": "NTC58",
 		"widthType": "WIDTH_80",
 		"coreType": "CORE_26",
-		"value": 120.0
+		"mainValue": 120.0
 	},
 	{
 		"id": 25,
@@ -222,7 +222,7 @@
 		"paper": "NTC58",
 		"widthType": "WIDTH_80",
 		"coreType": "CORE_26",
-		"value": 150.0
+		"mainValue": 150.0
 	},
 	{
 		"id": 26,
@@ -231,7 +231,7 @@
 		"paper": "NTC55",
 		"widthType": "WIDTH_80",
 		"coreType": "CORE_26",
-		"value": 110.0
+		"mainValue": 110.0
 	},
 	{
 		"id": 27,
@@ -240,7 +240,7 @@
 		"paper": "NTC55",
 		"widthType": "WIDTH_80",
 		"coreType": "CORE_26",
-		"value": 180.0
+		"mainValue": 180.0
 	},
 	{
 		"id": 28,
@@ -249,6 +249,6 @@
 		"paper": "NTC55",
 		"widthType": "WIDTH_80",
 		"coreType": "CORE_18",
-		"value": 200.0
+		"mainValue": 200.0
 	}
 ]

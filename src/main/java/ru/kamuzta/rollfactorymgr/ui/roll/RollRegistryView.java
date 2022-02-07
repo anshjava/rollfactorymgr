@@ -2,7 +2,6 @@ package ru.kamuzta.rollfactorymgr.ui.roll;
 
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -11,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import ru.kamuzta.rollfactorymgr.model.*;
 import ru.kamuzta.rollfactorymgr.ui.menu.HeaderMenuView;
+import ru.kamuzta.rollfactorymgr.ui.table.*;
 
 import java.math.BigDecimal;
 import java.net.URL;
@@ -40,13 +40,13 @@ public class RollRegistryView implements FxmlView<RollRegistryViewModel>, Initia
     @FXML
     private TableColumn<RollProperty, String> skuColumn;
     @FXML
-    private TableColumn<RollProperty, String> typeColumn;
+    private TableColumn<RollProperty, RollType> typeColumn;
     @FXML
-    private TableColumn<RollProperty, BigDecimal> paperColumn;
+    private TableColumn<RollProperty, Paper> paperColumn;
     @FXML
-    private TableColumn<RollProperty, BigDecimal> widthColumn;
+    private TableColumn<RollProperty, WidthType> widthColumn;
     @FXML
-    private TableColumn<RollProperty, BigDecimal> coreColumn;
+    private TableColumn<RollProperty, CoreType> coreColumn;
     @FXML
     private TableColumn<RollProperty, BigDecimal> lengthColumn;
     @FXML
@@ -65,13 +65,40 @@ public class RollRegistryView implements FxmlView<RollRegistryViewModel>, Initia
         rollRegistryTableView.itemsProperty().bind(viewModel.rollPropertiesProperty());
         idColumn.setCellValueFactory(column -> column.getValue().getId());
         skuColumn.setCellValueFactory(column -> column.getValue().getSku());
+
+        typeColumn.setCellFactory(column -> new RollTypeCell<>());
         typeColumn.setCellValueFactory(column -> column.getValue().getRollType());
-        paperColumn.setCellValueFactory(column -> column.getValue().getPaperWeight());
-        widthColumn.setCellValueFactory(column -> column.getValue().getRollWidth());
-        coreColumn.setCellValueFactory(column -> column.getValue().getCoreDiameter());
-        lengthColumn.setCellValueFactory(column -> column.getValue().getRollLength());
-        diameterColumn.setCellValueFactory(column -> column.getValue().getRollDiameter());
-        weightColumn.setCellValueFactory(column -> column.getValue().getRollWeight());
+
+        paperColumn.setCellFactory(column -> new PaperCell<>());
+        paperColumn.setCellValueFactory(column -> column.getValue().getPaper());
+
+        widthColumn.setCellFactory(column -> new WidthTypeCell<>());
+        widthColumn.setCellValueFactory(column -> column.getValue().getWidthType());
+
+        coreColumn.setCellFactory(column -> new CoreTypeCell<>());
+        coreColumn.setCellValueFactory(column -> column.getValue().getCoreType());
+
+        lengthColumn.setCellValueFactory(column -> {
+            if (column.getValue().getRollType().get().isLength()) {
+                return column.getValue().getMainValue();
+            } else {
+                return column.getValue().calculateLength();
+            }
+        });
+        lengthColumn.setCellFactory(column -> new BigDecimalCell<>(1));
+
+        diameterColumn.setCellValueFactory(column -> {
+            if (column.getValue().getRollType().get().isDiameter()) {
+                return column.getValue().getMainValue();
+            } else {
+                return column.getValue().calculateDiameter();
+            }
+        });
+        diameterColumn.setCellFactory(column -> new BigDecimalCell<>(0));
+
+        weightColumn.setCellValueFactory(column -> column.getValue().calculateWeight());
+        weightColumn.setCellFactory(column -> new BigDecimalCell<>(3));
+
         //configure buttons
         editRollButton.visibleProperty().bind(rollRegistryTableView.getSelectionModel().selectedIndexProperty().greaterThan(-1));
         editRollButton.managedProperty().bind(editRollButton.visibleProperty());

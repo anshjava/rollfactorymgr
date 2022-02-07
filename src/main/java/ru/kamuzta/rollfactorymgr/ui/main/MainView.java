@@ -53,6 +53,8 @@ import ru.kamuzta.rollfactorymgr.ui.javafx.PlatformUtil;
 import ru.kamuzta.rollfactorymgr.ui.menu.MenuView;
 import ru.kamuzta.rollfactorymgr.ui.message.MessageDialogView;
 import ru.kamuzta.rollfactorymgr.ui.message.MessageDialogViewModel;
+import ru.kamuzta.rollfactorymgr.ui.roll.RollCreateView;
+import ru.kamuzta.rollfactorymgr.ui.roll.RollCreateViewModel;
 import ru.kamuzta.rollfactorymgr.ui.roll.RollEditView;
 import ru.kamuzta.rollfactorymgr.ui.roll.RollEditViewModel;
 import ru.kamuzta.rollfactorymgr.ui.underlay.UnderlayView;
@@ -416,6 +418,11 @@ public class MainView {
     }
 
     @Subscribe
+    public void onEvent(@NotNull ShowCreateRollEvent event) {
+        RollCreateViewModel model = showDialog(Screen.ROLL_CREATE, RollCreateView.class);
+    }
+
+    @Subscribe
     public void onEvent(@NotNull KeyPressedEvent event) {
         final ViewModel currentViewModel = getCurrentViewModel();
         //todo
@@ -431,7 +438,6 @@ public class MainView {
     public void onEvent(@NotNull ErrorDialogOpenEvent event) {
         try {
             showDialog(Screen.ERROR_DIALOG, ErrorDialogView.class);
-
             ErrorDialogViewModel viewModel = (ErrorDialogViewModel) getCurrentViewModel();
             viewModel.onError(event);
         } catch (ClassCastException e) {

@@ -16,9 +16,9 @@ import java.util.stream.Collectors;
 @Singleton
 @Slf4j
 public class RollServiceMock implements RollService {
-    private AtomicLong count;
     private static JsonUtil jsonUtil = JsonUtil.getInstance();
     private List<Roll> remoteRollRegistry = new ArrayList<>(jsonUtil.getListFromJson("rollRegistry.json", Roll.class, CouldNotDeserializeJsonException::new));
+    private AtomicLong count = new AtomicLong(remoteRollRegistry.stream().map(Roll::getId).max(Long::compare).orElse(0L));
     private List<Roll> localRollRegistry = new ArrayList<>();
 
     @Override
@@ -41,7 +41,7 @@ public class RollServiceMock implements RollService {
     }
 
     @Override
-    public List<Roll> findRollBySkuPattern(String sku) throws WebServiceException{
+    public List<Roll> findRollBySkuPattern(String sku) throws WebServiceException {
         return localRollRegistry.stream().filter(r -> r.getSku().contains(sku)).collect(Collectors.toList());
     }
 
@@ -78,7 +78,7 @@ public class RollServiceMock implements RollService {
                 })
                 .filter(r -> {
                     if (value != null) {
-                        return r.getValue().compareTo(value) == 0;
+                        return r.getMainValue().compareTo(value) == 0;
                     } else {
                         return true;
                     }
@@ -105,14 +105,15 @@ public class RollServiceMock implements RollService {
 
     @Override
     public boolean removeRollBySku(String sku) throws WebServiceException {
-        if (remoteRollRegistry.stream().noneMatch(r -> r.getSku().equals(sku))) {
-            throw new WebServiceException("Roll with SKU " + sku + " was not found, there is nothing to remove");
-        } else {
+        try {
+            validateRemoveRoll(sku);
             boolean result = remoteRollRegistry.remove(findRollBySku(sku));
             if (result) {
                 updateRegistryFromServer();
             }
             return result;
+        } catch (ValidationException e) {
+            throw new WebServiceException(e.getMessage(), e);
         }
     }
 
@@ -152,13 +153,22 @@ public class RollServiceMock implements RollService {
             throw new ValidationException("Roll with SKU " + roll.getSku() + " was not found, there is nothing to update");
         }
 
-        validateCommonRollParams(roll.getRollType(), roll.getPaper(), roll.getWidthType(), roll.getCoreType(), roll.getValue());
+        validateIfRollInWorkflow(roll.getSku());
 
-        List<Roll> foundDuplicate = findRollByParams(roll.getRollType(), roll.getPaper(), roll.getWidthType(), roll.getCoreType(), roll.getValue());
+        validateCommonRollParams(roll.getRollType(), roll.getPaper(), roll.getWidthType(), roll.getCoreType(), roll.getMainValue());
+
+        List<Roll> foundDuplicate = findRollByParams(roll.getRollType(), roll.getPaper(), roll.getWidthType(), roll.getCoreType(), roll.getMainValue());
         if (!foundDuplicate.isEmpty()) {
             String duplicateSku = foundDuplicate.stream().findFirst().get().getSku();
             throw new ValidationException("Error while trying create duplicate roll of SKU " + duplicateSku);
         }
+    }
+
+    private void validateRemoveRoll(String sku) throws ValidationException {
+        if (remoteRollRegistry.stream().noneMatch(r -> r.getSku().equals(sku))) {
+            throw new ValidationException("Roll with SKU " + sku + " was not found, there is nothing to remove");
+        }
+        validateIfRollInWorkflow(sku);
     }
 
     private void validateCommonRollParams(RollType rollType, Paper paper, WidthType widthType, CoreType coreType, BigDecimal value) throws ValidationException {
@@ -173,5 +183,9 @@ public class RollServiceMock implements RollService {
                 throw new ValidationException("Roll length can't be equal or less than zero");
             }
         }
+    }
+
+    private void validateIfRollInWorkflow(String sku) {
+        //do nothing in Mock service
     }
 }

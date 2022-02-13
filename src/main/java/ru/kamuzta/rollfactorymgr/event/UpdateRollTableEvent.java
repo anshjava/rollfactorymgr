@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class UpdateRollRegistryEvent extends UIEvent {
+public class UpdateRollTableEvent extends UIEvent {
 
 }

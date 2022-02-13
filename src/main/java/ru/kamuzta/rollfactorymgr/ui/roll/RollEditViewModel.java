@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import ru.kamuzta.rollfactorymgr.event.DisposableByEvent;
 import ru.kamuzta.rollfactorymgr.event.DisposeEvent;
 import ru.kamuzta.rollfactorymgr.event.ScreenEvent;
-import ru.kamuzta.rollfactorymgr.event.UpdateRollRegistryEvent;
+import ru.kamuzta.rollfactorymgr.event.UpdateRollTableEvent;
 import ru.kamuzta.rollfactorymgr.model.Roll;
 import ru.kamuzta.rollfactorymgr.model.RollProperty;
 import ru.kamuzta.rollfactorymgr.service.webservice.RollService;
@@ -43,7 +43,7 @@ public class RollEditViewModel implements ViewModel, DisposableByEvent {
     void editRoll(Roll editedRoll) {
         log.info("Screen [" + screen + "] Action: " + "editRoll");
         rollService.updateRoll(editedRoll);
-        Platform.runLater(() -> eventBus.post(new UpdateRollRegistryEvent()));
+        Platform.runLater(() -> eventBus.post(new UpdateRollTableEvent()));
     }
 
     void close(ActionEvent actionEvent) {

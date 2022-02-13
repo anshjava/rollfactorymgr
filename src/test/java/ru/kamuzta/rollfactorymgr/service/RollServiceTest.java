@@ -94,24 +94,43 @@ public class RollServiceTest {
     public void findRollByParamsTest() {
         System.out.println("_________ START findRollByParamsTest _________");
 
-        List<Roll> result1 = rollService.findRollByParams(RollType.LENGTH,Paper.NTC48,null,null,null);
+        List<Roll> result1 = rollService.findRollByParams(null, null, RollType.LENGTH, Paper.NTC48, null, null, null);
         assertNotNull(result1);
         assertEquals(5, result1.size());
+        System.out.println("Result1:");
         result1.forEach(System.out::println);
 
-        List<Roll> result2 = rollService.findRollByParams(RollType.DIAMETER,null,null,null,null);
+        List<Roll> result2 = rollService.findRollByParams(null, null, RollType.DIAMETER, null, null, null, null);
         assertNotNull(result2);
         assertEquals(7, result2.size());
+        System.out.println("Result2:");
         result2.forEach(System.out::println);
 
-        List<Roll> result3 = rollService.findRollByParams(null,null,null,null, BigDecimal.valueOf(80));
+        List<Roll> result3 = rollService.findRollByParams(null, null, null, null, null, null, BigDecimal.valueOf(80));
         assertNotNull(result3);
         assertEquals(2, result3.size());
+        System.out.println("Result3:");
         result3.forEach(System.out::println);
 
-        List<Roll> result4 = rollService.findRollByParams(RollType.DIAMETER,null,WidthType.WIDTH_57,null, null);
+        List<Roll> result4 = rollService.findRollByParams(null, null, RollType.DIAMETER, null, WidthType.WIDTH_57, null, null);
         assertNotNull(result4);
         assertEquals(0, result4.size());
+        System.out.println("Result4:");
+        result4.forEach(System.out::println);
+
+        //find by part of sku
+        List<Roll> result5 = rollService.findRollByParams(null, "LEN", null, null, WidthType.WIDTH_57, null, null);
+        assertNotNull(result5);
+        assertEquals(12, result5.size());
+        System.out.println("Result5:");
+        result5.forEach(System.out::println);
+
+        //find by part of id
+        List<Roll> result6 = rollService.findRollByParams(2L, null, null, null, null, null, null);
+        assertNotNull(result6);
+        assertEquals(11, result6.size());
+        System.out.println("Result6:");
+        result6.forEach(System.out::println);
     }
 
     @Test
@@ -131,7 +150,7 @@ public class RollServiceTest {
         }
 
         int countAfter = rollService.getLocalRollRegistry().size();
-        assertNotEquals(countBefore,countAfter);
+        assertNotEquals(countBefore, countAfter);
         System.out.println("countBefore: " + countBefore + " countAfter: " + countAfter);
     }
 
@@ -223,7 +242,7 @@ public class RollServiceTest {
         rollService.updateRegistryFromServer();
         int countAfter = rollService.getLocalRollRegistry().size();
         System.out.println("countBefore: " + countBefore + " countAfter: " + countAfter);
-        assertNotEquals(countBefore,countAfter);
+        assertNotEquals(countBefore, countAfter);
     }
 
     @Test
@@ -276,11 +295,11 @@ public class RollServiceTest {
         roll3Cloned.setMainValue(BigDecimal.valueOf(12.0));
         Roll roll3AfterUpdate = rollService.updateRoll(roll3Cloned);
         assertNotNull(roll3AfterUpdate);
-        assertEquals(roll3Cloned.getSku(),roll3AfterUpdate.getSku());
-        assertNotEquals(roll3,roll3AfterUpdate);
+        assertEquals(roll3Cloned.getSku(), roll3AfterUpdate.getSku());
+        assertNotEquals(roll3, roll3AfterUpdate);
 
         int countAfter = rollService.getLocalRollRegistry().size();
-        assertEquals(countBefore,countAfter);
+        assertEquals(countBefore, countAfter);
         System.out.println("countBefore: " + countBefore + " countAfter: " + countAfter);
     }
 

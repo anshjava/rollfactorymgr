@@ -45,6 +45,8 @@ public interface RollService {
     /**
      * Find Roll by parameters in local cached Roll Registry
      *
+     * @param id  part of roll id
+     * @param sku  part of roll sku
      * @param rollType  roll manufacturing method
      * @param paper     raw material
      * @param widthType roll width
@@ -53,7 +55,7 @@ public interface RollService {
      * @return list of matched Rolls
      * @throws WebServiceException
      */
-    List<Roll> findRollByParams(RollType rollType, Paper paper, WidthType widthType, CoreType coreType, BigDecimal value) throws WebServiceException;
+    List<Roll> findRollByParams(Long id, String sku, RollType rollType, Paper paper, WidthType widthType, CoreType coreType, BigDecimal value) throws WebServiceException;
 
     /**
      * Create Roll on Server Registry

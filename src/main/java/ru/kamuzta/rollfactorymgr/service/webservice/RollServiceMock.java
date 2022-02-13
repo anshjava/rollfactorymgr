@@ -46,43 +46,15 @@ public class RollServiceMock implements RollService {
     }
 
     @Override
-    public List<Roll> findRollByParams(RollType rollType, Paper paper, WidthType widthType, CoreType coreType, BigDecimal value) throws WebServiceException {
+    public List<Roll> findRollByParams(Long id, String sku, RollType rollType, Paper paper, WidthType widthType, CoreType coreType, BigDecimal mainValue) throws WebServiceException {
         return localRollRegistry.stream()
-                .filter(r -> {
-                    if (rollType != null) {
-                        return r.getRollType() == rollType;
-                    } else {
-                        return true;
-                    }
-                })
-                .filter(r -> {
-                    if (paper != null) {
-                        return r.getPaper() == paper;
-                    } else {
-                        return true;
-                    }
-                })
-                .filter(r -> {
-                    if (widthType != null) {
-                        return r.getWidthType() == widthType;
-                    } else {
-                        return true;
-                    }
-                })
-                .filter(r -> {
-                    if (coreType != null) {
-                        return r.getCoreType() == coreType;
-                    } else {
-                        return true;
-                    }
-                })
-                .filter(r -> {
-                    if (value != null) {
-                        return r.getMainValue().compareTo(value) == 0;
-                    } else {
-                        return true;
-                    }
-                })
+                .filter(r -> String.valueOf(r.getId()).contains((Optional.ofNullable(id).map(String::valueOf)).orElse(String.valueOf(r.getId()))))
+                .filter(r -> r.getSku().contains(Optional.ofNullable(sku).orElse(r.getSku())))
+                .filter(r -> r.getRollType() == Optional.ofNullable(rollType).orElse(r.getRollType()))
+                .filter(r -> r.getPaper() == Optional.ofNullable(paper).orElse(r.getPaper()))
+                .filter(r -> r.getWidthType() == Optional.ofNullable(widthType).orElse(r.getWidthType()))
+                .filter(r -> r.getCoreType() == Optional.ofNullable(coreType).orElse(r.getCoreType()))
+                .filter(r -> r.getMainValue().compareTo(Optional.ofNullable(mainValue).orElse(r.getMainValue())) == 0)
                 .collect(Collectors.toList());
     }
 
@@ -140,7 +112,7 @@ public class RollServiceMock implements RollService {
 
         validateCommonRollParams(rollType, paper, widthType, coreType, value);
 
-        List<Roll> foundDuplicate = findRollByParams(rollType, paper, widthType, coreType, value);
+        List<Roll> foundDuplicate = findRollByParams(null, null, rollType, paper, widthType, coreType, value);
         if (!foundDuplicate.isEmpty()) {
             String duplicateSku = foundDuplicate.stream().findFirst().get().getSku();
             throw new ValidationException("Error while trying create duplicate roll of SKU " + duplicateSku);
@@ -157,7 +129,7 @@ public class RollServiceMock implements RollService {
 
         validateCommonRollParams(roll.getRollType(), roll.getPaper(), roll.getWidthType(), roll.getCoreType(), roll.getMainValue());
 
-        List<Roll> foundDuplicate = findRollByParams(roll.getRollType(), roll.getPaper(), roll.getWidthType(), roll.getCoreType(), roll.getMainValue());
+        List<Roll> foundDuplicate = findRollByParams(null, null, roll.getRollType(), roll.getPaper(), roll.getWidthType(), roll.getCoreType(), roll.getMainValue());
         if (!foundDuplicate.isEmpty()) {
             String duplicateSku = foundDuplicate.stream().findFirst().get().getSku();
             throw new ValidationException("Error while trying create duplicate roll of SKU " + duplicateSku);

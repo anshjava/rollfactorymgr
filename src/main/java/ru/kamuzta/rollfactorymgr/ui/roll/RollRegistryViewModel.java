@@ -63,7 +63,7 @@ public class RollRegistryViewModel implements ViewModel, DisposableByEvent {
     }
 
     @Subscribe
-    public void onEvent(@NotNull UpdateRollRegistryEvent event) {
+    public void onEvent(@NotNull UpdateRollTableEvent event) {
         log.info("Screen [" + screen + "] Action: " + "onEvent " + event);
         Platform.runLater(this::onUpdateRollRegistry);
     }

@@ -11,49 +11,82 @@
     </top>
     <center>
         <VBox alignment="TOP_CENTER" styleClass="standard-padding-spacing">
-            <TitledPane prefHeight="200.0" styleClass="info" text="Select filters">
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="20.0" prefWidth="770.0">
-                    <HBox styleClass="standard-padding" alignment="CENTER" prefHeight="180.0"
+            <TitledPane minHeight="0.0" styleClass="info" text="Select filters">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="770.0">
+                    <HBox styleClass="standard-padding" alignment="CENTER" minHeight="0.0"
                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <ListView fx:id="availableFilters" />
-                        <ListView fx:id="selectedFilters" />
-                    </HBox>
-                </AnchorPane>
-            </TitledPane>
-            <TitledPane prefHeight="100.0" styleClass="info" text="Setup filters values">
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="770.0">
-                    <HBox styleClass="standard-padding">
-                        <Button fx:id="updateRollRegistryButton" onAction="#onUpdateRollRegistry"
-                                text="Update Roll Registry" styleClass="warning" />
+                        <ListView fx:id="availableFilters" prefHeight="100" prefWidth="150" />
+                        <ListView fx:id="selectedFilters" prefHeight="100" prefWidth="150" />
                         <Pane HBox.hgrow="ALWAYS" />
-                        <Button fx:id="editRollButton" onAction="#onEditRoll" text="Edit" styleClass="success, first" />
-                        <Button fx:id="removeRollButton" onAction="#onRemoveRoll" text="Remove"
-                                styleClass="success, last" />
+                        <VBox>
+                            <GridPane alignment="CENTER" prefWidth="290.0" maxWidth="290">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="140.0"
+                                                       prefWidth="140.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="140.0"
+                                                       prefWidth="140.0" />
+                                </columnConstraints>
+                                <Label fx:id="idLabel" text="Database id" GridPane.rowIndex="0" />
+                                <Label fx:id="skuLabel" text="SKU" GridPane.rowIndex="1" />
+                                <Label fx:id="rollTypeLabel" text="Roll type" GridPane.rowIndex="2" />
+                                <Label fx:id="paperLabel" text="Paper sort" GridPane.rowIndex="3" />
+                                <Label fx:id="widthTypeLabel" text="Roll width" GridPane.rowIndex="4" />
+                                <Label fx:id="coreTypeLabel" text="Core diameter" GridPane.rowIndex="5" />
+                                <Label fx:id="mainValueLabel" text="Main value" GridPane.rowIndex="6" />
+                                <TextField fx:id="id" prefWidth="140" prefHeight="30" GridPane.columnIndex="1"
+                                           GridPane.rowIndex="0" />
+                                <TextField fx:id="sku" prefWidth="140" prefHeight="30" GridPane.columnIndex="1"
+                                           GridPane.rowIndex="1" />
+                                <ComboBox fx:id="rollType" prefWidth="140" prefHeight="30" GridPane.columnIndex="1"
+                                          GridPane.rowIndex="2" />
+                                <ComboBox fx:id="paper" prefWidth="140" prefHeight="30" GridPane.columnIndex="1"
+                                          GridPane.rowIndex="3" />
+                                <ComboBox fx:id="widthType" prefWidth="140" prefHeight="30" GridPane.columnIndex="1"
+                                          GridPane.rowIndex="4" />
+                                <ComboBox fx:id="coreType" prefWidth="140" prefHeight="30" GridPane.columnIndex="1"
+                                          GridPane.rowIndex="5" />
+                                <TextField fx:id="mainValue" prefWidth="140" prefHeight="30" GridPane.columnIndex="1"
+                                           GridPane.rowIndex="6" />
+                            </GridPane>
+                            <HBox>
+                                <Pane HBox.hgrow="ALWAYS" />
+                                <Button fx:id="findRollButton" onAction="#onFindRoll"
+                                        text="Find" styleClass="warning" />
+                            </HBox>
+                        </VBox>
                     </HBox>
                 </AnchorPane>
             </TitledPane>
             <TitledPane prefHeight="200.0" styleClass="success" text="View search result">
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="20.0" prefWidth="770" maxWidth="770">
-                    <TableView fx:id="rollRegistryTableView" layoutX="53.0" layoutY="-71.0" prefHeight="100.0"
-                               prefWidth="770.0"
-                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
-                               tableMenuButtonVisible="true">
-                        <columns>
-                            <TableColumn fx:id="idColumn" prefWidth="30.0" text="#" />
-                            <TableColumn fx:id="skuColumn" prefWidth="80.0" text="SKU" />
-                            <TableColumn fx:id="typeColumn" prefWidth="105.0" text="type" />
-                            <TableColumn fx:id="paperColumn" prefWidth="105.0" text="paper, g/m2" />
-                            <TableColumn fx:id="widthColumn" prefWidth="100.0" text="width, mm" />
-                            <TableColumn fx:id="coreColumn" prefWidth="90.0" text="core, mm" />
-                            <TableColumn fx:id="lengthColumn" prefWidth="80.0" text="length, m" />
-                            <TableColumn fx:id="diameterColumn" prefWidth="80.0" text="d, mm" />
-                            <TableColumn fx:id="weightColumn" prefWidth="95.0" text="weight, kg" />
-                        </columns>
-                    </TableView>
-                </AnchorPane>
+                <VBox>
+                    <HBox>
+                        <Button fx:id="editRollButton" onAction="#onEditRoll" text="Edit" styleClass="success, first" />
+                        <Button fx:id="removeRollButton" onAction="#onRemoveRoll" text="Remove"
+                                styleClass="success, last" />
+                    </HBox>
+                    <AnchorPane minHeight="100.0" minWidth="0.0" prefWidth="770" maxWidth="770">
+                        <TableView fx:id="resultTableView" layoutX="53.0" layoutY="-71.0" minHeight="100.0"
+                                   prefWidth="770.0"
+                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+                                   tableMenuButtonVisible="true">
+                            <columns>
+                                <TableColumn fx:id="idColumn" prefWidth="30.0" text="#" />
+                                <TableColumn fx:id="skuColumn" prefWidth="80.0" text="SKU" />
+                                <TableColumn fx:id="typeColumn" prefWidth="105.0" text="type" />
+                                <TableColumn fx:id="paperColumn" prefWidth="105.0" text="paper, g/m2" />
+                                <TableColumn fx:id="widthColumn" prefWidth="100.0" text="width, mm" />
+                                <TableColumn fx:id="coreColumn" prefWidth="90.0" text="core, mm" />
+                                <TableColumn fx:id="lengthColumn" prefWidth="80.0" text="length, m" />
+                                <TableColumn fx:id="diameterColumn" prefWidth="80.0" text="d, mm" />
+                                <TableColumn fx:id="weightColumn" prefWidth="95.0" text="weight, kg" />
+                            </columns>
+                        </TableView>
+                    </AnchorPane>
+                </VBox>
             </TitledPane>
+            <Pane VBox.vgrow="ALWAYS" />
         </VBox>
     </center>
 </BorderPane>

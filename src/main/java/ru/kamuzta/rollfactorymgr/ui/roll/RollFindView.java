@@ -16,6 +16,8 @@ import ru.kamuzta.rollfactorymgr.ui.table.*;
 
 import java.math.BigDecimal;
 import java.net.URL;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class RollFindView implements FxmlView<RollFindViewModel>, Initializable {
@@ -25,6 +27,12 @@ public class RollFindView implements FxmlView<RollFindViewModel>, Initializable 
 
     @FXML
     private HeaderMenuView headerMenuView;
+
+    @FXML
+    private TitledPane filtersPane;
+
+    @FXML
+    private TitledPane resultPane;
 
     @FXML
     private ListView<RollFilter> availableFilters;
@@ -121,6 +129,7 @@ public class RollFindView implements FxmlView<RollFindViewModel>, Initializable 
                 availableFilters.getItems().remove(clickedFilter);
                 availableFilters.getSelectionModel().clearSelection();
                 refreshFilterVisibility(selectedFilters.getItems());
+                reCalculateResultHeight();
             }
         });
 
@@ -133,6 +142,7 @@ public class RollFindView implements FxmlView<RollFindViewModel>, Initializable 
                 selectedFilters.getItems().remove(clickedFilter);
                 selectedFilters.getSelectionModel().clearSelection();
                 refreshFilterVisibility(selectedFilters.getItems());
+                reCalculateResultHeight();
             }
         });
     }
@@ -140,6 +150,9 @@ public class RollFindView implements FxmlView<RollFindViewModel>, Initializable 
     private void configureTable() {
         //configure table
         resultTableView.itemsProperty().bind(viewModel.rollPropertiesProperty());
+        resultTableView.minHeightProperty().bind(resultTableView.prefHeightProperty());
+        resultTableView.maxHeightProperty().bind(resultTableView.prefHeightProperty());
+
         idColumn.setCellValueFactory(column -> column.getValue().getId());
         skuColumn.setCellValueFactory(column -> column.getValue().getSku());
 
@@ -229,7 +242,15 @@ public class RollFindView implements FxmlView<RollFindViewModel>, Initializable 
         });
 
         RollProperty rollProperty = viewModel.getRollProperty();
-        id.textProperty().addListener((observable, oldValue, newValue) -> rollProperty.getId().setValue(Long.valueOf(newValue)));
+        id.textProperty().addListener((observable, oldValue, newValue) -> {
+            Long newLongValue;
+            try {
+                newLongValue = Long.valueOf(newValue);
+            } catch (NumberFormatException nfe) {
+                newLongValue = null;
+            }
+            rollProperty.getId().setValue(newLongValue);
+        });
         sku.textProperty().addListener((observable, oldValue, newValue) -> rollProperty.getSku().setValue(newValue));
         rollType.valueProperty().bindBidirectional(rollProperty.getRollType());
         paper.valueProperty().bindBidirectional(rollProperty.getPaper());
@@ -289,6 +310,7 @@ public class RollFindView implements FxmlView<RollFindViewModel>, Initializable 
     @FXML
     void onFindRoll() {
         viewModel.onFindRoll();
+        reCalculateResultHeight();
     }
 
     @FXML
@@ -305,6 +327,13 @@ public class RollFindView implements FxmlView<RollFindViewModel>, Initializable 
         if (selectedIndex >= 0) {
             viewModel.onRemoveRoll(resultTableView.getItems().get(selectedIndex).getSku().getValue());
         }
+    }
+
+    private void reCalculateResultHeight() {
+        resultTableView.prefHeightProperty().set(Double.min(430 - headerPane.getHeight() - filtersPane.getHeight(),
+                resultTableView.fixedCellSizeProperty().getValue()
+                * (Optional.ofNullable(resultTableView.getItems()).map(List::size).orElse(0))
+                + 40.0));
     }
 
 }

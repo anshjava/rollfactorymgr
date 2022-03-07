@@ -143,7 +143,7 @@ public class RollCreateView implements FxmlView<RollCreateViewModel>, Initializa
         widthType.valueProperty().bindBidirectional(rollProperty.getWidthType());
         coreType.valueProperty().bindBidirectional(rollProperty.getCoreType());
         if (rollProperty.getRollType().get().isLength()) {
-            rollLength.textProperty().set(rollProperty.getMainValue().getValue().toString());
+            rollLength.textProperty().set(Optional.ofNullable(rollProperty.getMainValue().getValue()).orElse(BigDecimal.ZERO).toString());
             rollDiameter.textProperty().set(rollProperty.calculateDiameter().toString());
         } else {
             rollDiameter.textProperty().set(rollProperty.getMainValue().getValue().toString());

@@ -1,13 +1,11 @@
 package ru.kamuzta.rollfactorymgr.model;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 /**
  * Roll wrapper for FX
@@ -35,24 +33,24 @@ public class RollProperty {
     }
 
     public static RollProperty getSample() {
-        return new RollProperty(new SimpleObjectProperty<>(0L),
+        return new RollProperty(new SimpleObjectProperty<>(null),
                 new SimpleStringProperty(""),
                 new SimpleObjectProperty<>(RollType.LENGTH),
                 new SimpleObjectProperty<>(Paper.NTC44),
                 new SimpleObjectProperty<>(WidthType.WIDTH_57),
                 new SimpleObjectProperty<>(CoreType.CORE_12),
-                new SimpleObjectProperty<>(BigDecimal.ZERO)
+                new SimpleObjectProperty<>(null)
         );
     }
 
     private Roll constructRoll() {
-        return new Roll(id.getValue(),
+        return new Roll(Optional.ofNullable(id.getValue()).orElse(0L),
                 sku.getValue(),
                 rollType.getValue(),
                 paper.getValue(),
                 widthType.getValue(),
                 coreType.getValue(),
-                mainValue.getValue());
+                Optional.ofNullable(mainValue.getValue()).orElse(BigDecimal.ZERO));
     }
 
     public ObjectProperty<BigDecimal> calculateLength() {

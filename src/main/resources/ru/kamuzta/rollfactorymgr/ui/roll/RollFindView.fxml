@@ -11,7 +11,7 @@
     </top>
     <center>
         <VBox alignment="TOP_CENTER" styleClass="standard-padding-spacing">
-            <TitledPane minHeight="0.0" styleClass="info" text="Select filters">
+            <TitledPane fx:id="filtersPane" minHeight="0.0" styleClass="info" text="Select filters" VBox.vgrow="ALWAYS">
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="770.0">
                     <HBox styleClass="standard-padding" alignment="CENTER" minHeight="0.0"
                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
@@ -58,16 +58,16 @@
                     </HBox>
                 </AnchorPane>
             </TitledPane>
-            <TitledPane prefHeight="200.0" styleClass="success" text="View search result">
+            <TitledPane fx:id="resultPane" maxHeight="200" styleClass="success" text="View search result" VBox.vgrow="SOMETIMES">
                 <VBox>
                     <HBox>
                         <Button fx:id="editRollButton" onAction="#onEditRoll" text="Edit" styleClass="success, first" />
                         <Button fx:id="removeRollButton" onAction="#onRemoveRoll" text="Remove"
                                 styleClass="success, last" />
                     </HBox>
-                    <AnchorPane minHeight="100.0" minWidth="0.0" prefWidth="770" maxWidth="770">
-                        <TableView fx:id="resultTableView" layoutX="53.0" layoutY="-71.0" minHeight="100.0"
-                                   prefWidth="770.0"
+                    <AnchorPane minWidth="0.0" prefWidth="770" maxWidth="770">
+                        <TableView fx:id="resultTableView" layoutX="53.0" layoutY="-71.0"
+                                   prefWidth="770.0" fixedCellSize="25"
                                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
                                    tableMenuButtonVisible="true">
@@ -86,7 +86,6 @@
                     </AnchorPane>
                 </VBox>
             </TitledPane>
-            <Pane VBox.vgrow="ALWAYS" />
         </VBox>
     </center>
 </BorderPane>

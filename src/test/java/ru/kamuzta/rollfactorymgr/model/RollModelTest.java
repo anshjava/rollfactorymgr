@@ -5,7 +5,9 @@ import static org.junit.Assert.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
+import ru.kamuzta.rollfactorymgr.model.roll.*;
 import ru.kamuzta.rollfactorymgr.utils.json.CouldNotDeserializeJsonException;
+import ru.kamuzta.rollfactorymgr.utils.json.CouldNotSeserializeToJsonException;
 import ru.kamuzta.rollfactorymgr.utils.json.JsonUtil;
 import ru.kamuzta.rollfactorymgr.utils.TestUtils;
 
@@ -25,24 +27,37 @@ public class RollModelTest {
         jsonUtil = JsonUtil.getInstance();
     }
 
+
+    /**
+     * Testing roll cloning
+     */
     @Test
+    public void rollGetCloneTest() {
+        System.out.println("_________ START rollgetCloneTest _________");
+        Roll roll = TestUtils.getRandomRoll();
+        Roll clonedRoll = roll.clone();
+        assertEquals(roll, clonedRoll);
+        assertNotSame(roll, clonedRoll);
+    }
+
     /**
      * Testing roll sort
      */
+    @Test
     public void rollCompareTest() {
         System.out.println("_________ START rollCompareTest _________");
         TreeSet<Roll> rollSet = new TreeSet<>();
         for (int i = 0; i < 100; i++) {
-            rollSet.addAll(TestUtils.getRandomRollsList());
+            rollSet.add(TestUtils.getRandomRoll());
         }
         rollSet.forEach(System.out::println);
     }
 
-    @Test
     /**
      *Testing of roll calculations
      *TODO: check bidirectional calculation of diameter and length
      */
+    @Test
     public void rollCalculationTest() {
         System.out.println("_________ START rollCalculationTest _________");
         Roll roll1 = Roll.builder()
@@ -72,10 +87,10 @@ public class RollModelTest {
         assertEquals(BigDecimal.valueOf(0.075).setScale(3, RoundingMode.HALF_UP), roll2.calculateWeight());
     }
 
-    @Test
     /**
      * Try serialization and deserialization of roll
      */
+    @Test
     public void rollSerializationTest() {
         System.out.println("_________ START rollSerializationTest _________");
         JsonUtil jsonUtil = JsonUtil.getInstance();
@@ -88,16 +103,17 @@ public class RollModelTest {
                 .coreType(CoreType.CORE_12)
                 .mainValue(BigDecimal.valueOf(30.0).setScale(1, RoundingMode.HALF_UP))
                 .build();
-        String json = jsonUtil.writeObject(roll1, CouldNotDeserializeJsonException::new);
+        String json = jsonUtil.writeObject(roll1, CouldNotSeserializeToJsonException::new);
         Roll roll2 = jsonUtil.readValue(json, Roll.class, CouldNotDeserializeJsonException::new);
         System.out.println(roll2);
         assertEquals(roll1,roll2);
+        assertNotSame(roll1,roll2);
     }
 
-    @Test
     /**
      * Create standard rolls registry
      */
+    @Test
     public void rollRegistryCreateTest() {
         System.out.println("_________ START rollRegistryCreateTest _________");
         List<Roll> rollList = new ArrayList<>();
@@ -135,10 +151,10 @@ public class RollModelTest {
         System.out.println(json);
     }
 
-    @Test
     /**
      * Testing reading jsonRegistry to list
      */
+    @Test
     public void rollRegistryReadFromJsonTest() {
         System.out.println("_________ START rollRegistryReadFromJsonTest _________");
 

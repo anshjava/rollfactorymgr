@@ -1,4 +1,4 @@
-package ru.kamuzta.rollfactorymgr.model;
+package ru.kamuzta.rollfactorymgr.model.roll;
 
 import javafx.beans.property.*;
 import lombok.AllArgsConstructor;

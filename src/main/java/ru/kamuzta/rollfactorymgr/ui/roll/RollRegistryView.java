@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
-import ru.kamuzta.rollfactorymgr.model.*;
+import ru.kamuzta.rollfactorymgr.model.roll.*;
 import ru.kamuzta.rollfactorymgr.ui.menu.HeaderMenuView;
 import ru.kamuzta.rollfactorymgr.ui.table.*;
 

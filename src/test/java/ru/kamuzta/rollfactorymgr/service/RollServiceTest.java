@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import ru.kamuzta.rollfactorymgr.GuiceJUnitRunner;
 import ru.kamuzta.rollfactorymgr.exception.WebServiceException;
-import ru.kamuzta.rollfactorymgr.model.*;
+import ru.kamuzta.rollfactorymgr.model.roll.*;
 import ru.kamuzta.rollfactorymgr.modules.EventBusModule;
 import ru.kamuzta.rollfactorymgr.service.webservice.RollService;
 
@@ -29,10 +29,10 @@ public class RollServiceTest {
         rollService.updateRegistryFromServer();
     }
 
-    @Test
     /**
      * Testing obtaining roll registry
      */
+    @Test
     public void getRollRegistryTest() {
         System.out.println("_________ START getRollRegistryTest _________");
         List<Roll> rollRegistry = rollService.getLocalRollRegistry();
@@ -42,10 +42,10 @@ public class RollServiceTest {
         rollRegistry.forEach(System.out::println);
     }
 
-    @Test
     /**
      * Testing find roll by SKU
      */
+    @Test
     public void findRollBySkuTest() {
         System.out.println("_________ START findRollBySkuTest _________");
         Roll roll1 = rollService.findRollBySku("LEN5730");
@@ -65,10 +65,10 @@ public class RollServiceTest {
         assertNull(roll3);
     }
 
-    @Test
     /**
      * Testing find roll by part of SKU
      */
+    @Test
     public void findRollBySkuPatternTest() {
         System.out.println("_________ START findRollBySkuPatternTest _________");
 
@@ -87,10 +87,10 @@ public class RollServiceTest {
         assertTrue(result3.isEmpty());
     }
 
-    @Test
     /**
      * Testing finding roll by collection of params
      */
+    @Test
     public void findRollByParamsTest() {
         System.out.println("_________ START findRollByParamsTest _________");
 
@@ -133,10 +133,10 @@ public class RollServiceTest {
         result6.forEach(System.out::println);
     }
 
-    @Test
     /**
      * Testing removing roll by SKU
      */
+    @Test
     public void removeRollBySkuTest() {
         System.out.println("_________ START removeRollBySkuTest _________");
 
@@ -154,10 +154,10 @@ public class RollServiceTest {
         System.out.println("countBefore: " + countBefore + " countAfter: " + countAfter);
     }
 
-    @Test
     /**
      * Testing creating new roll
      */
+    @Test
     public void createRollTest() {
         System.out.println("_________ START createRollTest _________");
 
@@ -245,10 +245,10 @@ public class RollServiceTest {
         assertNotEquals(countBefore, countAfter);
     }
 
-    @Test
     /**
      * Testing updating roll parameters
      */
+    @Test
     public void updateRollTest() {
         System.out.println("_________ START updateRollTest _________");
 

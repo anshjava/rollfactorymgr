@@ -15,8 +15,8 @@ import ru.kamuzta.rollfactorymgr.event.DisposableByEvent;
 import ru.kamuzta.rollfactorymgr.event.DisposeEvent;
 import ru.kamuzta.rollfactorymgr.event.ScreenEvent;
 import ru.kamuzta.rollfactorymgr.event.UpdateRollTableEvent;
-import ru.kamuzta.rollfactorymgr.model.Roll;
-import ru.kamuzta.rollfactorymgr.model.RollProperty;
+import ru.kamuzta.rollfactorymgr.model.roll.Roll;
+import ru.kamuzta.rollfactorymgr.model.roll.RollProperty;
 import ru.kamuzta.rollfactorymgr.service.webservice.RollService;
 import ru.kamuzta.rollfactorymgr.ui.Screen;
 

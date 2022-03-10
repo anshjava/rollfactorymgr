@@ -11,7 +11,7 @@ import javafx.collections.ObservableList;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import ru.kamuzta.rollfactorymgr.event.*;
-import ru.kamuzta.rollfactorymgr.model.*;
+import ru.kamuzta.rollfactorymgr.model.roll.RollProperty;
 import ru.kamuzta.rollfactorymgr.service.webservice.RollService;
 import ru.kamuzta.rollfactorymgr.ui.Screen;
 import ru.kamuzta.rollfactorymgr.ui.dialog.DialogHelper;
@@ -24,16 +24,14 @@ public class RollRegistryViewModel implements ViewModel, DisposableByEvent {
 
     private final RollService rollService;
     private final EventBus eventBus;
-    private final DialogHelper dialogHelper;
     private final Screen screen;
 
     private ListProperty<RollProperty> rollProperties = new SimpleListProperty<>();
 
     @Inject
-    RollRegistryViewModel(EventBus eventBus, RollService rollService, DialogHelper dialogHelper) {
+    RollRegistryViewModel(EventBus eventBus, RollService rollService) {
         this.rollService = rollService;
         this.eventBus = eventBus;
-        this.dialogHelper = dialogHelper;
         this.screen = Screen.ROLL_REGISTRY;
         eventBus.register(this);
     }

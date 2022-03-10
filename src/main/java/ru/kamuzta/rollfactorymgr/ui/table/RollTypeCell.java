@@ -2,7 +2,7 @@ package ru.kamuzta.rollfactorymgr.ui.table;
 
 import javafx.scene.control.TableCell;
 import org.apache.commons.lang3.StringUtils;
-import ru.kamuzta.rollfactorymgr.model.RollType;
+import ru.kamuzta.rollfactorymgr.model.roll.RollType;
 
 public class RollTypeCell<T> extends TableCell<T, RollType> {
 

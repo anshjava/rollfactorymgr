@@ -1,6 +1,7 @@
-package ru.kamuzta.rollfactorymgr.model;
+package ru.kamuzta.rollfactorymgr.model.roll;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.common.collect.ComparisonChain;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,7 +16,7 @@ import java.math.RoundingMode;
 @Builder
 @JsonPropertyOrder({"id", "sku", "rollType", "paper", "widthType", "coreType", "mainValue"})
 public class Roll implements Comparable<Roll> {
-    private static BigDecimal PI = BigDecimal.valueOf(Math.PI);
+    private static final BigDecimal PI = BigDecimal.valueOf(Math.PI);
     @NotNull
     private Long id;
     @NotNull
@@ -33,6 +34,7 @@ public class Roll implements Comparable<Roll> {
 
     @Override
     public Roll clone() {
+        //all fields are immutable
         return new Roll(this.id, this.sku, this.rollType, this.paper, this.widthType, this.coreType, this.mainValue);
     }
 
@@ -104,22 +106,14 @@ public class Roll implements Comparable<Roll> {
     // SKU (natural)
     @Override
     public int compareTo(@NotNull Roll that) {
-        int result = 0;
-
-        if (this.equals(that)) {
-            return result;
-        } else if ((result = this.rollType.compareTo(that.getRollType())) == 0) {
-            if ((result = this.paper.compareTo(that.getPaper())) == 0) {
-                if ((result = this.widthType.compareTo(that.getWidthType())) == 0) {
-                    if ((result = this.coreType.compareTo(that.getCoreType())) == 0) {
-                        if ((result = this.mainValue.compareTo(that.getMainValue())) == 0) {
-                            result = this.sku.compareTo(that.getSku());
-                        }
-                    }
-                }
-            }
-        }
-        return result;
+        return ComparisonChain.start()
+                .compare(rollType, that.rollType)
+                .compare(paper, that.paper)
+                .compare(widthType, that.widthType)
+                .compare(coreType, that.coreType)
+                .compare(mainValue, that.mainValue)
+                .compare(sku, that.sku)
+                .result();
     }
 
 }

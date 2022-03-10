@@ -2,7 +2,7 @@ package ru.kamuzta.rollfactorymgr.service.webservice;
 
 import com.google.inject.ImplementedBy;
 import ru.kamuzta.rollfactorymgr.exception.WebServiceException;
-import ru.kamuzta.rollfactorymgr.model.*;
+import ru.kamuzta.rollfactorymgr.model.roll.*;
 
 import java.math.BigDecimal;
 import java.util.List;

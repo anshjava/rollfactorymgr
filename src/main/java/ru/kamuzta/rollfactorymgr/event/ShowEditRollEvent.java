@@ -2,7 +2,7 @@ package ru.kamuzta.rollfactorymgr.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import ru.kamuzta.rollfactorymgr.model.RollProperty;
+import ru.kamuzta.rollfactorymgr.model.roll.RollProperty;
 
 @AllArgsConstructor
 @Getter

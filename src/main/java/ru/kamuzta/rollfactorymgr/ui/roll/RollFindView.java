@@ -2,7 +2,6 @@ package ru.kamuzta.rollfactorymgr.ui.roll;
 
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,7 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.util.StringConverter;
-import ru.kamuzta.rollfactorymgr.model.*;
+import ru.kamuzta.rollfactorymgr.model.roll.*;
 import ru.kamuzta.rollfactorymgr.ui.menu.HeaderMenuView;
 import ru.kamuzta.rollfactorymgr.ui.table.*;
 
@@ -326,9 +325,11 @@ public class RollFindView implements FxmlView<RollFindViewModel>, Initializable 
         int selectedIndex = resultTableView.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             viewModel.onRemoveRoll(resultTableView.getItems().get(selectedIndex).getSku().getValue());
+            reCalculateResultHeight();
         }
     }
 
+    //TODO do with bindings
     private void reCalculateResultHeight() {
         resultTableView.prefHeightProperty().set(Double.min(430 - headerPane.getHeight() - filtersPane.getHeight(),
                 resultTableView.fixedCellSizeProperty().getValue()

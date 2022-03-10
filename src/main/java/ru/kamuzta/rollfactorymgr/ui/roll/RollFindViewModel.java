@@ -15,11 +15,10 @@ import ru.kamuzta.rollfactorymgr.event.DisposableByEvent;
 import ru.kamuzta.rollfactorymgr.event.DisposeEvent;
 import ru.kamuzta.rollfactorymgr.event.ShowEditRollEvent;
 import ru.kamuzta.rollfactorymgr.event.UpdateRollTableEvent;
-import ru.kamuzta.rollfactorymgr.model.RollFilter;
-import ru.kamuzta.rollfactorymgr.model.RollProperty;
+import ru.kamuzta.rollfactorymgr.model.roll.RollFilter;
+import ru.kamuzta.rollfactorymgr.model.roll.RollProperty;
 import ru.kamuzta.rollfactorymgr.service.webservice.RollService;
 import ru.kamuzta.rollfactorymgr.ui.Screen;
-import ru.kamuzta.rollfactorymgr.ui.dialog.DialogHelper;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,7 +28,6 @@ public class RollFindViewModel implements ViewModel, DisposableByEvent {
 
     private final RollService rollService;
     private final EventBus eventBus;
-    private final DialogHelper dialogHelper;
     private final Screen screen;
 
     @Getter
@@ -42,10 +40,9 @@ public class RollFindViewModel implements ViewModel, DisposableByEvent {
     private ListProperty<RollFilter> selectedFilters = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     @Inject
-    RollFindViewModel(EventBus eventBus, RollService rollService, DialogHelper dialogHelper) {
+    RollFindViewModel(EventBus eventBus, RollService rollService) {
         this.rollService = rollService;
         this.eventBus = eventBus;
-        this.dialogHelper = dialogHelper;
         this.screen = Screen.ROLL_FIND;
         eventBus.register(this);
     }
@@ -92,6 +89,7 @@ public class RollFindViewModel implements ViewModel, DisposableByEvent {
     void onEditRoll(RollProperty rollProperty) {
         log.info("Screen [" + screen + "] Action: " + "onEditRoll");
         eventBus.post(new ShowEditRollEvent(rollProperty));
+        //TODO update table afterEdit
     }
 
     void onRemoveRoll(String sku) {

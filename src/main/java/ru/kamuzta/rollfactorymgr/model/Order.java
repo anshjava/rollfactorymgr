@@ -1,9 +1,12 @@
 package ru.kamuzta.rollfactorymgr.model;
 
+import com.google.common.collect.ComparisonChain;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
+import ru.kamuzta.rollfactorymgr.model.client.Client;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -12,6 +15,7 @@ import java.util.List;
  * Order
  */
 @AllArgsConstructor
+@EqualsAndHashCode
 @Getter
 @Builder
 public class Order implements Comparable<Order> {
@@ -19,16 +23,16 @@ public class Order implements Comparable<Order> {
     private Long id;
 
     @NotNull
-    private ZonedDateTime zonedDateTime;
+    private ZonedDateTime creationDate;
 
     @NotNull
-    OrderState orderState;
+    private OrderState orderState;
 
     @NotNull
-    Client client;
+    private Client client;
 
     @NotNull
-    List<OrderLine> orderLines;
+    private List<OrderLine> orderLines;
 
     //sort Order by:
     // time (older first)
@@ -37,17 +41,11 @@ public class Order implements Comparable<Order> {
     // id (natural)
     @Override
     public int compareTo(@NotNull Order that) {
-        int result = 0;
-
-        if (this.equals(that)) {
-            return result;
-        } else if ((result = this.zonedDateTime.compareTo(that.getZonedDateTime())) == 0) {
-            if ((result = this.client.getName().compareTo(that.getClient().getName())) == 0) {
-                if ((result = this.orderState.compareTo(that.getOrderState())) == 0) {
-                    result = this.id.compareTo(that.getId());
-                }
-            }
-        }
-        return result;
+        return ComparisonChain.start()
+                .compare(creationDate, that.creationDate)
+                .compare(client.getCompanyName(), that.client.getCompanyName())
+                .compare(orderState, that.orderState)
+                .compare(id, that.id)
+                .result();
     }
 }

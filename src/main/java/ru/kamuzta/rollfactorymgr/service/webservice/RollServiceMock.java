@@ -2,10 +2,10 @@ package ru.kamuzta.rollfactorymgr.service.webservice;
 
 import com.google.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
+import ru.kamuzta.rollfactorymgr.model.roll.*;
 import ru.kamuzta.rollfactorymgr.utils.json.CouldNotDeserializeJsonException;
 import ru.kamuzta.rollfactorymgr.exception.ValidationException;
 import ru.kamuzta.rollfactorymgr.exception.WebServiceException;
-import ru.kamuzta.rollfactorymgr.model.*;
 import ru.kamuzta.rollfactorymgr.utils.json.JsonUtil;
 
 import java.math.BigDecimal;
@@ -107,14 +107,14 @@ public class RollServiceMock implements RollService {
         }
 
         if (localRollRegistry.stream().anyMatch(r -> r.getSku().equals(sku))) {
-            throw new ValidationException("Roll with sku " + sku + " is already exists!");
+            throw new ValidationException("Roll with SKU " + sku + " is already exists!");
         }
 
         validateCommonRollParams(rollType, paper, widthType, coreType, value);
 
         List<Roll> foundDuplicate = findRollByParams(null, null, rollType, paper, widthType, coreType, value);
         if (!foundDuplicate.isEmpty()) {
-            String duplicateSku = foundDuplicate.stream().findFirst().get().getSku();
+            String duplicateSku = foundDuplicate.get(0).getSku();
             throw new ValidationException("Error while trying create duplicate roll of SKU " + duplicateSku);
         }
 
@@ -131,7 +131,7 @@ public class RollServiceMock implements RollService {
 
         List<Roll> foundDuplicate = findRollByParams(null, null, roll.getRollType(), roll.getPaper(), roll.getWidthType(), roll.getCoreType(), roll.getMainValue());
         if (!foundDuplicate.isEmpty()) {
-            String duplicateSku = foundDuplicate.stream().findFirst().get().getSku();
+            String duplicateSku = foundDuplicate.get(0).getSku();
             throw new ValidationException("Error while trying create duplicate roll of SKU " + duplicateSku);
         }
     }
@@ -144,20 +144,40 @@ public class RollServiceMock implements RollService {
     }
 
     private void validateCommonRollParams(RollType rollType, Paper paper, WidthType widthType, CoreType coreType, BigDecimal value) throws ValidationException {
-        if (rollType == RollType.DIAMETER) {
-            if (value.compareTo(coreType.getDiameter()) != 1) {
-                throw new ValidationException("Roll diameter can't be equal or less than core diameter");
-            }
+        if (rollType == null) {
+            throw new ValidationException("Roll type must be specified");
         }
 
-        if (rollType == RollType.LENGTH) {
-            if (value.compareTo(BigDecimal.ZERO) != 1) {
-                throw new ValidationException("Roll length can't be equal or less than zero");
-            }
+        if (paper == null) {
+            throw new ValidationException("Roll paper must be specified");
+        }
+
+        if (widthType == null) {
+            throw new ValidationException("Roll width must be specified");
+        }
+
+        if (coreType == null) {
+            throw new ValidationException("Roll core type must be specified");
+        }
+
+        if (value == null) {
+            throw new ValidationException("Roll main value must be specified");
+        }
+
+        if (rollType == RollType.DIAMETER && value.compareTo(coreType.getDiameter()) != 1) {
+            throw new ValidationException("Roll diameter can't be equal or less than core diameter");
+        }
+
+        if (rollType == RollType.LENGTH && value.signum() == 1) {
+            throw new ValidationException("Roll length can't be equal or less than zero");
         }
     }
 
-    private void validateIfRollInWorkflow(String sku) {
-        //do nothing in Mock service
+    private void validateIfRollInWorkflow(String sku) throws ValidationException {
+        if (sku.equals("DIA20018")) {
+            throw new ValidationException("Roll with sku " + sku + " is in workflow at this moment");
+        } else {
+            log.info("Roll with sku " + sku + " is not in workflow");
+        }
     }
 }

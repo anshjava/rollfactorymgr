@@ -2,7 +2,7 @@ package ru.kamuzta.rollfactorymgr.ui.table;
 
 import javafx.scene.control.TableCell;
 import org.apache.commons.lang3.StringUtils;
-import ru.kamuzta.rollfactorymgr.model.CoreType;
+import ru.kamuzta.rollfactorymgr.model.roll.CoreType;
 
 import java.math.RoundingMode;
 

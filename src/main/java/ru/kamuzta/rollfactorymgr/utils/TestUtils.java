@@ -1,7 +1,9 @@
 package ru.kamuzta.rollfactorymgr.utils;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ru.kamuzta.rollfactorymgr.model.*;
+import ru.kamuzta.rollfactorymgr.model.roll.*;
 
 import java.math.BigDecimal;
 import java.security.SecureRandom;
@@ -9,12 +11,13 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TestUtils {
     static AtomicLong count = new AtomicLong(0L);
     static Random random = new SecureRandom();
 
     public static List<Roll> getRandomRollsList() {
-        int pcs = random.nextInt(10);
+        int pcs = 1 + random.nextInt(9);
         log.info("Create a random list of " + pcs +" rolls...");
         List<Roll> rolls = new ArrayList<>();
         for (int i = 0; i < pcs; i++) {

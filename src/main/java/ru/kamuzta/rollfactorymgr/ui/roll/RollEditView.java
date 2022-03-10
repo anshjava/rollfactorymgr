@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.util.StringConverter;
-import ru.kamuzta.rollfactorymgr.model.*;
+import ru.kamuzta.rollfactorymgr.model.roll.*;
 
 import java.math.BigDecimal;
 import java.net.URL;
@@ -156,9 +156,6 @@ public class RollEditView implements FxmlView<RollEditViewModel>, Initializable 
         viewModel.close(actionEvent);
     }
 
-    private RollProperty getRollProperty() {
-        return viewModel.getRollProperty().get();
-    }
 
     private void refreshView() {
         setInitialParameters();

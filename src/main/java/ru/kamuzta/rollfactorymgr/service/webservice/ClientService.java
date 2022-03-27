@@ -4,7 +4,7 @@ import com.google.inject.ImplementedBy;
 import ru.kamuzta.rollfactorymgr.exception.WebServiceException;
 import ru.kamuzta.rollfactorymgr.model.client.Client;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @ImplementedBy(ClientServiceMock.class)
@@ -57,7 +57,7 @@ public interface ClientService {
      * @return list of matched Clients
      * @throws WebServiceException
      */
-    List<Client> findClientByParams(Long id, String companyName, ZonedDateTime creationDateFrom, ZonedDateTime creationDateTo,
+    List<Client> findClientByParams(Long id, String companyName, OffsetDateTime creationDateFrom, OffsetDateTime creationDateTo,
                                     String city, String address, String buyerName, String phone, String email) throws WebServiceException;
 
     /**

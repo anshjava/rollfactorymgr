@@ -8,7 +8,7 @@ import ru.kamuzta.rollfactorymgr.model.client.Client;
 import ru.kamuzta.rollfactorymgr.utils.json.CouldNotDeserializeJsonException;
 import ru.kamuzta.rollfactorymgr.utils.json.JsonUtil;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ClientServiceMock implements ClientService {
     private static JsonUtil jsonUtil = JsonUtil.getInstance();
-    private List<Client> remoteClientRegistry = new ArrayList<>(jsonUtil.getListFromJson("clientRegistry.json", Client.class, CouldNotDeserializeJsonException::new));
+    private final List<Client> remoteClientRegistry = new ArrayList<>(jsonUtil.getListFromJson("clientRegistry.json", Client.class, CouldNotDeserializeJsonException::new));
     private AtomicLong count = new AtomicLong(remoteClientRegistry.stream().map(Client::getId).max(Long::compare).orElse(0L));
-    private List<Client> localClientRegistry = new ArrayList<>();
+    private final List<Client> localClientRegistry = new ArrayList<>();
 
     @Override
     public void updateRegistryFromServer() throws WebServiceException {
@@ -53,7 +53,7 @@ public class ClientServiceMock implements ClientService {
     }
 
     @Override
-    public List<Client> findClientByParams(Long id, String companyName, ZonedDateTime creationDateFrom, ZonedDateTime creationDateTo,
+    public List<Client> findClientByParams(Long id, String companyName, OffsetDateTime creationDateFrom, OffsetDateTime creationDateTo,
                                            String city, String address, String buyerName, String phone, String email) throws WebServiceException {
         return localClientRegistry.stream()
                 .filter(c -> String.valueOf(c.getId()).contains((Optional.ofNullable(id).map(String::valueOf)).orElse(String.valueOf(c.getId()))))
@@ -72,7 +72,7 @@ public class ClientServiceMock implements ClientService {
     public Client createClient(String companyName, String city, String address, String buyerName, String phone, String email) throws WebServiceException {
         try {
             validateCreateClient(companyName, city, address, buyerName, phone, email);
-            Client newClient = new Client(ZonedDateTime.now(), count.incrementAndGet(), companyName, city, address, buyerName, phone, email);
+            Client newClient = new Client(count.incrementAndGet(), OffsetDateTime.now(),  companyName, city, address, buyerName, phone, email);
             remoteClientRegistry.add(newClient);
             return newClient.clone();
         } catch (ValidationException e) {

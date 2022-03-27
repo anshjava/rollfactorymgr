@@ -1,12 +1,18 @@
 package ru.kamuzta.rollfactorymgr.utils.json;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.AllArgsConstructor;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -20,11 +26,30 @@ public class JsonUtil {
     private final ObjectMapper mapper;
 
     public static JsonUtil getInstance() {
-        return new JsonUtil(new ObjectMapper());
+        ObjectMapper objectMapper = new ObjectMapper();
+        JavaTimeModule customDateModule = new JavaTimeModule();
+        customDateModule.addSerializer(OffsetDateTime.class, new JsonSerializer<OffsetDateTime>() {
+            @Override
+            public void serialize(OffsetDateTime offsetDateTime, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+                jsonGenerator.writeString(DateTimeFormatter.ISO_DATE_TIME.format(offsetDateTime));
+            }
+        });
+
+        customDateModule.addDeserializer(OffsetDateTime.class, new JsonDeserializer<OffsetDateTime>() {
+            @Override
+            public OffsetDateTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+                return OffsetDateTime.from(DateTimeFormatter.ISO_DATE_TIME.parse(p.getText()));
+
+            }
+        });
+        objectMapper.registerModule(customDateModule).disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
+        return new JsonUtil(objectMapper);
     }
 
     public static JsonUtil getInstance(JsonInclude.Include include) {
-        return new JsonUtil(new ObjectMapper().setSerializationInclusion(include));
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        return new JsonUtil(objectMapper.setSerializationInclusion(include));
     }
 
     public <E extends Throwable> String writeObject(Object jsonObject, Function<Exception, E> func) throws E {
@@ -88,4 +113,16 @@ public class JsonUtil {
             throw func.apply(e);
         }
     }
+
+    public class ZonedDateTimeDeserializer extends JsonDeserializer<ZonedDateTime> {
+
+        public ZonedDateTimeDeserializer() {
+        }
+
+        @Override
+        public ZonedDateTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+            return ZonedDateTime.parse(p.getText());
+        }
+    }
+
 }

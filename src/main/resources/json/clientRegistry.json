@@ -1,0 +1,92 @@
+[
+    {
+        "id": 1,
+        "creationDate": "1990-02-18T06:30:30.000000365-07:00",
+        "companyName": "RollTrade Inc.",
+        "city": "Los Angeles",
+        "address": "Broadway 57",
+        "buyerName": "Antonio Banderos",
+        "phone": "79217770666",
+        "email": "antonio@rolltrade.com"
+    },
+    {
+        "id": 2,
+        "creationDate": "1995-01-01T07:45:30.0000001-07:00",
+        "companyName": "BestRolls Inc.",
+        "city": "Los Angeles",
+        "address": "Broadway 56",
+        "buyerName": "Nicolas Cage",
+        "phone": "79256546545",
+        "email": "nicolas@bestrolls.net"
+    },
+    {
+        "id": 3,
+        "creationDate": "1997-03-05T08:59:30.0000002-07:00",
+        "companyName": "MegaRoll Inc.",
+        "city": "Los Angeles",
+        "address": "Broadway 55",
+        "buyerName": "Demy Moore",
+        "phone": "78521111221",
+        "email": "dmoore@megaroll.org"
+    },
+    {
+        "id": 4,
+        "creationDate": "2010-01-01T01:01:01.000000001+03:00",
+        "companyName": "OptTrade",
+        "city": "Moscow",
+        "address": "Lubyanka 12",
+        "buyerName": "Fedor Bondarchuk",
+        "phone": "79252256666",
+        "email": "bondarchuk@mail.ru"
+    },
+    {
+        "id": 5,
+        "creationDate": "2011-02-02T02:02:02.000000002+03:00",
+        "companyName": "MarketBest",
+        "city": "Moscow",
+        "address": "Red Square 1",
+        "buyerName": "Dmitry Nagiev",
+        "phone": "79152365895",
+        "email": "nagiev@yandex.ru"
+    },
+    {
+        "id": 6,
+        "creationDate": "2012-03-03T03:03:03.000000003+03:00",
+        "companyName": "BuySaleInc",
+        "city": "Moscow",
+        "address": "Leninsky 43",
+        "buyerName": "Yury Druz",
+        "phone": "78546985544",
+        "email": "druz@rambler.ru"
+    },
+    {
+        "id": 7,
+        "creationDate": "2020-01-01T01:01:01.000000001+09:00",
+        "companyName": "NinjaRoll",
+        "city": "Tokyo",
+        "address": "Naruto 33",
+        "buyerName": "Naruto Naruto",
+        "phone": "71234567889",
+        "email": "naruto@tokyo.jp"
+    },
+    {
+        "id": 8,
+        "creationDate": "2021-02-02T02:02:02.000000002+09:00",
+        "companyName": "ZooNoidos",
+        "city": "Tokyo",
+        "address": "Guyver 12",
+        "buyerName": "Sho Fukumachi",
+        "phone": "71234567888",
+        "email": "guyver12@guyver.com"
+    },
+    {
+        "id": 9,
+        "creationDate": "2022-03-03T03:03:03.000000003+09:00",
+        "companyName": "OneRoll - OnePunch",
+        "city": "Tokyo",
+        "address": "Onepunchman 21",
+        "buyerName": "Saitama",
+        "phone": "71234567880",
+        "email": "one@punch.man"
+    }
+]

@@ -23,11 +23,11 @@ import static org.junit.Assert.assertNotSame;
 
 @Slf4j
 public class ClientModelTest {
-    JsonUtil jsonUtil;
+    JsonUtil jsonUtil = JsonUtil.getInstance();
 
     @Before
     public void before() {
-        jsonUtil = JsonUtil.getInstance();
+
     }
 
 

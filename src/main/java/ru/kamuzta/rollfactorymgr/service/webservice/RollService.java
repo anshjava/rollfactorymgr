@@ -1,6 +1,8 @@
 package ru.kamuzta.rollfactorymgr.service.webservice;
 
 import com.google.inject.ImplementedBy;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.kamuzta.rollfactorymgr.exception.WebServiceException;
 import ru.kamuzta.rollfactorymgr.model.roll.*;
 
@@ -22,7 +24,7 @@ public interface RollService {
      * @return local cached Roll Registry
      * @throws WebServiceException
      */
-    List<Roll> getLocalRollRegistry();
+    List<Roll> getLocalRegistry();
 
     /**
      * Find Roll by SKU in local cached Roll Registry
@@ -31,7 +33,16 @@ public interface RollService {
      * @return found Roll
      * @throws WebServiceException
      */
-    Roll findRollBySku(String sku) throws WebServiceException;
+    Roll findRollBySku(@NotNull String sku) throws WebServiceException;
+
+    /**
+     * Find Roll by id in local cached Roll Registry
+     *
+     * @param id - id of Roll
+     * @return found Roll
+     * @throws WebServiceException
+     */
+    Roll findRollById(@NotNull Long id) throws WebServiceException;
 
     /**
      * Find Roll by SKU pattern in local cached Roll Registry
@@ -40,7 +51,7 @@ public interface RollService {
      * @return list of matched Rolls
      * @throws WebServiceException
      */
-    List<Roll> findRollBySkuPattern(String sku) throws WebServiceException;
+    List<Roll> findRollBySkuPattern(@NotNull String sku) throws WebServiceException;
 
     /**
      * Find Roll by parameters in local cached Roll Registry
@@ -55,7 +66,7 @@ public interface RollService {
      * @return list of matched Rolls
      * @throws WebServiceException
      */
-    List<Roll> findRollByParams(Long id, String sku, RollType rollType, Paper paper, WidthType widthType, CoreType coreType, BigDecimal value) throws WebServiceException;
+    List<Roll> findRollByParams(@Nullable Long id, @Nullable String sku, @Nullable RollType rollType, @Nullable Paper paper, @Nullable WidthType widthType, @Nullable CoreType coreType, @Nullable BigDecimal value) throws WebServiceException;
 
     /**
      * Create Roll on Server Registry
@@ -69,7 +80,7 @@ public interface RollService {
      * @return new Roll
      * @throws WebServiceException if validation fail
      */
-    Roll createRoll(String sku, RollType rollType, Paper paper, WidthType widthType, CoreType coreType, BigDecimal value) throws WebServiceException;
+    Roll createRoll(@NotNull String sku, @NotNull RollType rollType, @NotNull Paper paper, @NotNull WidthType widthType, @NotNull CoreType coreType, @NotNull BigDecimal value) throws WebServiceException;
 
     /**
      * Remove Roll on Server Registry by SKU
@@ -77,7 +88,7 @@ public interface RollService {
      * @return true if success
      * @throws WebServiceException if Roll with specified SKU was not found or there is some orders with this roll
      */
-    boolean removeRollBySku(String sku) throws WebServiceException;
+    boolean removeRollBySku(@NotNull String sku) throws WebServiceException;
 
     /**
      * Update Roll on Server Registry with new parameters
@@ -85,6 +96,6 @@ public interface RollService {
      * @return updated Roll
      * @throws WebServiceException if validation fail or all parameters are equals
      */
-    Roll updateRoll(Roll roll) throws WebServiceException;
+    Roll updateRoll(@NotNull Roll roll) throws WebServiceException;
 
 }

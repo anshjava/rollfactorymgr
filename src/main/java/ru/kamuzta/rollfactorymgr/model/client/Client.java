@@ -7,11 +7,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.OffsetDateTime;
 
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @Builder
-@Getter
 @JsonPropertyOrder({"id", "creationDate", "companyName", "city", "address", "buyerName", "phone", "email"})
 public class Client implements Comparable<Client>{
 

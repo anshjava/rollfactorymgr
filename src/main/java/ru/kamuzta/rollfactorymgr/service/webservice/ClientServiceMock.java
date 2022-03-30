@@ -2,6 +2,8 @@ package ru.kamuzta.rollfactorymgr.service.webservice;
 
 import com.google.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.kamuzta.rollfactorymgr.exception.ValidationException;
 import ru.kamuzta.rollfactorymgr.exception.WebServiceException;
 import ru.kamuzta.rollfactorymgr.model.client.Client;
@@ -35,12 +37,12 @@ public class ClientServiceMock implements ClientService {
     }
 
     @Override
-    public List<Client> getLocalClientRegistry() {
-        return localClientRegistry;
+    public List<Client> getLocalRegistry() {
+        return localClientRegistry.stream().map(Client::clone).collect(Collectors.toList());
     }
 
     @Override
-    public Client findClientById(Long id) throws WebServiceException {
+    public Client findClientById(@NotNull Long id) throws WebServiceException {
         return localClientRegistry.stream().filter(r -> r.getId().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new WebServiceException("Client with id " + id + " was not found"))
@@ -48,13 +50,13 @@ public class ClientServiceMock implements ClientService {
     }
 
     @Override
-    public List<Client> findClientByNamePattern(String companyName) throws WebServiceException {
-        return localClientRegistry.stream().filter(r -> r.getCompanyName().contains(companyName)).collect(Collectors.toList());
+    public List<Client> findClientByNamePattern(@NotNull String companyName) throws WebServiceException {
+        return localClientRegistry.stream().filter(r -> r.getCompanyName().contains(companyName)).map(Client::clone).collect(Collectors.toList());
     }
 
     @Override
-    public List<Client> findClientByParams(Long id, String companyName, OffsetDateTime creationDateFrom, OffsetDateTime creationDateTo,
-                                           String city, String address, String buyerName, String phone, String email) throws WebServiceException {
+    public List<Client> findClientByParams(@Nullable Long id, @Nullable String companyName, @Nullable OffsetDateTime creationDateFrom, @Nullable OffsetDateTime creationDateTo,
+                                           @Nullable String city, @Nullable String address, @Nullable String buyerName, @Nullable String phone, @Nullable String email) throws WebServiceException {
         return localClientRegistry.stream()
                 .filter(c -> String.valueOf(c.getId()).contains((Optional.ofNullable(id).map(String::valueOf)).orElse(String.valueOf(c.getId()))))
                 .filter(c -> c.getCompanyName().contains(Optional.ofNullable(companyName).orElse(c.getCompanyName())))
@@ -62,18 +64,26 @@ public class ClientServiceMock implements ClientService {
                 .filter(c -> c.getCreationDate().isBefore(Optional.ofNullable(creationDateTo).orElse(c.getCreationDate().plusSeconds(1L))))
                 .filter(c -> c.getCity().contains(Optional.ofNullable(city).orElse(c.getCity())))
                 .filter(c -> c.getAddress().contains(Optional.ofNullable(address).orElse(c.getAddress())))
-                .filter(c -> c.getBuyerName().contains(Optional.ofNullable(buyerName).orElse(c.getCompanyName())))
+                .filter(c -> c.getBuyerName().contains(Optional.ofNullable(buyerName).orElse(c.getBuyerName())))
                 .filter(c -> c.getPhone().contains(Optional.ofNullable(phone).orElse(c.getPhone())))
                 .filter(c -> c.getEmail().contains(Optional.ofNullable(email).orElse(c.getEmail())))
-                .collect(Collectors.toList());
+                .map(Client::clone).collect(Collectors.toList());
     }
 
     @Override
-    public Client createClient(String companyName, String city, String address, String buyerName, String phone, String email) throws WebServiceException {
+    public Client createClient(@Nullable OffsetDateTime creationDate, @NotNull String companyName, @NotNull String city, @NotNull String address, @NotNull String buyerName, @NotNull String phone, @NotNull String email) throws WebServiceException {
         try {
-            validateCreateClient(companyName, city, address, buyerName, phone, email);
-            Client newClient = new Client(count.incrementAndGet(), OffsetDateTime.now(),  companyName, city, address, buyerName, phone, email);
+            validateCreateClient(creationDate, companyName, city, address, buyerName, phone, email);
+            Client newClient = new Client(count.incrementAndGet(),
+                    creationDate != null ? creationDate : OffsetDateTime.now(),
+                    companyName,
+                    city,
+                    address,
+                    buyerName,
+                    phone,
+                    email);
             remoteClientRegistry.add(newClient);
+            updateRegistryFromServer();
             return newClient.clone();
         } catch (ValidationException e) {
             throw new WebServiceException(e.getMessage(), e);
@@ -81,7 +91,7 @@ public class ClientServiceMock implements ClientService {
     }
 
     @Override
-    public boolean removeClientById(Long id) throws WebServiceException {
+    public boolean removeClientById(@NotNull Long id) throws WebServiceException {
         try {
             validateRemoveClient(id);
             boolean result = remoteClientRegistry.remove(findClientById(id));
@@ -95,7 +105,7 @@ public class ClientServiceMock implements ClientService {
     }
 
     @Override
-    public Client updateClient(Client client) throws WebServiceException {
+    public Client updateClient(@NotNull Client client) throws WebServiceException {
         try {
             validateUpdateClient(client);
             remoteClientRegistry.set(remoteClientRegistry.indexOf(findClientById(client.getId())), client);
@@ -108,9 +118,12 @@ public class ClientServiceMock implements ClientService {
 
 
 
-    private void validateCreateClient(String companyName, String city, String address, String buyerName, String phone, String email) throws ValidationException {
-        if (!companyName.matches("[A-Za-z0-9]+")) {
-            throw new ValidationException("companyName has wrong format! Must contains only A-Z, a-z, 0-9");
+    private void validateCreateClient(@Nullable OffsetDateTime creationDate, @NotNull String companyName, @NotNull String city, @NotNull String address, @NotNull String buyerName, @NotNull String phone, @NotNull String email) throws ValidationException {
+        if (creationDate != null && creationDate.isAfter(OffsetDateTime.now())) {
+            throw new ValidationException("creationDate could not be in future!");
+        }
+        if (!companyName.matches("[A-Za-z0-9\\-. ]+")) {
+            throw new ValidationException("companyName has wrong format! Must contains only A-Z, a-z, 0-9 and .- ");
         }
 
         if (localClientRegistry.stream().anyMatch(r -> r.getCompanyName().equals(companyName))) {
@@ -127,19 +140,19 @@ public class ClientServiceMock implements ClientService {
     }
 
     private void validateCommonClientParams(String city, String address, String buyerName, String phone, String email) throws ValidationException {
-        if (!city.matches("[A-Za-z0-9\\-]+")) {
-            throw new ValidationException("City has wrong format! Must contains only A-Z, a-z, 0-9 and -");
+        if (!city.matches("[A-Za-z\\- ]+")) {
+            throw new ValidationException("City has wrong format! Must contains only A-Z, a-z and - ");
         }
-        if (!address.matches("[A-Za-z0-9\\-.,]+")) {
-            throw new ValidationException("Address has wrong format! Must contains only A-Z, a-z, 0-9 and -.,");
+        if (!address.matches("[A-Za-z0-9\\-., ]+")) {
+            throw new ValidationException("Address has wrong format! Must contains only A-Z, a-z, 0-9 and -., ");
         }
-        if (!buyerName.matches("[A-Za-z\\-]+")) {
-            throw new ValidationException("BuyerName has wrong format! Must contains only A-Z, a-z");
+        if (!buyerName.matches("[A-Za-z\\- ]+")) {
+            throw new ValidationException("BuyerName has wrong format! Must contains only A-Z, a-z ");
         }
         if (!phone.matches("7[0-9]{10}")) {
             throw new ValidationException("Phone has wrong format! Must starts with 7 and contains 11 digits total");
         }
-        if (!email.matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\\\.[A-Za-z0-9-]+)*(\\\\.[A-Za-z]{2,})$")) {
+        if (!email.matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")) {
             throw new ValidationException("Email has wrong format!");
         }
     }
@@ -168,7 +181,7 @@ public class ClientServiceMock implements ClientService {
     }
 
     private void validateIfClientInWorkflow(Long id) throws ValidationException {
-        if (id == 777L) {
+        if (id == 1L) {
             throw new ValidationException("Client with id " + id + " is in workflow at this moment");
         } else {
             log.info("Client with id " + id + " is not in workflow");

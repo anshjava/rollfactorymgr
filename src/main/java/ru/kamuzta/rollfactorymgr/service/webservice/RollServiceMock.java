@@ -2,6 +2,9 @@ package ru.kamuzta.rollfactorymgr.service.webservice;
 
 import com.google.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import ru.kamuzta.rollfactorymgr.model.client.Client;
 import ru.kamuzta.rollfactorymgr.model.roll.*;
 import ru.kamuzta.rollfactorymgr.utils.json.CouldNotDeserializeJsonException;
 import ru.kamuzta.rollfactorymgr.exception.ValidationException;
@@ -17,9 +20,9 @@ import java.util.stream.Collectors;
 @Slf4j
 public class RollServiceMock implements RollService {
     private static JsonUtil jsonUtil = JsonUtil.getInstance();
-    private List<Roll> remoteRollRegistry = new ArrayList<>(jsonUtil.getListFromJson("rollRegistry.json", Roll.class, CouldNotDeserializeJsonException::new));
+    private final List<Roll> remoteRollRegistry = new ArrayList<>(jsonUtil.getListFromJson("rollRegistry.json", Roll.class, CouldNotDeserializeJsonException::new));
     private AtomicLong count = new AtomicLong(remoteRollRegistry.stream().map(Roll::getId).max(Long::compare).orElse(0L));
-    private List<Roll> localRollRegistry = new ArrayList<>();
+    private final List<Roll> localRollRegistry = new ArrayList<>();
 
     @Override
     public void updateRegistryFromServer() throws WebServiceException {
@@ -33,7 +36,7 @@ public class RollServiceMock implements RollService {
     }
 
     @Override
-    public Roll findRollBySku(String sku) throws WebServiceException {
+    public Roll findRollBySku(@NotNull String sku) throws WebServiceException {
         return localRollRegistry.stream().filter(r -> r.getSku().equals(sku))
                 .findFirst()
                 .orElseThrow(() -> new WebServiceException("Roll with SKU " + sku + " was not found"))
@@ -41,12 +44,20 @@ public class RollServiceMock implements RollService {
     }
 
     @Override
-    public List<Roll> findRollBySkuPattern(String sku) throws WebServiceException {
-        return localRollRegistry.stream().filter(r -> r.getSku().contains(sku)).collect(Collectors.toList());
+    public List<Roll> findRollBySkuPattern(@NotNull String sku) throws WebServiceException {
+        return localRollRegistry.stream().filter(r -> r.getSku().contains(sku)).map(Roll::clone).collect(Collectors.toList());
     }
 
     @Override
-    public List<Roll> findRollByParams(Long id, String sku, RollType rollType, Paper paper, WidthType widthType, CoreType coreType, BigDecimal mainValue) throws WebServiceException {
+    public Roll findRollById(@NotNull Long id) throws WebServiceException {
+        return localRollRegistry.stream().filter(r -> r.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new WebServiceException("Roll with id " + id + " was not found"))
+                .clone();
+    }
+
+    @Override
+    public List<Roll> findRollByParams(@Nullable Long id, @Nullable String sku, @Nullable RollType rollType, @Nullable Paper paper, @Nullable WidthType widthType, @Nullable CoreType coreType, @Nullable BigDecimal mainValue) throws WebServiceException {
         return localRollRegistry.stream()
                 .filter(r -> String.valueOf(r.getId()).contains((Optional.ofNullable(id).map(String::valueOf)).orElse(String.valueOf(r.getId()))))
                 .filter(r -> r.getSku().contains(Optional.ofNullable(sku).orElse(r.getSku())))
@@ -55,20 +66,21 @@ public class RollServiceMock implements RollService {
                 .filter(r -> r.getWidthType() == Optional.ofNullable(widthType).orElse(r.getWidthType()))
                 .filter(r -> r.getCoreType() == Optional.ofNullable(coreType).orElse(r.getCoreType()))
                 .filter(r -> r.getMainValue().compareTo(Optional.ofNullable(mainValue).orElse(r.getMainValue())) == 0)
-                .collect(Collectors.toList());
+                .map(Roll::clone).collect(Collectors.toList());
     }
 
     @Override
-    public List<Roll> getLocalRollRegistry() {
-        return localRollRegistry;
+    public List<Roll> getLocalRegistry() {
+        return localRollRegistry.stream().map(Roll::clone).collect(Collectors.toList());
     }
 
     @Override
-    public Roll createRoll(String sku, RollType rollType, Paper paper, WidthType widthType, CoreType coreType, BigDecimal value) throws WebServiceException {
+    public Roll createRoll(@NotNull String sku, @NotNull RollType rollType, @NotNull Paper paper, @NotNull WidthType widthType, @NotNull CoreType coreType, @NotNull BigDecimal value) throws WebServiceException {
         try {
             validateCreateRoll(sku, rollType, paper, widthType, coreType, value);
             Roll newRoll = new Roll(count.incrementAndGet(), sku, rollType, paper, widthType, coreType, value);
             remoteRollRegistry.add(newRoll);
+            updateRegistryFromServer();
             return newRoll.clone();
         } catch (ValidationException e) {
             throw new WebServiceException(e.getMessage(), e);
@@ -76,7 +88,7 @@ public class RollServiceMock implements RollService {
     }
 
     @Override
-    public boolean removeRollBySku(String sku) throws WebServiceException {
+    public boolean removeRollBySku(@NotNull String sku) throws WebServiceException {
         try {
             validateRemoveRoll(sku);
             boolean result = remoteRollRegistry.remove(findRollBySku(sku));
@@ -90,7 +102,7 @@ public class RollServiceMock implements RollService {
     }
 
     @Override
-    public Roll updateRoll(Roll roll) throws WebServiceException {
+    public Roll updateRoll(@NotNull Roll roll) throws WebServiceException {
         try {
             validateUpdateRoll(roll);
             remoteRollRegistry.set(remoteRollRegistry.indexOf(findRollBySku(roll.getSku())), roll);
@@ -164,17 +176,17 @@ public class RollServiceMock implements RollService {
             throw new ValidationException("Roll main value must be specified");
         }
 
-        if (rollType == RollType.DIAMETER && value.compareTo(coreType.getDiameter()) != 1) {
+        if (rollType == RollType.DIAMETER && value.compareTo(coreType.getDiameter()) <= 0) {
             throw new ValidationException("Roll diameter can't be equal or less than core diameter");
         }
 
-        if (rollType == RollType.LENGTH && value.signum() == 1) {
+        if (rollType == RollType.LENGTH && value.signum() != 1) {
             throw new ValidationException("Roll length can't be equal or less than zero");
         }
     }
 
     private void validateIfRollInWorkflow(String sku) throws ValidationException {
-        if (sku.equals("DIA20018")) {
+        if (sku.equals("LEN5710")) {
             throw new ValidationException("Roll with sku " + sku + " is in workflow at this moment");
         } else {
             log.info("Roll with sku " + sku + " is not in workflow");

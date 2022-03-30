@@ -14,7 +14,6 @@ import ru.kamuzta.rollfactorymgr.event.*;
 import ru.kamuzta.rollfactorymgr.model.roll.RollProperty;
 import ru.kamuzta.rollfactorymgr.service.webservice.RollService;
 import ru.kamuzta.rollfactorymgr.ui.Screen;
-import ru.kamuzta.rollfactorymgr.ui.dialog.DialogHelper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,7 +46,7 @@ public class RollRegistryViewModel implements ViewModel, DisposableByEvent {
 
     void onRefreshTable() {
         log.info("Screen [" + screen + "] Action: " + "onRefreshTable");
-        List<RollProperty> rollPropertyList = rollService.getLocalRollRegistry().stream()
+        List<RollProperty> rollPropertyList = rollService.getLocalRegistry().stream()
                 .map(r -> new RollProperty(
                         new SimpleObjectProperty<>(r.getId()),
                         new SimpleStringProperty(r.getSku()),

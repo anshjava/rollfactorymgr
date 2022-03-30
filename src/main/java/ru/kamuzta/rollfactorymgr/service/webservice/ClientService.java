@@ -1,6 +1,8 @@
 package ru.kamuzta.rollfactorymgr.service.webservice;
 
 import com.google.inject.ImplementedBy;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.kamuzta.rollfactorymgr.exception.WebServiceException;
 import ru.kamuzta.rollfactorymgr.model.client.Client;
 
@@ -17,12 +19,12 @@ public interface ClientService {
     void updateRegistryFromServer() throws WebServiceException;
 
     /**
-     * Get local cached Client Registry
+     * Get local cached Registry
      *
-     * @return local cached Client Registry
+     * @return local cached Registry
      * @throws WebServiceException
      */
-    List<Client> getLocalClientRegistry();
+    List<Client> getLocalRegistry();
 
     /**
      * Find Client by id in local cached Client Registry
@@ -31,7 +33,7 @@ public interface ClientService {
      * @return found Client
      * @throws WebServiceException
      */
-    Client findClientById(Long id) throws WebServiceException;
+    Client findClientById(@NotNull Long id) throws WebServiceException;
 
     /**
      * Find Client by companyName pattern in local cached Client Registry
@@ -40,7 +42,7 @@ public interface ClientService {
      * @return list of matched Clients
      * @throws WebServiceException
      */
-    List<Client> findClientByNamePattern(String companyName) throws WebServiceException;
+    List<Client> findClientByNamePattern(@NotNull String companyName) throws WebServiceException;
 
     /**
      * Find Client by parameters in local cached Client Registry
@@ -57,22 +59,23 @@ public interface ClientService {
      * @return list of matched Clients
      * @throws WebServiceException
      */
-    List<Client> findClientByParams(Long id, String companyName, OffsetDateTime creationDateFrom, OffsetDateTime creationDateTo,
-                                    String city, String address, String buyerName, String phone, String email) throws WebServiceException;
+    List<Client> findClientByParams(@Nullable Long id, @Nullable String companyName, @Nullable OffsetDateTime creationDateFrom, @Nullable OffsetDateTime creationDateTo,
+                                    @Nullable String city, @Nullable String address, @Nullable String buyerName, @Nullable String phone, @Nullable String email) throws WebServiceException;
 
     /**
      * Create Client on Server Registry
      *
-     * @param companyName client's company name
-     * @param city        city
-     * @param address     address
-     * @param buyerName   client's buyer name
-     * @param phone       client's buyer phone
-     * @param email       client's buyer email
+     * @param creationDate dateTime of creation
+     * @param companyName  client's company name
+     * @param city         city
+     * @param address      address
+     * @param buyerName    client's buyer name
+     * @param phone        client's buyer phone
+     * @param email        client's buyer email
      * @return new Client
      * @throws WebServiceException if validation fail
      */
-    Client createClient(String companyName, String city, String address, String buyerName, String phone, String email) throws WebServiceException;
+    Client createClient(@Nullable OffsetDateTime creationDate, @NotNull String companyName, @NotNull String city, @NotNull String address, @NotNull String buyerName, @NotNull String phone, @NotNull String email) throws WebServiceException;
 
     /**
      * Remove Client on Server Registry by id
@@ -81,7 +84,7 @@ public interface ClientService {
      * @return true if success
      * @throws WebServiceException if Client with specified id was not found or there is some orders by this client
      */
-    boolean removeClientById(Long id) throws WebServiceException;
+    boolean removeClientById(@NotNull Long id) throws WebServiceException;
 
     /**
      * Update Client on Server Registry with new parameters
@@ -90,6 +93,6 @@ public interface ClientService {
      * @return updated Client
      * @throws WebServiceException if validation fail or all parameters are equals
      */
-    Client updateClient(Client client) throws WebServiceException;
+    Client updateClient(@NotNull Client client) throws WebServiceException;
 
 }

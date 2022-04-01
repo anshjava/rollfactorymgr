@@ -1,4 +1,4 @@
-package ru.kamuzta.rollfactorymgr.model;
+package ru.kamuzta.rollfactorymgr.model.order;
 
 public enum OrderState {
     NEW,

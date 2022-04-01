@@ -1,0 +1,128 @@
+[
+    {
+        "id": 1,
+        "roll": {
+            "id": 1,
+            "sku": "LEN5710",
+            "rollType": "LENGTH",
+            "paper": "NTC48",
+            "widthType": "WIDTH_57",
+            "coreType": "CORE_12",
+            "mainValue": 10.0
+        },
+        "quantity": 1000,
+        "state": "NEW"
+    },
+    {
+        "id": 2,
+        "roll": {
+            "id": 2,
+            "sku": "LEN5715",
+            "rollType": "LENGTH",
+            "paper": "NTC48",
+            "widthType": "WIDTH_57",
+            "coreType": "CORE_12",
+            "mainValue": 15.0
+        },
+        "quantity": 2000,
+        "state": "NEW"
+    },
+    {
+        "id": 3,
+        "roll": {
+            "id": 3,
+            "sku": "LEN5717",
+            "rollType": "LENGTH",
+            "paper": "NTC48",
+            "widthType": "WIDTH_57",
+            "coreType": "CORE_12",
+            "mainValue": 17.0
+        },
+        "quantity": 3000,
+        "state": "NEW"
+    },
+    {
+        "id": 4,
+        "roll": {
+            "id": 4,
+            "sku": "LEN5719",
+            "rollType": "LENGTH",
+            "paper": "NTC48",
+            "widthType": "WIDTH_57",
+            "coreType": "CORE_12",
+            "mainValue": 19.0
+        },
+        "quantity": 4000,
+        "state": "NEW"
+    },
+    {
+        "id": 5,
+        "roll": {
+            "id": 5,
+            "sku": "LEN5721",
+            "rollType": "LENGTH",
+            "paper": "NTC48",
+            "widthType": "WIDTH_57",
+            "coreType": "CORE_12",
+            "mainValue": 21.0
+        },
+        "quantity": 500,
+        "state": "NEW"
+    },
+    {
+        "id": 6,
+        "roll": {
+            "id": 6,
+            "sku": "LEN5723",
+            "rollType": "LENGTH",
+            "paper": "NTC44",
+            "widthType": "WIDTH_57",
+            "coreType": "CORE_12",
+            "mainValue": 23.0
+        },
+        "quantity": 600,
+        "state": "NEW"
+    },
+    {
+        "id": 7,
+        "roll": {
+            "id": 7,
+            "sku": "LEN5725",
+            "rollType": "LENGTH",
+            "paper": "NTC44",
+            "widthType": "WIDTH_57",
+            "coreType": "CORE_12",
+            "mainValue": 25.0
+        },
+        "quantity": 700,
+        "state": "NEW"
+    },
+    {
+        "id": 8,
+        "roll": {
+            "id": 8,
+            "sku": "LEN5727",
+            "rollType": "LENGTH",
+            "paper": "NTC44",
+            "widthType": "WIDTH_57",
+            "coreType": "CORE_12",
+            "mainValue": 27.0
+        },
+        "quantity": 800,
+        "state": "NEW"
+    },
+    {
+        "id": 9,
+        "roll": {
+            "id": 9,
+            "sku": "LEN5729",
+            "rollType": "LENGTH",
+            "paper": "NTC44",
+            "widthType": "WIDTH_57",
+            "coreType": "CORE_12",
+            "mainValue": 29.0
+        },
+        "quantity": 900,
+        "state": "NEW"
+    }
+]

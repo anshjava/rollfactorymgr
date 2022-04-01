@@ -1,50 +1,57 @@
-package ru.kamuzta.rollfactorymgr.model;
+package ru.kamuzta.rollfactorymgr.model.order;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.common.collect.ComparisonChain;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 import org.jetbrains.annotations.NotNull;
 import ru.kamuzta.rollfactorymgr.model.client.Client;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Order
  */
-@AllArgsConstructor
-@EqualsAndHashCode
 @Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
 @Builder
+@JsonPropertyOrder({"id", "creationDate", "client", "lines", "state"})
 public class Order implements Comparable<Order> {
     @NotNull
     private Long id;
 
     @NotNull
-    private ZonedDateTime creationDate;
-
-    @NotNull
-    private OrderState orderState;
+    private OffsetDateTime creationDate;
 
     @NotNull
     private Client client;
 
     @NotNull
-    private List<OrderLine> orderLines;
+    private List<OrderLine> lines;
+
+    @NotNull
+    private OrderState state;
+
+    @Override
+    public Order clone() {
+        return new Order(this.id, this.creationDate, this.client, this.lines.stream().map(OrderLine::clone).collect(Collectors.toList()), this.state);
+    }
 
     //sort Order by:
+    // order state (NEW first)
     // time (older first)
     // client (by name natural)
-    // order state (NEW first)
     // id (natural)
     @Override
     public int compareTo(@NotNull Order that) {
         return ComparisonChain.start()
+                .compare(state, that.state)
                 .compare(creationDate, that.creationDate)
                 .compare(client.getCompanyName(), that.client.getCompanyName())
-                .compare(orderState, that.orderState)
                 .compare(id, that.id)
                 .result();
     }

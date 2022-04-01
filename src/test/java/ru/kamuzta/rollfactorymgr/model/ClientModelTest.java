@@ -36,11 +36,11 @@ public class ClientModelTest {
      */
     @Test
     public void clientGetCloneTest() {
-        System.out.println("_________ START clientGetCloneTest _________");
+        log.info("_________ START clientGetCloneTest _________");
         Client client = TestUtils.getRandomClient();
         Client clonedClient = client.clone();
-        System.out.println(client);
-        System.out.println(clonedClient);
+        log.info(client.toString());
+        log.info(clonedClient.toString());
         assertEquals(client, clonedClient);
         assertNotSame(client, clonedClient);
     }
@@ -50,12 +50,12 @@ public class ClientModelTest {
      */
     @Test
     public void clientCompareTest() {
-        System.out.println("_________ START clientCompareTest _________");
+        log.info("_________ START clientCompareTest _________");
         TreeSet<Client> clientSet = new TreeSet<>();
         for (int i = 0; i < 100; i++) {
             clientSet.add(TestUtils.getRandomClient());
         }
-        clientSet.forEach(System.out::println);
+        clientSet.forEach(client -> log.info(client.toString()));
     }
 
     /**
@@ -63,8 +63,7 @@ public class ClientModelTest {
      */
     @Test
     public void clientSerializationTest() {
-        System.out.println("_________ START clientSerializationTest _________");
-        JsonUtil jsonUtil = JsonUtil.getInstance();
+        log.info("_________ START clientSerializationTest _________");
         Client client1 = Client.builder()
                 .id(1L)
                 .creationDate(OffsetDateTime.now())
@@ -77,8 +76,8 @@ public class ClientModelTest {
                 .build();
         String json = jsonUtil.writeObject(client1, CouldNotSeserializeToJsonException::new);
         Client client2 = jsonUtil.readValue(json, Client.class, CouldNotDeserializeJsonException::new);
-        System.out.println(client1);
-        System.out.println(client2);
+        log.info(client1.toString());
+        log.info(client2.toString());
         assertEquals(client1, client2);
         assertNotSame(client1, client2);
     }
@@ -88,7 +87,7 @@ public class ClientModelTest {
      */
     @Test
     public void clientRegistryCreateTest() {
-        System.out.println("_________ START clientRegistryCreateTest _________");
+        log.info("_________ START clientRegistryCreateTest _________");
         List<Client> clientList = new ArrayList<>();
 
         clientList.add(Client.builder().id(1L).creationDate(OffsetDateTime.of(1990,2,18,6,30,30,365, ZoneOffset.of("-07:00"))).companyName("RollTrade Inc.").city("Los Angeles").address("Broadway 57").buyerName("Antonio Banderos").phone("79217770666").email("antonio@rolltrade.com").build());
@@ -105,7 +104,7 @@ public class ClientModelTest {
 
         String json = jsonUtil.writeObject(clientList, CouldNotDeserializeJsonException::new);
         assertNotNull(json);
-        System.out.println(json);
+        log.info(json);
     }
 
     /**
@@ -113,13 +112,13 @@ public class ClientModelTest {
      */
     @Test
     public void clientRegistryReadFromJsonTest() {
-        System.out.println("_________ START clientRegistryReadFromJsonTest _________");
+        log.info("_________ START clientRegistryReadFromJsonTest _________");
 
         List<Client> clietnListFromJson = jsonUtil.getListFromJson("clientRegistry.json", Client.class, CouldNotDeserializeJsonException::new);
         assertNotNull(clietnListFromJson);
         assertFalse(clietnListFromJson.isEmpty());
         Collections.sort(clietnListFromJson);
-        clietnListFromJson.forEach(System.out::println);
+        clietnListFromJson.forEach(client -> log.info(client.toString()));
     }
 
 }

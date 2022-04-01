@@ -20,20 +20,19 @@ import java.util.TreeSet;
 
 @Slf4j
 public class RollModelTest {
-    JsonUtil jsonUtil;
+    JsonUtil jsonUtil = JsonUtil.getInstance();
 
     @Before
     public void before() {
-        jsonUtil = JsonUtil.getInstance();
-    }
 
+    }
 
     /**
      * Testing roll cloning
      */
     @Test
     public void rollGetCloneTest() {
-        System.out.println("_________ START rollgetCloneTest _________");
+        log.info("_________ START rollGetCloneTest _________");
         Roll roll = TestUtils.getRandomRoll();
         Roll clonedRoll = roll.clone();
         assertEquals(roll, clonedRoll);
@@ -45,12 +44,12 @@ public class RollModelTest {
      */
     @Test
     public void rollCompareTest() {
-        System.out.println("_________ START rollCompareTest _________");
+        log.info("_________ START rollCompareTest _________");
         TreeSet<Roll> rollSet = new TreeSet<>();
         for (int i = 0; i < 100; i++) {
             rollSet.add(TestUtils.getRandomRoll());
         }
-        rollSet.forEach(System.out::println);
+        rollSet.forEach(roll -> log.info(roll.toString()));
     }
 
     /**
@@ -59,7 +58,7 @@ public class RollModelTest {
      */
     @Test
     public void rollCalculationTest() {
-        System.out.println("_________ START rollCalculationTest _________");
+        log.info("_________ START rollCalculationTest _________");
         Roll roll1 = Roll.builder()
                 .id(1L)
                 .sku("LEN123")
@@ -92,8 +91,7 @@ public class RollModelTest {
      */
     @Test
     public void rollSerializationTest() {
-        System.out.println("_________ START rollSerializationTest _________");
-        JsonUtil jsonUtil = JsonUtil.getInstance();
+        log.info("_________ START rollSerializationTest _________");
         Roll roll1 = Roll.builder()
                 .id(1L)
                 .sku("LEN123")
@@ -103,9 +101,10 @@ public class RollModelTest {
                 .coreType(CoreType.CORE_12)
                 .mainValue(BigDecimal.valueOf(30.0).setScale(1, RoundingMode.HALF_UP))
                 .build();
+        log.info(roll1.toString());
         String json = jsonUtil.writeObject(roll1, CouldNotSeserializeToJsonException::new);
         Roll roll2 = jsonUtil.readValue(json, Roll.class, CouldNotDeserializeJsonException::new);
-        System.out.println(roll2);
+        log.info(roll2.toString());
         assertEquals(roll1,roll2);
         assertNotSame(roll1,roll2);
     }
@@ -115,7 +114,7 @@ public class RollModelTest {
      */
     @Test
     public void rollRegistryCreateTest() {
-        System.out.println("_________ START rollRegistryCreateTest _________");
+        log.info("_________ START rollRegistryCreateTest _________");
         List<Roll> rollList = new ArrayList<>();
         rollList.add(Roll.builder().id(1L).sku("LEN5710").mainValue(BigDecimal.valueOf(10.0).setScale(1, RoundingMode.HALF_UP)).rollType(RollType.LENGTH).paper(Paper.NTC48).widthType(WidthType.WIDTH_57).coreType(CoreType.CORE_12).build());
         rollList.add(Roll.builder().id(2L).sku("LEN5715").mainValue(BigDecimal.valueOf(15.0).setScale(1, RoundingMode.HALF_UP)).rollType(RollType.LENGTH).paper(Paper.NTC48).widthType(WidthType.WIDTH_57).coreType(CoreType.CORE_12).build());
@@ -148,7 +147,7 @@ public class RollModelTest {
 
         String json = jsonUtil.writeObject(rollList, CouldNotDeserializeJsonException::new);
         assertNotNull(json);
-        System.out.println(json);
+        log.info(json);
     }
 
     /**
@@ -156,13 +155,13 @@ public class RollModelTest {
      */
     @Test
     public void rollRegistryReadFromJsonTest() {
-        System.out.println("_________ START rollRegistryReadFromJsonTest _________");
+        log.info("_________ START rollRegistryReadFromJsonTest _________");
 
         List<Roll> rollListFromJson = jsonUtil.getListFromJson("rollRegistry.json", Roll.class, CouldNotDeserializeJsonException::new);
         assertNotNull(rollListFromJson);
         assertFalse(rollListFromJson.isEmpty());
         Collections.sort(rollListFromJson);
-        rollListFromJson.forEach(System.out::println);
+        rollListFromJson.forEach(roll -> log.info(roll.toString()));
     }
 
 

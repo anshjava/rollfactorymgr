@@ -5,7 +5,11 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import ru.kamuzta.rollfactorymgr.model.client.Client;
+import ru.kamuzta.rollfactorymgr.model.order.OrderLine;
+import ru.kamuzta.rollfactorymgr.model.order.OrderState;
 import ru.kamuzta.rollfactorymgr.model.roll.*;
+import ru.kamuzta.rollfactorymgr.utils.json.CouldNotDeserializeJsonException;
+import ru.kamuzta.rollfactorymgr.utils.json.JsonUtil;
 
 import java.math.BigDecimal;
 import java.security.SecureRandom;
@@ -18,6 +22,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class TestUtils {
     static AtomicLong count = new AtomicLong(0L);
     static Random random = new SecureRandom();
+    static JsonUtil jsonUtil = JsonUtil.getInstance();
 
     public static List<Roll> getRandomRollsList() {
         int pcs = 1 + random.nextInt(9);
@@ -128,6 +133,22 @@ public class TestUtils {
         String phone = getRandomPhone("7", 11);
         String email = getRandomEmail(15);
         return new Client(count.incrementAndGet(), creationDate, companyName, city, address, buyerName, phone, email);
+    }
+
+    public static OrderLine getRandomOrderLine() {
+        Integer quantity = random.nextInt(1000);
+        Roll roll = getRandomStandardRoll();
+        return new OrderLine(count.incrementAndGet(), roll, quantity, OrderState.NEW);
+    }
+
+    public static Roll getRandomStandardRoll() {
+        List<Roll> standartRollList = jsonUtil.getListFromJson("rollRegistry.json", Roll.class, CouldNotDeserializeJsonException::new);
+        return getRandomFromList(standartRollList);
+    }
+
+    public static Roll getStandardRoll(Long id) {
+        List<Roll> standartRollList = jsonUtil.getListFromJson("rollRegistry.json", Roll.class, CouldNotDeserializeJsonException::new);
+        return standartRollList.stream().filter(roll -> roll.getId().equals(id)).findFirst().orElseThrow(() -> new IllegalArgumentException("There is no standart roll with id " + id));
     }
 
     private static <T> T getRandomFromList(List<T> sourcelist) {

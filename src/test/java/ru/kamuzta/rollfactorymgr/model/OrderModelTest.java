@@ -114,7 +114,7 @@ public class OrderModelTest {
     @Test
     public void orderListExampleReadFromJsonTest() {
         log.info("_________ START orderListExampleReadFromJsonTest _________");
-        List<Order> orderListFromJson = jsonUtil.getListFromJson("orderExampleList.json", Order.class, CouldNotDeserializeJsonException::new);
+        List<Order> orderListFromJson = jsonUtil.getListFromJson("orderRegistry.json", Order.class, CouldNotDeserializeJsonException::new);
         assertNotNull(orderListFromJson);
         assertFalse(orderListFromJson.isEmpty());
         Collections.sort(orderListFromJson);

@@ -133,9 +133,9 @@ public class ClientServiceMock implements ClientService {
         validateCommonClientParams(city, address, buyerName, phone, email);
 
         List<Client> foundDuplicate = findClientByParams(null, null, null, null, city, address, buyerName, phone, email);
-        if (!foundDuplicate.isEmpty()) {
-            String duplicateCompanyName = foundDuplicate.get(0).getCompanyName();
-            throw new ValidationException("Error while trying create duplicate client of clientName " + duplicateCompanyName);
+        Optional<Client> optionalClient = foundDuplicate.stream().findFirst();
+        if (optionalClient.isPresent()) {
+            throw new ValidationException("Error while trying create duplicate client of clientName " + optionalClient.get().getCompanyName());
         }
     }
 
@@ -167,9 +167,9 @@ public class ClientServiceMock implements ClientService {
         validateCommonClientParams(client.getCity(), client.getAddress(), client.getBuyerName(), client.getPhone(), client.getEmail());
 
         List<Client> foundDuplicate = findClientByParams(null, null, null, null, client.getCity(), client.getAddress(), client.getBuyerName(), client.getPhone(), client.getEmail());
-        if (!foundDuplicate.isEmpty()) {
-            String duplicateCompanyName = foundDuplicate.get(0).getCompanyName();
-            throw new ValidationException("Error while trying create duplicate client of clientName " + duplicateCompanyName);
+        Optional<Client> optionalClient = foundDuplicate.stream().findFirst();
+        if (optionalClient.isPresent()) {
+            throw new ValidationException("Error while trying create duplicate client of clientName " + optionalClient.get().getCompanyName());
         }
     }
 

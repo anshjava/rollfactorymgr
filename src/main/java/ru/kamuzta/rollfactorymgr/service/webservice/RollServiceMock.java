@@ -125,11 +125,10 @@ public class RollServiceMock implements RollService {
         validateCommonRollParams(rollType, paper, widthType, coreType, value);
 
         List<Roll> foundDuplicate = findRollByParams(null, null, rollType, paper, widthType, coreType, value);
-        if (!foundDuplicate.isEmpty()) {
-            String duplicateSku = foundDuplicate.get(0).getSku();
-            throw new ValidationException("Error while trying create duplicate roll of SKU " + duplicateSku);
+        Optional<Roll> optionalRoll = foundDuplicate.stream().findFirst();
+        if (optionalRoll.isPresent()) {
+            throw new ValidationException("Error while trying create duplicate roll of SKU " + optionalRoll.get().getSku());
         }
-
     }
 
     private void validateUpdateRoll(Roll roll) throws ValidationException {
@@ -142,9 +141,9 @@ public class RollServiceMock implements RollService {
         validateCommonRollParams(roll.getRollType(), roll.getPaper(), roll.getWidthType(), roll.getCoreType(), roll.getMainValue());
 
         List<Roll> foundDuplicate = findRollByParams(null, null, roll.getRollType(), roll.getPaper(), roll.getWidthType(), roll.getCoreType(), roll.getMainValue());
-        if (!foundDuplicate.isEmpty()) {
-            String duplicateSku = foundDuplicate.get(0).getSku();
-            throw new ValidationException("Error while trying create duplicate roll of SKU " + duplicateSku);
+        Optional<Roll> optionalRoll = foundDuplicate.stream().findFirst();
+        if (optionalRoll.isPresent()) {
+            throw new ValidationException("Error while trying create duplicate roll of SKU " + optionalRoll.get().getSku());
         }
     }
 

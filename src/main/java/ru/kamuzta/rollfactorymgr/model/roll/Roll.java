@@ -32,10 +32,14 @@ public class Roll implements Comparable<Roll> {
     @NotNull
     private BigDecimal mainValue;
 
-    @Override
-    public Roll clone() {
-        //all fields are immutable
-        return new Roll(this.id, this.sku, this.rollType, this.paper, this.widthType, this.coreType, this.mainValue);
+    public Roll(Roll that) {
+        this.id = that.id;
+        this.sku = that.sku;
+        this.rollType = that.rollType;
+        this.paper = that.paper;
+        this.widthType = that.widthType;
+        this.coreType = that.coreType;
+        this.mainValue = that.mainValue;
     }
 
     public BigDecimal calculateLength() {

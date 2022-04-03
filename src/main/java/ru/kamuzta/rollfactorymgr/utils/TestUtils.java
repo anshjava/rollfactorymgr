@@ -1,10 +1,12 @@
 package ru.kamuzta.rollfactorymgr.utils;
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import ru.kamuzta.rollfactorymgr.model.client.Client;
+import ru.kamuzta.rollfactorymgr.model.order.Order;
 import ru.kamuzta.rollfactorymgr.model.order.OrderLine;
 import ru.kamuzta.rollfactorymgr.model.order.OrderState;
 import ru.kamuzta.rollfactorymgr.model.roll.*;
@@ -16,11 +18,13 @@ import java.security.SecureRandom;
 import java.time.OffsetDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TestUtils {
     static AtomicLong count = new AtomicLong(0L);
+    @Getter
     static Random random = new SecureRandom();
     static JsonUtil jsonUtil = JsonUtil.getInstance();
 
@@ -37,10 +41,10 @@ public class TestUtils {
 
     public static Roll getRandomRoll() {
         String sku = getRandomSKU();
-        RollType rollType = getRandomFromArray(RollType.values());
-        Paper paper = (rollType == RollType.DIAMETER) ? getRandomFromArray(Paper.NTC55, Paper.NTC58) : getRandomFromArray(Paper.NTC44, Paper.NTC48);
-        WidthType widthType = (rollType == RollType.DIAMETER) ? WidthType.WIDTH_80 : getRandomFromArray(WidthType.values());
-        CoreType coreType = (widthType == WidthType.WIDTH_57) ? CoreType.CORE_12 : getRandomFromArray(CoreType.CORE_18, CoreType.CORE_26);
+        RollType rollType = getRandomElementFromArray(RollType.values());
+        Paper paper = (rollType == RollType.DIAMETER) ? getRandomElementFromArray(Paper.NTC55, Paper.NTC58) : getRandomElementFromArray(Paper.NTC44, Paper.NTC48);
+        WidthType widthType = (rollType == RollType.DIAMETER) ? WidthType.WIDTH_80 : getRandomElementFromArray(WidthType.values());
+        CoreType coreType = (widthType == WidthType.WIDTH_57) ? CoreType.CORE_12 : getRandomElementFromArray(CoreType.CORE_18, CoreType.CORE_26);
         BigDecimal value;
 
         switch (rollType) {
@@ -82,7 +86,7 @@ public class TestUtils {
     }
 
     public static String getRandomCity() {
-        return getRandomFromArray("New York", "Los Angeles", "Berlin", "Paris", "Moscow", "Tel Aviv");
+        return getRandomElementFromArray("New York", "Los Angeles", "Berlin", "Paris", "Moscow", "Tel Aviv");
     }
 
     public static String getRandomPhone(String firstDigit, int phoneLength) {
@@ -141,9 +145,23 @@ public class TestUtils {
         return new OrderLine(count.incrementAndGet(), roll, quantity, OrderState.NEW);
     }
 
+    public static List<OrderLine> getRandomOrderLineList(int count) {
+        List<OrderLine> orderLines = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            orderLines.add(getRandomOrderLine());
+        }
+        return orderLines;
+    }
+
+    public static Order getRandomOrder() {
+        Integer quantity = random.nextInt(20);
+        List<OrderLine> orderLines = getRandomOrderLineList(quantity);
+        return new Order(count.incrementAndGet(), OffsetDateTime.now(), getRandomClient(), orderLines, OrderState.NEW);
+    }
+
     public static Roll getRandomStandardRoll() {
         List<Roll> standartRollList = jsonUtil.getListFromJson("rollRegistry.json", Roll.class, CouldNotDeserializeJsonException::new);
-        return getRandomFromList(standartRollList);
+        return getRandomElementFromList(standartRollList);
     }
 
     public static Roll getStandardRoll(Long id) {
@@ -151,14 +169,19 @@ public class TestUtils {
         return standartRollList.stream().filter(roll -> roll.getId().equals(id)).findFirst().orElseThrow(() -> new IllegalArgumentException("There is no standart roll with id " + id));
     }
 
-    private static <T> T getRandomFromList(List<T> sourcelist) {
+    public static <T> List<T> getRandomElementsFromList(List<T> sourcelist, int count) {
+        Collections.shuffle(sourcelist);
+        return sourcelist.stream().limit(Math.min(count, sourcelist.size())).collect(Collectors.toList());
+    }
+
+    public static <T> T getRandomElementFromList(List<T> sourcelist) {
         Collections.shuffle(sourcelist);
         return sourcelist.get(0);
     }
 
     @SafeVarargs
-    private static <T> T getRandomFromArray(T... sourceItems) {
-        return getRandomFromList(Arrays.asList(sourceItems));
+    public static <T> T getRandomElementFromArray(T... sourceItems) {
+        return getRandomElementFromList(Arrays.asList(sourceItems));
     }
 
 }

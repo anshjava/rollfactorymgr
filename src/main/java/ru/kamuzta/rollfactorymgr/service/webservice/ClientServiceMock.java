@@ -38,20 +38,20 @@ public class ClientServiceMock implements ClientService {
 
     @Override
     public List<Client> getLocalRegistry() {
-        return localClientRegistry.stream().map(Client::clone).collect(Collectors.toList());
+        return localClientRegistry.stream().map(Client::new).collect(Collectors.toList());
     }
 
     @Override
     public Client findClientById(@NotNull Long id) throws WebServiceException {
         return localClientRegistry.stream().filter(r -> r.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new WebServiceException("Client with id " + id + " was not found"))
-                .clone();
+                .map(Client::new)
+                .orElseThrow(() -> new WebServiceException("Client with id " + id + " was not found"));
     }
 
     @Override
     public List<Client> findClientByNamePattern(@NotNull String companyName) throws WebServiceException {
-        return localClientRegistry.stream().filter(r -> r.getCompanyName().contains(companyName)).map(Client::clone).collect(Collectors.toList());
+        return localClientRegistry.stream().filter(r -> r.getCompanyName().contains(companyName)).map(Client::new).collect(Collectors.toList());
     }
 
     @Override
@@ -67,7 +67,7 @@ public class ClientServiceMock implements ClientService {
                 .filter(c -> c.getBuyerName().contains(Optional.ofNullable(buyerName).orElse(c.getBuyerName())))
                 .filter(c -> c.getPhone().contains(Optional.ofNullable(phone).orElse(c.getPhone())))
                 .filter(c -> c.getEmail().contains(Optional.ofNullable(email).orElse(c.getEmail())))
-                .map(Client::clone).collect(Collectors.toList());
+                .map(Client::new).collect(Collectors.toList());
     }
 
     @Override
@@ -84,7 +84,7 @@ public class ClientServiceMock implements ClientService {
                     email);
             remoteClientRegistry.add(newClient);
             updateRegistryFromServer();
-            return newClient.clone();
+            return new Client(newClient);
         } catch (ValidationException e) {
             throw new WebServiceException(e.getMessage(), e);
         }
@@ -110,7 +110,7 @@ public class ClientServiceMock implements ClientService {
             validateUpdateClient(client);
             remoteClientRegistry.set(remoteClientRegistry.indexOf(findClientById(client.getId())), client);
             updateRegistryFromServer();
-            return client.clone();
+            return new Client(client);
         } catch (ValidationException e) {
             throw new WebServiceException(e.getMessage(), e);
         }

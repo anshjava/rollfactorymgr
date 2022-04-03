@@ -34,7 +34,7 @@ public class RollModelTest {
     public void rollGetCloneTest() {
         log.info("_________ START rollGetCloneTest _________");
         Roll roll = TestUtils.getRandomRoll();
-        Roll clonedRoll = roll.clone();
+        Roll clonedRoll = new Roll(roll);
         assertEquals(roll, clonedRoll);
         assertNotSame(roll, clonedRoll);
     }

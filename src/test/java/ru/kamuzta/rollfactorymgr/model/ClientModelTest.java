@@ -38,7 +38,7 @@ public class ClientModelTest {
     public void clientGetCloneTest() {
         log.info("_________ START clientGetCloneTest _________");
         Client client = TestUtils.getRandomClient();
-        Client clonedClient = client.clone();
+        Client clonedClient = new Client(client);
         log.info(client.toString());
         log.info(clonedClient.toString());
         assertEquals(client, clonedClient);
@@ -114,11 +114,11 @@ public class ClientModelTest {
     public void clientRegistryReadFromJsonTest() {
         log.info("_________ START clientRegistryReadFromJsonTest _________");
 
-        List<Client> clietnListFromJson = jsonUtil.getListFromJson("clientRegistry.json", Client.class, CouldNotDeserializeJsonException::new);
-        assertNotNull(clietnListFromJson);
-        assertFalse(clietnListFromJson.isEmpty());
-        Collections.sort(clietnListFromJson);
-        clietnListFromJson.forEach(client -> log.info(client.toString()));
+        List<Client> clientListFromJson = jsonUtil.getListFromJson("clientRegistry.json", Client.class, CouldNotDeserializeJsonException::new);
+        assertNotNull(clientListFromJson);
+        assertFalse(clientListFromJson.isEmpty());
+        Collections.sort(clientListFromJson);
+        clientListFromJson.forEach(client -> log.info(client.toString()));
     }
 
 }

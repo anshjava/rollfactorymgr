@@ -38,7 +38,7 @@ public class OrderLineModelTest {
         log.info("_________ START orderLineGetCloneTest _________");
         OrderLine orderLine = TestUtils.getRandomOrderLine();
         log.info(orderLine.toString());
-        OrderLine clonedOrderLine = orderLine.clone();
+        OrderLine clonedOrderLine = new OrderLine(orderLine);
         log.info(clonedOrderLine.toString());
         assertEquals(orderLine, clonedOrderLine);
         assertNotSame(orderLine, clonedOrderLine);
@@ -49,7 +49,7 @@ public class OrderLineModelTest {
      */
     @Test
     public void orderLineCompareTest() {
-        log.info("_________ START rollCompareTest _________");
+        log.info("_________ START orderLineCompareTest _________");
         TreeSet<OrderLine> orderLineSet = new TreeSet<>();
         for (int i = 0; i < 100; i++) {
             orderLineSet.add(TestUtils.getRandomOrderLine());
@@ -93,6 +93,17 @@ public class OrderLineModelTest {
         orderLineList.add(OrderLine.builder().id(7L).roll(TestUtils.getStandardRoll(7L)).quantity(700).state(OrderState.NEW).build());
         orderLineList.add(OrderLine.builder().id(8L).roll(TestUtils.getStandardRoll(8L)).quantity(800).state(OrderState.NEW).build());
         orderLineList.add(OrderLine.builder().id(9L).roll(TestUtils.getStandardRoll(9L)).quantity(900).state(OrderState.NEW).build());
+        orderLineList.add(OrderLine.builder().id(10L).roll(TestUtils.getStandardRoll(10L)).quantity(1000).state(OrderState.NEW).build());
+        orderLineList.add(OrderLine.builder().id(11L).roll(TestUtils.getStandardRoll(11L)).quantity(1100).state(OrderState.NEW).build());
+        orderLineList.add(OrderLine.builder().id(12L).roll(TestUtils.getStandardRoll(12L)).quantity(1200).state(OrderState.NEW).build());
+        orderLineList.add(OrderLine.builder().id(13L).roll(TestUtils.getStandardRoll(13L)).quantity(1300).state(OrderState.NEW).build());
+        orderLineList.add(OrderLine.builder().id(14L).roll(TestUtils.getStandardRoll(14L)).quantity(1400).state(OrderState.NEW).build());
+        orderLineList.add(OrderLine.builder().id(15L).roll(TestUtils.getStandardRoll(15L)).quantity(1500).state(OrderState.NEW).build());
+        orderLineList.add(OrderLine.builder().id(16L).roll(TestUtils.getStandardRoll(16L)).quantity(1600).state(OrderState.NEW).build());
+        orderLineList.add(OrderLine.builder().id(17L).roll(TestUtils.getStandardRoll(17L)).quantity(1700).state(OrderState.NEW).build());
+        orderLineList.add(OrderLine.builder().id(18L).roll(TestUtils.getStandardRoll(18L)).quantity(1800).state(OrderState.NEW).build());
+        orderLineList.add(OrderLine.builder().id(19L).roll(TestUtils.getStandardRoll(19L)).quantity(1900).state(OrderState.NEW).build());
+        orderLineList.add(OrderLine.builder().id(20L).roll(TestUtils.getStandardRoll(20L)).quantity(2000).state(OrderState.NEW).build());
 
         String json = jsonUtil.writeObject(orderLineList, CouldNotDeserializeJsonException::new);
         assertNotNull(json);

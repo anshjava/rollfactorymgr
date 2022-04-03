@@ -30,10 +30,11 @@ public class OrderLine implements Comparable<OrderLine> {
     @NotNull
     private OrderState state;
 
-    @Override
-    public OrderLine clone() {
-        //all fields are immutable
-        return new OrderLine(this.id, this.roll, this.quantity, this.state);
+    public OrderLine(OrderLine that) {
+        this.id = that.id;
+        this.roll = that.roll;
+        this.quantity = that.quantity;
+        this.state = that.state;
     }
 
     public BigDecimal calculateWeight() {

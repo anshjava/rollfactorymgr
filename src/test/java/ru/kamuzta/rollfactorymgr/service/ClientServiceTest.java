@@ -415,7 +415,7 @@ public class ClientServiceTest {
         Client client9 = clientService.findClientById(2L);
         assertNotNull(client9);
         System.out.println(client9);
-        Client client9Cloned = client9.clone();
+        Client client9Cloned = new Client(client9);
         client9Cloned.setEmail("newmail@newdomail.new");
         Client client9AfterUpdate = clientService.updateClient(client9Cloned);
         assertNotNull(client9AfterUpdate);

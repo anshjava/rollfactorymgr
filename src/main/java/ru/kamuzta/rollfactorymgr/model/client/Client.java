@@ -40,10 +40,15 @@ public class Client implements Comparable<Client>{
     @NotNull
     private String email;
 
-    @Override
-    public Client clone() {
-        //all fields are immutable
-        return new Client(this.id, this.creationDate, this.companyName, this.city, this.address, this.buyerName, this.phone, this.email);
+    public Client(Client that) {
+        this.id = that.id;
+        this.creationDate = that.creationDate;
+        this.companyName = that.companyName;
+        this.city = that.city;
+        this.address = that.address;
+        this.buyerName = that.buyerName;
+        this.phone = that.phone;
+        this.email = that.email;
     }
 
     //sort Client by:

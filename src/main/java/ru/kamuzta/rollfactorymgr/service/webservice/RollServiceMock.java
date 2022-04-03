@@ -39,21 +39,21 @@ public class RollServiceMock implements RollService {
     public Roll findRollBySku(@NotNull String sku) throws WebServiceException {
         return localRollRegistry.stream().filter(r -> r.getSku().equals(sku))
                 .findFirst()
-                .orElseThrow(() -> new WebServiceException("Roll with SKU " + sku + " was not found"))
-                .clone();
+                .map(Roll::new)
+                .orElseThrow(() -> new WebServiceException("Roll with SKU " + sku + " was not found"));
     }
 
     @Override
     public List<Roll> findRollBySkuPattern(@NotNull String sku) throws WebServiceException {
-        return localRollRegistry.stream().filter(r -> r.getSku().contains(sku)).map(Roll::clone).collect(Collectors.toList());
+        return localRollRegistry.stream().filter(r -> r.getSku().contains(sku)).map(Roll::new).collect(Collectors.toList());
     }
 
     @Override
     public Roll findRollById(@NotNull Long id) throws WebServiceException {
         return localRollRegistry.stream().filter(r -> r.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new WebServiceException("Roll with id " + id + " was not found"))
-                .clone();
+                .map(Roll::new)
+                .orElseThrow(() -> new WebServiceException("Roll with id " + id + " was not found"));
     }
 
     @Override
@@ -66,12 +66,12 @@ public class RollServiceMock implements RollService {
                 .filter(r -> r.getWidthType() == Optional.ofNullable(widthType).orElse(r.getWidthType()))
                 .filter(r -> r.getCoreType() == Optional.ofNullable(coreType).orElse(r.getCoreType()))
                 .filter(r -> r.getMainValue().compareTo(Optional.ofNullable(mainValue).orElse(r.getMainValue())) == 0)
-                .map(Roll::clone).collect(Collectors.toList());
+                .map(Roll::new).collect(Collectors.toList());
     }
 
     @Override
     public List<Roll> getLocalRegistry() {
-        return localRollRegistry.stream().map(Roll::clone).collect(Collectors.toList());
+        return localRollRegistry.stream().map(Roll::new).collect(Collectors.toList());
     }
 
     @Override
@@ -81,7 +81,7 @@ public class RollServiceMock implements RollService {
             Roll newRoll = new Roll(count.incrementAndGet(), sku, rollType, paper, widthType, coreType, value);
             remoteRollRegistry.add(newRoll);
             updateRegistryFromServer();
-            return newRoll.clone();
+            return new Roll(newRoll);
         } catch (ValidationException e) {
             throw new WebServiceException(e.getMessage(), e);
         }
@@ -107,7 +107,7 @@ public class RollServiceMock implements RollService {
             validateUpdateRoll(roll);
             remoteRollRegistry.set(remoteRollRegistry.indexOf(findRollBySku(roll.getSku())), roll);
             updateRegistryFromServer();
-            return roll.clone();
+            return new Roll(roll);
         } catch (ValidationException e) {
             throw new WebServiceException(e.getMessage(), e);
         }

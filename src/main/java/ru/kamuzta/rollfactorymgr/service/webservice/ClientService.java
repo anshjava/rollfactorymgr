@@ -19,12 +19,12 @@ public interface ClientService {
     void updateRegistryFromServer() throws WebServiceException;
 
     /**
-     * Get local cached Registry
+     * Get active clients from local cached Registry
      *
-     * @return local cached Registry
+     * @return active clients
      * @throws WebServiceException
      */
-    List<Client> getLocalRegistry();
+    List<Client> getActiveClientsLocal();
 
     /**
      * Find Client by id in local cached Client Registry

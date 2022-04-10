@@ -8,7 +8,8 @@
             "paper": "NTC48",
             "widthType": "WIDTH_57",
             "coreType": "CORE_12",
-            "mainValue": 10.0
+            "mainValue": 10.0,
+            "state": "ACTIVE"
         },
         "quantity": 1000,
         "state": "NEW"
@@ -22,7 +23,8 @@
             "paper": "NTC48",
             "widthType": "WIDTH_57",
             "coreType": "CORE_12",
-            "mainValue": 15.0
+            "mainValue": 15.0,
+            "state": "ACTIVE"
         },
         "quantity": 2000,
         "state": "NEW"
@@ -36,7 +38,8 @@
             "paper": "NTC48",
             "widthType": "WIDTH_57",
             "coreType": "CORE_12",
-            "mainValue": 17.0
+            "mainValue": 17.0,
+            "state": "ACTIVE"
         },
         "quantity": 3000,
         "state": "NEW"
@@ -50,7 +53,8 @@
             "paper": "NTC48",
             "widthType": "WIDTH_57",
             "coreType": "CORE_12",
-            "mainValue": 19.0
+            "mainValue": 19.0,
+            "state": "ACTIVE"
         },
         "quantity": 4000,
         "state": "NEW"
@@ -64,7 +68,8 @@
             "paper": "NTC48",
             "widthType": "WIDTH_57",
             "coreType": "CORE_12",
-            "mainValue": 21.0
+            "mainValue": 21.0,
+            "state": "ACTIVE"
         },
         "quantity": 500,
         "state": "NEW"
@@ -78,7 +83,8 @@
             "paper": "NTC44",
             "widthType": "WIDTH_57",
             "coreType": "CORE_12",
-            "mainValue": 23.0
+            "mainValue": 23.0,
+            "state": "ACTIVE"
         },
         "quantity": 600,
         "state": "NEW"
@@ -92,7 +98,8 @@
             "paper": "NTC44",
             "widthType": "WIDTH_57",
             "coreType": "CORE_12",
-            "mainValue": 25.0
+            "mainValue": 25.0,
+            "state": "ACTIVE"
         },
         "quantity": 700,
         "state": "NEW"
@@ -106,7 +113,8 @@
             "paper": "NTC44",
             "widthType": "WIDTH_57",
             "coreType": "CORE_12",
-            "mainValue": 27.0
+            "mainValue": 27.0,
+            "state": "ACTIVE"
         },
         "quantity": 800,
         "state": "NEW"
@@ -120,7 +128,8 @@
             "paper": "NTC44",
             "widthType": "WIDTH_57",
             "coreType": "CORE_12",
-            "mainValue": 29.0
+            "mainValue": 29.0,
+            "state": "ACTIVE"
         },
         "quantity": 900,
         "state": "NEW"
@@ -134,7 +143,8 @@
             "paper": "NTC44",
             "widthType": "WIDTH_57",
             "coreType": "CORE_12",
-            "mainValue": 30.0
+            "mainValue": 30.0,
+            "state": "ACTIVE"
         },
         "quantity": 1000,
         "state": "NEW"
@@ -148,7 +158,8 @@
             "paper": "NTC44",
             "widthType": "WIDTH_57",
             "coreType": "CORE_12",
-            "mainValue": 35.0
+            "mainValue": 35.0,
+            "state": "ACTIVE"
         },
         "quantity": 1100,
         "state": "NEW"
@@ -162,7 +173,8 @@
             "paper": "NTC44",
             "widthType": "WIDTH_57",
             "coreType": "CORE_12",
-            "mainValue": 40.0
+            "mainValue": 40.0,
+            "state": "ACTIVE"
         },
         "quantity": 1200,
         "state": "NEW"
@@ -176,7 +188,8 @@
             "paper": "NTC44",
             "widthType": "WIDTH_80",
             "coreType": "CORE_12",
-            "mainValue": 50.0
+            "mainValue": 50.0,
+            "state": "ACTIVE"
         },
         "quantity": 1300,
         "state": "NEW"
@@ -190,7 +203,8 @@
             "paper": "NTC44",
             "widthType": "WIDTH_80",
             "coreType": "CORE_12",
-            "mainValue": 53.0
+            "mainValue": 53.0,
+            "state": "ACTIVE"
         },
         "quantity": 1400,
         "state": "NEW"
@@ -204,7 +218,8 @@
             "paper": "NTC44",
             "widthType": "WIDTH_80",
             "coreType": "CORE_12",
-            "mainValue": 58.0
+            "mainValue": 58.0,
+            "state": "ACTIVE"
         },
         "quantity": 1500,
         "state": "NEW"
@@ -218,7 +233,8 @@
             "paper": "NTC44",
             "widthType": "WIDTH_80",
             "coreType": "CORE_12",
-            "mainValue": 69.0
+            "mainValue": 69.0,
+            "state": "ACTIVE"
         },
         "quantity": 1600,
         "state": "NEW"
@@ -232,7 +248,8 @@
             "paper": "NTC44",
             "widthType": "WIDTH_80",
             "coreType": "CORE_12",
-            "mainValue": 72.0
+            "mainValue": 72.0,
+            "state": "ACTIVE"
         },
         "quantity": 1700,
         "state": "NEW"
@@ -246,7 +263,8 @@
             "paper": "NTC44",
             "widthType": "WIDTH_80",
             "coreType": "CORE_12",
-            "mainValue": 80.0
+            "mainValue": 80.0,
+            "state": "ACTIVE"
         },
         "quantity": 1800,
         "state": "NEW"
@@ -260,7 +278,8 @@
             "paper": "NTC44",
             "widthType": "WIDTH_80",
             "coreType": "CORE_18",
-            "mainValue": 45.0
+            "mainValue": 45.0,
+            "state": "ACTIVE"
         },
         "quantity": 1900,
         "state": "NEW"
@@ -274,7 +293,8 @@
             "paper": "NTC44",
             "widthType": "WIDTH_80",
             "coreType": "CORE_18",
-            "mainValue": 61.0
+            "mainValue": 61.0,
+            "state": "ACTIVE"
         },
         "quantity": 2000,
         "state": "NEW"

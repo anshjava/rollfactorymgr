@@ -1,16 +1,26 @@
-package ru.kamuzta.rollfactorymgr.service.webservice;
+package ru.kamuzta.rollfactorymgr.processor;
 
 import com.google.inject.ImplementedBy;
+import com.google.inject.Inject;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.kamuzta.rollfactorymgr.exception.ValidationException;
 import ru.kamuzta.rollfactorymgr.exception.WebServiceException;
+import ru.kamuzta.rollfactorymgr.model.order.OrderLine;
+import ru.kamuzta.rollfactorymgr.model.order.OrderState;
 import ru.kamuzta.rollfactorymgr.model.roll.*;
+import ru.kamuzta.rollfactorymgr.service.webservice.OrderService;
+import ru.kamuzta.rollfactorymgr.service.webservice.OrderServiceMock;
+import ru.kamuzta.rollfactorymgr.service.webservice.RollService;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
-@ImplementedBy(RollServiceMock.class)
-public interface RollService {
+@ImplementedBy(RollProcessorImpl.class)
+public interface RollProcessor {
+
     /**
      * Update local cached Registry by values from server
      *
@@ -80,7 +90,7 @@ public interface RollService {
      * @return new Roll
      * @throws WebServiceException if validation fail
      */
-    Roll createRoll(@NotNull String sku, @NotNull RollType rollType, @NotNull Paper paper, @NotNull WidthType widthType, @NotNull CoreType coreType, @NotNull BigDecimal value) throws WebServiceException;
+    Roll createRoll(@NotNull String sku, @NotNull RollType rollType, @NotNull Paper paper, @NotNull WidthType widthType, @NotNull CoreType coreType, @NotNull BigDecimal value) throws WebServiceException, ValidationException;
 
     /**
      * Remove Roll on Server Registry by SKU
@@ -88,7 +98,7 @@ public interface RollService {
      * @return true if success
      * @throws WebServiceException if Roll with specified SKU was not found or there is some orders with this roll
      */
-    boolean removeRollBySku(@NotNull String sku) throws WebServiceException;
+    boolean removeRollBySku(@NotNull String sku) throws WebServiceException, ValidationException;
 
     /**
      * Update Roll on Server Registry with new parameters
@@ -96,6 +106,16 @@ public interface RollService {
      * @return updated Roll
      * @throws WebServiceException if validation fail or all parameters are equals
      */
-    Roll updateRoll(@NotNull Roll roll) throws WebServiceException;
+    Roll updateRoll(@NotNull Roll roll) throws WebServiceException, ValidationException;
 
+
+    void validateCreateRoll(String sku, RollType rollType, Paper paper, WidthType widthType, CoreType coreType, BigDecimal value) throws ValidationException;
+
+    void validateUpdateRoll(Roll roll) throws ValidationException;
+
+    void validateRemoveRoll(String sku) throws ValidationException;
+
+    void validateCommonRollParams(RollType rollType, Paper paper, WidthType widthType, CoreType coreType, BigDecimal value) throws ValidationException;
+
+    void validateIfRollInWorkflow(String sku) throws ValidationException;
 }

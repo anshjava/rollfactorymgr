@@ -14,7 +14,7 @@ import java.math.RoundingMode;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Builder
-@JsonPropertyOrder({"id", "sku", "rollType", "paper", "widthType", "coreType", "mainValue"})
+@JsonPropertyOrder({"id", "sku", "rollType", "paper", "widthType", "coreType", "mainValue", "state"})
 public class Roll implements Comparable<Roll> {
     private static final BigDecimal PI = BigDecimal.valueOf(Math.PI);
     @NotNull
@@ -31,6 +31,8 @@ public class Roll implements Comparable<Roll> {
     private CoreType coreType;
     @NotNull
     private BigDecimal mainValue;
+    @NotNull
+    private RollState state;
 
     public Roll(Roll that) {
         this.id = that.id;
@@ -40,6 +42,7 @@ public class Roll implements Comparable<Roll> {
         this.widthType = that.widthType;
         this.coreType = that.coreType;
         this.mainValue = that.mainValue;
+        this.state = that.state;
     }
 
     public BigDecimal calculateLength() {
@@ -57,6 +60,7 @@ public class Roll implements Comparable<Roll> {
         }
     }
 
+    //create util for all calcs
     public BigDecimal calculateDiameter() {
         switch (rollType) {
             case LENGTH:
@@ -89,7 +93,8 @@ public class Roll implements Comparable<Roll> {
 
     @Override
     public String toString() {
-        return String.format("Roll: [%d] [%s] %s %s %.0f x %.1f%s x %.0f %.0fg/m2",
+        return String.format("Roll: [%s] [%d] [%s] %s %s %.0f x %.1f%s x %.0f %.0fg/m2",
+                state,
                 id,
                 sku,
                 rollType,
@@ -108,6 +113,7 @@ public class Roll implements Comparable<Roll> {
     // core (smaller first)
     // value (natural)
     // SKU (natural)
+    // state (ACTIVE first)
     @Override
     public int compareTo(@NotNull Roll that) {
         return ComparisonChain.start()
@@ -117,6 +123,7 @@ public class Roll implements Comparable<Roll> {
                 .compare(coreType, that.coreType)
                 .compare(mainValue, that.mainValue)
                 .compare(sku, that.sku)
+                .compare(state, that.state)
                 .result();
     }
 

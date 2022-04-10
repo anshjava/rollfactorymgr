@@ -44,9 +44,10 @@ public class RollRegistryViewModel implements ViewModel, DisposableByEvent {
         this.rollProperties.set(rollProperties);
     }
 
+    //TODO change to processor
     void onRefreshTable() {
         log.info("Screen [" + screen + "] Action: " + "onRefreshTable");
-        List<RollProperty> rollPropertyList = rollService.getLocalRegistry().stream()
+        List<RollProperty> rollPropertyList = rollService.getActiveRollsLocal().stream()
                 .map(r -> new RollProperty(
                         new SimpleObjectProperty<>(r.getId()),
                         new SimpleStringProperty(r.getSku()),

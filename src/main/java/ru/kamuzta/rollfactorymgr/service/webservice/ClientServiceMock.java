@@ -7,6 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.kamuzta.rollfactorymgr.exception.ValidationException;
 import ru.kamuzta.rollfactorymgr.exception.WebServiceException;
 import ru.kamuzta.rollfactorymgr.model.client.Client;
+import ru.kamuzta.rollfactorymgr.model.client.ClientState;
 import ru.kamuzta.rollfactorymgr.utils.json.CouldNotDeserializeJsonException;
 import ru.kamuzta.rollfactorymgr.utils.json.JsonUtil;
 
@@ -27,23 +28,25 @@ public class ClientServiceMock implements ClientService {
 
     @Override
     public void updateRegistryFromServer() throws WebServiceException {
-        try {
-            localClientRegistry.clear();
-            localClientRegistry.addAll(remoteClientRegistry);
-            count = new AtomicLong(localClientRegistry.stream().map(Client::getId).max(Long::compare).orElse(0L));
-        } catch (CouldNotDeserializeJsonException e) {
-            throw new WebServiceException(e.getMessage(), e);
-        }
+        localClientRegistry.clear();
+        localClientRegistry.addAll(remoteClientRegistry);
+        count = new AtomicLong(remoteClientRegistry.stream().map(Client::getId).max(Long::compare).orElse(0L));
     }
 
     @Override
-    public List<Client> getLocalRegistry() {
-        return localClientRegistry.stream().map(Client::new).collect(Collectors.toList());
+    public List<Client> getActiveClientsLocal() {
+        updateRegistryFromServer();
+        return localClientRegistry.stream()
+                .filter(client -> client.getState() == ClientState.ACTIVE)
+                .map(Client::new)
+                .collect(Collectors.toList());
     }
 
     @Override
     public Client findClientById(@NotNull Long id) throws WebServiceException {
-        return localClientRegistry.stream().filter(r -> r.getId().equals(id))
+        return localClientRegistry.stream()
+                .filter(client -> client.getState() == ClientState.ACTIVE)
+                .filter(r -> r.getId().equals(id))
                 .findFirst()
                 .map(Client::new)
                 .orElseThrow(() -> new WebServiceException("Client with id " + id + " was not found"));
@@ -51,13 +54,18 @@ public class ClientServiceMock implements ClientService {
 
     @Override
     public List<Client> findClientByNamePattern(@NotNull String companyName) throws WebServiceException {
-        return localClientRegistry.stream().filter(r -> r.getCompanyName().contains(companyName)).map(Client::new).collect(Collectors.toList());
+        return localClientRegistry.stream()
+                .filter(client -> client.getState() == ClientState.ACTIVE)
+                .filter(r -> r.getCompanyName().contains(companyName))
+                .map(Client::new)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Client> findClientByParams(@Nullable Long id, @Nullable String companyName, @Nullable OffsetDateTime creationDateFrom, @Nullable OffsetDateTime creationDateTo,
                                            @Nullable String city, @Nullable String address, @Nullable String buyerName, @Nullable String phone, @Nullable String email) throws WebServiceException {
         return localClientRegistry.stream()
+                .filter(c -> c.getState() == ClientState.ACTIVE)
                 .filter(c -> String.valueOf(c.getId()).contains((Optional.ofNullable(id).map(String::valueOf)).orElse(String.valueOf(c.getId()))))
                 .filter(c -> c.getCompanyName().contains(Optional.ofNullable(companyName).orElse(c.getCompanyName())))
                 .filter(c -> c.getCreationDate().isAfter(Optional.ofNullable(creationDateFrom).orElse(c.getCreationDate().minusSeconds(1L))))
@@ -81,7 +89,8 @@ public class ClientServiceMock implements ClientService {
                     address,
                     buyerName,
                     phone,
-                    email);
+                    email,
+                    ClientState.ACTIVE);
             remoteClientRegistry.add(newClient);
             updateRegistryFromServer();
             return new Client(newClient);
@@ -94,11 +103,12 @@ public class ClientServiceMock implements ClientService {
     public boolean removeClientById(@NotNull Long id) throws WebServiceException {
         try {
             validateRemoveClient(id);
-            boolean result = remoteClientRegistry.remove(findClientById(id));
-            if (result) {
-                updateRegistryFromServer();
-            }
-            return result;
+            Client clientToDelete = findClientById(id);
+            clientToDelete.setState(ClientState.DELETED);
+            Client oldClient = findClientById(clientToDelete.getId());
+            remoteClientRegistry.set(remoteClientRegistry.indexOf(oldClient), clientToDelete);
+            updateRegistryFromServer();
+            return true;
         } catch (ValidationException e) {
             throw new WebServiceException(e.getMessage(), e);
         }
@@ -108,14 +118,14 @@ public class ClientServiceMock implements ClientService {
     public Client updateClient(@NotNull Client client) throws WebServiceException {
         try {
             validateUpdateClient(client);
-            remoteClientRegistry.set(remoteClientRegistry.indexOf(findClientById(client.getId())), client);
+            Client oldClient = findClientById(client.getId());
+            remoteClientRegistry.set(remoteClientRegistry.indexOf(oldClient), client);
             updateRegistryFromServer();
             return new Client(client);
         } catch (ValidationException e) {
             throw new WebServiceException(e.getMessage(), e);
         }
     }
-
 
 
     private void validateCreateClient(@Nullable OffsetDateTime creationDate, @NotNull String companyName, @NotNull String city, @NotNull String address, @NotNull String buyerName, @NotNull String phone, @NotNull String email) throws ValidationException {

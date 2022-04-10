@@ -50,7 +50,8 @@ public class RollProperty {
                 paper.getValue(),
                 widthType.getValue(),
                 coreType.getValue(),
-                Optional.ofNullable(mainValue.getValue()).orElse(BigDecimal.ZERO));
+                Optional.ofNullable(mainValue.getValue()).orElse(BigDecimal.ZERO),
+                RollState.ACTIVE);
     }
 
     public ObjectProperty<BigDecimal> calculateLength() {

@@ -4,7 +4,8 @@ public enum OrderState {
     NEW,
     QUEUED,
     INPROGRESS,
-    COMPLETED;
+    COMPLETED,
+    CANCELED;
 
     @Override
     public String toString() {

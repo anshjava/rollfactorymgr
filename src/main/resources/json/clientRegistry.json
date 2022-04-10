@@ -7,7 +7,8 @@
         "address": "Broadway 57",
         "buyerName": "Antonio Banderos",
         "phone": "79217770666",
-        "email": "antonio@rolltrade.com"
+        "email": "antonio@rolltrade.com",
+        "state": "ACTIVE"
     },
     {
         "id": 2,
@@ -17,7 +18,8 @@
         "address": "Broadway 56",
         "buyerName": "Nicolas Cage",
         "phone": "79256546545",
-        "email": "nicolas@bestrolls.net"
+        "email": "nicolas@bestrolls.net",
+        "state": "ACTIVE"
     },
     {
         "id": 3,
@@ -27,7 +29,8 @@
         "address": "Broadway 55",
         "buyerName": "Demy Moore",
         "phone": "78521111221",
-        "email": "dmoore@megaroll.org"
+        "email": "dmoore@megaroll.org",
+        "state": "ACTIVE"
     },
     {
         "id": 4,
@@ -37,7 +40,8 @@
         "address": "Lubyanka 12",
         "buyerName": "Fedor Bondarchuk",
         "phone": "79252256666",
-        "email": "bondarchuk@mail.ru"
+        "email": "bondarchuk@mail.ru",
+        "state": "ACTIVE"
     },
     {
         "id": 5,
@@ -47,7 +51,8 @@
         "address": "Red Square 1",
         "buyerName": "Dmitry Nagiev",
         "phone": "79152365895",
-        "email": "nagiev@yandex.ru"
+        "email": "nagiev@yandex.ru",
+        "state": "ACTIVE"
     },
     {
         "id": 6,
@@ -57,7 +62,8 @@
         "address": "Leninsky 43",
         "buyerName": "Yury Druz",
         "phone": "78546985544",
-        "email": "druz@rambler.ru"
+        "email": "druz@rambler.ru",
+        "state": "ACTIVE"
     },
     {
         "id": 7,
@@ -66,8 +72,9 @@
         "city": "Tokyo",
         "address": "Naruto 33",
         "buyerName": "Naruto Naruto",
-        "phone": "71234567889",
-        "email": "naruto@tokyo.jp"
+        "phone": "78001234565",
+        "email": "naruto@tokyo.jp",
+        "state": "ACTIVE"
     },
     {
         "id": 8,
@@ -76,8 +83,9 @@
         "city": "Tokyo",
         "address": "Guyver 12",
         "buyerName": "Sho Fukumachi",
-        "phone": "71234567888",
-        "email": "guyver12@guyver.com"
+        "phone": "78001234566",
+        "email": "guyver12@guyver.com",
+        "state": "ACTIVE"
     },
     {
         "id": 9,
@@ -86,7 +94,8 @@
         "city": "Tokyo",
         "address": "Onepunchman 21",
         "buyerName": "Saitama",
-        "phone": "71234567880",
-        "email": "one@punch.man"
+        "phone": "78001234567",
+        "email": "one@punch.man",
+        "state": "DELETED"
     }
 ]

@@ -13,32 +13,27 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Builder
-@JsonPropertyOrder({"id", "creationDate", "companyName", "city", "address", "buyerName", "phone", "email"})
+@JsonPropertyOrder({"id", "creationDate", "companyName", "city", "address", "buyerName", "phone", "email", "state"})
 public class Client implements Comparable<Client>{
 
     @NotNull
     private Long id;
-
     @NotNull
     private OffsetDateTime creationDate;
-
     @NotNull
     private String companyName;
-
     @NotNull
     private String city;
-
     @NotNull
     private String address;
-
     @NotNull
     private String buyerName;
-
     @NotNull
     private String phone;
-
     @NotNull
     private String email;
+    @NotNull
+    private ClientState state;
 
     public Client(Client that) {
         this.id = that.id;
@@ -49,6 +44,7 @@ public class Client implements Comparable<Client>{
         this.buyerName = that.buyerName;
         this.phone = that.phone;
         this.email = that.email;
+        this.state = that.state;
     }
 
     //sort Client by:
@@ -60,6 +56,7 @@ public class Client implements Comparable<Client>{
     // buyerName (natural)
     // phone (natural)
     // email (natural)
+    // state (ACTIVE first)
     @Override
     public int compareTo(@NotNull Client that) {
         return ComparisonChain.start()
@@ -71,12 +68,14 @@ public class Client implements Comparable<Client>{
                 .compare(buyerName, that.buyerName)
                 .compare(phone, that.phone)
                 .compare(email, that.email)
+                .compare(state, that.state)
                 .result();
     }
 
     @Override
     public String toString() {
-        return String.format("[City: %s, %s] [Client: %d - %s] [%s] [Buyer: %s, %s, %s]",
+        return String.format("[%s] [City: %s, %s] [Client: %d - %s] [%s] [Buyer: %s, %s, %s]",
+                state,
                 city,
                 address,
                 id,

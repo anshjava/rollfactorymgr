@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -91,17 +93,47 @@ public class OrderModelTest {
         List<OrderLine> orderLineListFromJson = jsonUtil.getListFromJson("orderLineExampleList.json", OrderLine.class, CouldNotDeserializeJsonException::new);
 
         for (int i = 1; i <= 100; i++) {
-            int linesCount = Math.max(1, TestUtils.getRandom().nextInt(20));
+            int linesCount = Math.max(1, TestUtils.getRandom().nextInt(5));
             Order order = Order.builder()
-                    .id(Long.valueOf(i))
+                    .id((long) i)
                     .creationDate(OffsetDateTime.now())
                     .client(TestUtils.getRandomElementFromList(clientListFromJson))
-                    .lines(TestUtils.getRandomElementsFromList(orderLineListFromJson, linesCount))
+                    .lines(TestUtils.getRandomElementsFromList(orderLineListFromJson, linesCount).stream().map(OrderLine::new).collect(Collectors.toList()))
                     .state(OrderState.NEW)
                     .build();
-
             orderList.add(order);
         }
+        //states(for testing purpose)
+        IntStream.rangeClosed(0,1).forEach(i -> {
+            OrderState state = OrderState.NEW;
+            Order order = orderList.get(i);
+            order.setState(state);
+            order.getLines().forEach(line -> line.setState(state));
+        });
+        IntStream.rangeClosed(2,3).forEach(i -> {
+            OrderState state = OrderState.QUEUED;
+            Order order = orderList.get(i);
+            order.setState(state);
+            order.getLines().forEach(line -> line.setState(state));
+        });
+        IntStream.rangeClosed(4,5).forEach(i -> {
+            OrderState state = OrderState.INPROGRESS;
+            Order order = orderList.get(i);
+            order.setState(state);
+            order.getLines().forEach(line -> line.setState(state));
+        });
+        IntStream.rangeClosed(6,49).forEach(i -> {
+            OrderState state = OrderState.COMPLETED;
+            Order order = orderList.get(i);
+            order.setState(state);
+            order.getLines().forEach(line -> line.setState(state));
+        });
+        IntStream.rangeClosed(50,99).forEach(i -> {
+            OrderState state = OrderState.CANCELED;
+            Order order = orderList.get(i);
+            order.setState(state);
+            order.getLines().forEach(line -> line.setState(state));
+        });
 
         String json = jsonUtil.writeObject(orderList, CouldNotDeserializeJsonException::new);
         assertNotNull(json);

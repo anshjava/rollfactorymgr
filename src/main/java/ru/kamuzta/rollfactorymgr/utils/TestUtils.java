@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import ru.kamuzta.rollfactorymgr.model.client.Client;
+import ru.kamuzta.rollfactorymgr.model.client.ClientState;
 import ru.kamuzta.rollfactorymgr.model.order.Order;
 import ru.kamuzta.rollfactorymgr.model.order.OrderLine;
 import ru.kamuzta.rollfactorymgr.model.order.OrderState;
@@ -62,7 +63,7 @@ public class TestUtils {
                 throw new IllegalArgumentException("Wrong RollType");
         }
 
-        return new Roll(count.incrementAndGet(), sku, rollType, paper, widthType, coreType, value);
+        return new Roll(count.incrementAndGet(), sku, rollType, paper, widthType, coreType, value, RollState.ACTIVE);
     }
 
     private static String getRandomSn() {
@@ -136,7 +137,7 @@ public class TestUtils {
         String buyerName = getRandomString(12);
         String phone = getRandomPhone("7", 11);
         String email = getRandomEmail(15);
-        return new Client(count.incrementAndGet(), creationDate, companyName, city, address, buyerName, phone, email);
+        return new Client(count.incrementAndGet(), creationDate, companyName, city, address, buyerName, phone, email, ClientState.ACTIVE);
     }
 
     public static OrderLine getRandomOrderLine() {

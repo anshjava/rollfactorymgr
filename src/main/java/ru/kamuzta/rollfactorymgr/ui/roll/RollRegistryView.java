@@ -115,7 +115,7 @@ public class RollRegistryView implements FxmlView<RollRegistryViewModel>, Initia
     void onEditRoll() {
         int selectedIndex = rollRegistryTableView.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            viewModel.onEditRoll(rollRegistryTableView.getItems().get(selectedIndex).clone());
+            viewModel.onEditRoll(new RollProperty(rollRegistryTableView.getItems().get(selectedIndex)));
         }
     }
 

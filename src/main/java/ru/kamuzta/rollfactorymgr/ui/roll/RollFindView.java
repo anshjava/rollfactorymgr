@@ -316,7 +316,7 @@ public class RollFindView implements FxmlView<RollFindViewModel>, Initializable 
     void onEditRoll() {
         int selectedIndex = resultTableView.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            viewModel.onEditRoll(resultTableView.getItems().get(selectedIndex).clone());
+            viewModel.onEditRoll(new RollProperty(resultTableView.getItems().get(selectedIndex)));
         }
     }
 

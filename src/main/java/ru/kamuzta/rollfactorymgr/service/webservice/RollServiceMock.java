@@ -4,10 +4,8 @@ import com.google.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.kamuzta.rollfactorymgr.model.client.Client;
 import ru.kamuzta.rollfactorymgr.model.roll.*;
 import ru.kamuzta.rollfactorymgr.utils.json.CouldNotDeserializeJsonException;
-import ru.kamuzta.rollfactorymgr.exception.ValidationException;
 import ru.kamuzta.rollfactorymgr.exception.WebServiceException;
 import ru.kamuzta.rollfactorymgr.utils.json.JsonUtil;
 
@@ -83,7 +81,6 @@ public class RollServiceMock implements RollService {
     public Roll createRoll(@NotNull String sku, @NotNull RollType rollType, @NotNull Paper paper, @NotNull WidthType widthType, @NotNull CoreType coreType, @NotNull BigDecimal value) throws WebServiceException {
         Roll newRoll = new Roll(count.incrementAndGet(), sku, rollType, paper, widthType, coreType, value, RollState.ACTIVE);
         remoteRollRegistry.add(newRoll);
-        updateRegistryFromServer();
         return new Roll(newRoll);
     }
 
@@ -92,7 +89,6 @@ public class RollServiceMock implements RollService {
         Roll rollToDelete = findRollBySku(sku);
         rollToDelete.setState(RollState.DELETED);
         updateRoll(rollToDelete);
-        updateRegistryFromServer();
         return true;
     }
 
@@ -100,7 +96,6 @@ public class RollServiceMock implements RollService {
     public Roll updateRoll(@NotNull Roll roll) throws WebServiceException {
         Roll oldRoll = findRollById(roll.getId());
         remoteRollRegistry.set(remoteRollRegistry.indexOf(oldRoll), roll);
-        updateRegistryFromServer();
         return new Roll(roll);
     }
 }

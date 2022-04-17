@@ -5,6 +5,7 @@ import com.google.common.collect.ComparisonChain;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 import ru.kamuzta.rollfactorymgr.model.client.Client;
+import ru.kamuzta.rollfactorymgr.utils.RollCalculator;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -38,6 +39,7 @@ public class Order implements Comparable<Order> {
     @NotNull
     private OrderState state;
 
+    //copy constructor
     public Order(Order that) {
         this.id = that.id;
         this.creationDate = that.creationDate;
@@ -47,7 +49,7 @@ public class Order implements Comparable<Order> {
     }
 
     public BigDecimal calculateWeight() {
-        return lines.stream().map(line -> line.getRoll().calculateWeight().multiply(BigDecimal.valueOf(line.getQuantity()))
+        return lines.stream().map(line -> RollCalculator.calculateWeight(line.getRoll()).multiply(BigDecimal.valueOf(line.getQuantity()))
                 .setScale(2, RoundingMode.HALF_UP)).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 

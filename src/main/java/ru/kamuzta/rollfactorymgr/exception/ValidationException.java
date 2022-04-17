@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Getter
 @Slf4j
-public class ValidationException extends Exception {
+public class ValidationException extends UserFriendlyException {
 
     public ValidationException(String errorDescription) {
         super(errorDescription);

@@ -35,6 +35,7 @@ public class Client implements Comparable<Client>{
     @NotNull
     private ClientState state;
 
+    //copy constructor
     public Client(Client that) {
         this.id = that.id;
         this.creationDate = that.creationDate;

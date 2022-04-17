@@ -59,19 +59,25 @@ public class RollProcessorImpl implements RollProcessor {
     @Override
     public Roll createRoll(@NotNull String sku, @NotNull RollType rollType, @NotNull Paper paper, @NotNull WidthType widthType, @NotNull CoreType coreType, @NotNull BigDecimal value) throws WebServiceException, ValidationException {
         validateCreateRoll(sku, rollType, paper, widthType, coreType, value);
-        return rollService.createRoll(sku, rollType, paper, widthType, coreType, value);
+        Roll newRoll = rollService.createRoll(sku, rollType, paper, widthType, coreType, value);
+        updateRegistryFromServer();
+        return newRoll;
     }
 
     @Override
     public boolean removeRollBySku(@NotNull String sku) throws WebServiceException, ValidationException {
         validateRemoveRoll(sku);
-        return rollService.removeRollBySku(sku);
+        boolean result = rollService.removeRollBySku(sku);
+        updateRegistryFromServer();
+        return result;
     }
 
     @Override
     public Roll updateRoll(@NotNull Roll roll) throws WebServiceException, ValidationException {
         validateUpdateRoll(roll);
-        return rollService.updateRoll(roll);
+        Roll updatedRoll = rollService.updateRoll(roll);
+        updateRegistryFromServer();
+        return updatedRoll;
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.google.common.collect.ComparisonChain;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 import ru.kamuzta.rollfactorymgr.model.roll.Roll;
+import ru.kamuzta.rollfactorymgr.utils.RollCalculator;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -30,6 +31,7 @@ public class OrderLine implements Comparable<OrderLine> {
     @NotNull
     private OrderState state;
 
+    //copy constructor
     public OrderLine(OrderLine that) {
         this.id = that.id;
         this.roll = that.roll;
@@ -38,8 +40,8 @@ public class OrderLine implements Comparable<OrderLine> {
     }
 
     public BigDecimal calculateWeight() {
-        return roll.calculateWeight().multiply(BigDecimal.valueOf(quantity))
-                .setScale(2, RoundingMode.HALF_UP);
+        return RollCalculator.calculateWeight(roll)
+                .multiply(BigDecimal.valueOf(quantity)).setScale(2, RoundingMode.HALF_UP);
     }
 
     //sort Order Line by:
@@ -56,7 +58,7 @@ public class OrderLine implements Comparable<OrderLine> {
                 .compare(roll.getPaper(), that.roll.getPaper())
                 .compare(roll.getWidthType(), that.roll.getWidthType())
                 .compare(quantity, that.quantity, Comparator.reverseOrder())
-                .compare(roll.calculateWeight(), that.roll.calculateWeight(), Comparator.reverseOrder())
+                .compare(RollCalculator.calculateWeight(roll), RollCalculator.calculateWeight(that.roll), Comparator.reverseOrder())
                 .compare(id, that.id)
                 .result();
     }

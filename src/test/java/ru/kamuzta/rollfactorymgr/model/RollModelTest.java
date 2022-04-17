@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 import ru.kamuzta.rollfactorymgr.model.roll.*;
+import ru.kamuzta.rollfactorymgr.utils.RollCalculator;
 import ru.kamuzta.rollfactorymgr.utils.json.CouldNotDeserializeJsonException;
 import ru.kamuzta.rollfactorymgr.utils.json.CouldNotSeserializeToJsonException;
 import ru.kamuzta.rollfactorymgr.utils.json.JsonUtil;
@@ -20,7 +21,9 @@ import java.util.TreeSet;
 
 @Slf4j
 public class RollModelTest {
-    JsonUtil jsonUtil = JsonUtil.getInstance();
+    private JsonUtil jsonUtil = JsonUtil.getInstance();
+    private static RollCalculator rollCalculator;
+
 
     @Before
     public void before() {
@@ -53,8 +56,8 @@ public class RollModelTest {
     }
 
     /**
-     *Testing of roll calculations
-     *TODO: check bidirectional calculation of diameter and length
+     * Testing of roll calculations
+     * TODO: check bidirectional calculation of diameter and length
      */
     @Test
     public void rollCalculationTest() {
@@ -69,9 +72,12 @@ public class RollModelTest {
                 .mainValue(BigDecimal.valueOf(30.0).setScale(1, RoundingMode.HALF_UP))
                 .state(RollState.ACTIVE)
                 .build();
-        assertEquals(BigDecimal.valueOf(30.0).setScale(1, RoundingMode.HALF_UP), roll1.calculateLength());
-        assertEquals(BigDecimal.valueOf(45).setScale(0, RoundingMode.HALF_UP), roll1.calculateDiameter());
-        assertEquals(BigDecimal.valueOf(0.075).setScale(3, RoundingMode.HALF_UP), roll1.calculateWeight());
+        assertEquals(BigDecimal.valueOf(30.0).setScale(1, RoundingMode.HALF_UP),
+                RollCalculator.calculateLength(roll1));
+        assertEquals(BigDecimal.valueOf(45).setScale(0, RoundingMode.HALF_UP),
+                RollCalculator.calculateDiameter(roll1));
+        assertEquals(BigDecimal.valueOf(0.075).setScale(3, RoundingMode.HALF_UP),
+                RollCalculator.calculateWeight(roll1));
 
         Roll roll2 = Roll.builder()
                 .id(2L)
@@ -83,9 +89,12 @@ public class RollModelTest {
                 .mainValue(BigDecimal.valueOf(45).setScale(0, RoundingMode.HALF_UP))
                 .state(RollState.ACTIVE)
                 .build();
-        assertEquals(BigDecimal.valueOf(30.1).setScale(1, RoundingMode.HALF_UP), roll2.calculateLength());
-        assertEquals(BigDecimal.valueOf(45).setScale(0, RoundingMode.HALF_UP), roll2.calculateDiameter());
-        assertEquals(BigDecimal.valueOf(0.075).setScale(3, RoundingMode.HALF_UP), roll2.calculateWeight());
+        assertEquals(BigDecimal.valueOf(30.1).setScale(1, RoundingMode.HALF_UP),
+                RollCalculator.calculateLength(roll2));
+        assertEquals(BigDecimal.valueOf(45).setScale(0, RoundingMode.HALF_UP),
+                RollCalculator.calculateDiameter(roll2));
+        assertEquals(BigDecimal.valueOf(0.075).setScale(3, RoundingMode.HALF_UP),
+                RollCalculator.calculateWeight(roll2));
     }
 
     /**
@@ -108,8 +117,8 @@ public class RollModelTest {
         String json = jsonUtil.writeObject(roll1, CouldNotSeserializeToJsonException::new);
         Roll roll2 = jsonUtil.readValue(json, Roll.class, CouldNotDeserializeJsonException::new);
         log.info(roll2.toString());
-        assertEquals(roll1,roll2);
-        assertNotSame(roll1,roll2);
+        assertEquals(roll1, roll2);
+        assertNotSame(roll1, roll2);
     }
 
     /**

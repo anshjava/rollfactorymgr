@@ -17,7 +17,7 @@ import ru.kamuzta.rollfactorymgr.event.ShowEditRollEvent;
 import ru.kamuzta.rollfactorymgr.event.UpdateRollTableEvent;
 import ru.kamuzta.rollfactorymgr.model.roll.RollFilter;
 import ru.kamuzta.rollfactorymgr.model.roll.RollProperty;
-import ru.kamuzta.rollfactorymgr.service.webservice.RollService;
+import ru.kamuzta.rollfactorymgr.processor.RollProcessor;
 import ru.kamuzta.rollfactorymgr.ui.Screen;
 
 import java.util.*;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class RollFindViewModel implements ViewModel, DisposableByEvent {
 
-    private final RollService rollService;
+    private final RollProcessor rollProcessor;
     private final EventBus eventBus;
     private final Screen screen;
 
@@ -40,8 +40,8 @@ public class RollFindViewModel implements ViewModel, DisposableByEvent {
     private ListProperty<RollFilter> selectedFilters = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     @Inject
-    RollFindViewModel(EventBus eventBus, RollService rollService) {
-        this.rollService = rollService;
+    RollFindViewModel(EventBus eventBus, RollProcessor rollProcessor) {
+        this.rollProcessor = rollProcessor;
         this.eventBus = eventBus;
         this.screen = Screen.ROLL_FIND;
         eventBus.register(this);
@@ -64,9 +64,9 @@ public class RollFindViewModel implements ViewModel, DisposableByEvent {
 
     void onFindRoll() {
         log.info("Screen [" + screen + "] Action: " + "onFindRoll");
-        rollService.updateRegistryFromServer();
+        rollProcessor.updateRegistryFromServer();
         ObservableList<RollFilter> rollFilters = selectedFilters.getValue();
-        List<RollProperty> rollPropertyList = rollService.findRollByParams(
+        List<RollProperty> rollPropertyList = rollProcessor.findRollByParams(
                 rollFilters.contains(RollFilter.ID) ? rollProperty.getId().getValue() : null,
                 rollFilters.contains(RollFilter.SKU) ? rollProperty.getSku().getValue() : null,
                 rollFilters.contains(RollFilter.ROLL_TYPE) ? rollProperty.getRollType().getValue() : null,
@@ -81,7 +81,8 @@ public class RollFindViewModel implements ViewModel, DisposableByEvent {
                 new SimpleObjectProperty<>(r.getPaper()),
                 new SimpleObjectProperty<>(r.getWidthType()),
                 new SimpleObjectProperty<>(r.getCoreType()),
-                new SimpleObjectProperty<>(r.getMainValue())
+                new SimpleObjectProperty<>(r.getMainValue()),
+                new SimpleObjectProperty<>(r.getState())
         )).collect(Collectors.toList());
         setRollProperties(FXCollections.observableArrayList(rollPropertyList));
     }
@@ -94,7 +95,7 @@ public class RollFindViewModel implements ViewModel, DisposableByEvent {
 
     void onRemoveRoll(String sku) {
         log.info("Screen [" + screen + "] Action: " + "onRemoveRoll");
-        rollService.removeRollBySku(sku);
+        rollProcessor.removeRollBySku(sku);
         onFindRoll();
     }
 

@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import ru.kamuzta.rollfactorymgr.event.*;
 import ru.kamuzta.rollfactorymgr.model.roll.RollProperty;
-import ru.kamuzta.rollfactorymgr.service.webservice.RollService;
+import ru.kamuzta.rollfactorymgr.processor.RollProcessor;
 import ru.kamuzta.rollfactorymgr.ui.Screen;
 
 import java.util.List;
@@ -21,15 +21,15 @@ import java.util.stream.Collectors;
 @Slf4j
 public class RollRegistryViewModel implements ViewModel, DisposableByEvent {
 
-    private final RollService rollService;
+    private final RollProcessor rollProcessor;
     private final EventBus eventBus;
     private final Screen screen;
 
     private ListProperty<RollProperty> rollProperties = new SimpleListProperty<>();
 
     @Inject
-    RollRegistryViewModel(EventBus eventBus, RollService rollService) {
-        this.rollService = rollService;
+    RollRegistryViewModel(EventBus eventBus, RollProcessor rollProcessor) {
+        this.rollProcessor = rollProcessor;
         this.eventBus = eventBus;
         this.screen = Screen.ROLL_REGISTRY;
         eventBus.register(this);
@@ -44,10 +44,9 @@ public class RollRegistryViewModel implements ViewModel, DisposableByEvent {
         this.rollProperties.set(rollProperties);
     }
 
-    //TODO change to processor
     void onRefreshTable() {
         log.info("Screen [" + screen + "] Action: " + "onRefreshTable");
-        List<RollProperty> rollPropertyList = rollService.getActiveRollsLocal().stream()
+        List<RollProperty> rollPropertyList = rollProcessor.getActiveRollsLocal().stream()
                 .map(r -> new RollProperty(
                         new SimpleObjectProperty<>(r.getId()),
                         new SimpleStringProperty(r.getSku()),
@@ -55,7 +54,8 @@ public class RollRegistryViewModel implements ViewModel, DisposableByEvent {
                         new SimpleObjectProperty<>(r.getPaper()),
                         new SimpleObjectProperty<>(r.getWidthType()),
                         new SimpleObjectProperty<>(r.getCoreType()),
-                        new SimpleObjectProperty<>(r.getMainValue())
+                        new SimpleObjectProperty<>(r.getMainValue()),
+                        new SimpleObjectProperty<>(r.getState())
                 )).collect(Collectors.toList());
         setRollProperties(FXCollections.observableArrayList(rollPropertyList));
     }
@@ -68,7 +68,7 @@ public class RollRegistryViewModel implements ViewModel, DisposableByEvent {
 
     void onUpdateRollRegistry() {
         log.info("Screen [" + screen + "] Action: " + "onUpdateRollRegistry");
-        rollService.updateRegistryFromServer();
+        rollProcessor.updateRegistryFromServer();
         onRefreshTable();
     }
 
@@ -79,7 +79,7 @@ public class RollRegistryViewModel implements ViewModel, DisposableByEvent {
 
     void onRemoveRoll(String sku) {
         log.info("Screen [" + screen + "] Action: " + "onRemoveRoll");
-        rollService.removeRollBySku(sku);
+        rollProcessor.removeRollBySku(sku);
         onRefreshTable();
     }
 

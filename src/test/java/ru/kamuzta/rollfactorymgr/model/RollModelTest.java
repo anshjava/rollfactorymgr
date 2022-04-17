@@ -126,7 +126,7 @@ public class RollModelTest {
     public void rollRegistryCreateTest() {
         log.info("_________ START rollRegistryCreateTest _________");
         List<Roll> rollList = new ArrayList<>();
-        rollList.add(Roll.builder().id(1L).sku("LEN5710").mainValue(BigDecimal.valueOf(10.0).setScale(1, RoundingMode.HALF_UP)).rollType(RollType.LENGTH).paper(Paper.NTC48).widthType(WidthType.WIDTH_57).coreType(CoreType.CORE_12).state(RollState.DELETED).build());
+        rollList.add(Roll.builder().id(1L).sku("LEN5710").mainValue(BigDecimal.valueOf(10.0).setScale(1, RoundingMode.HALF_UP)).rollType(RollType.LENGTH).paper(Paper.NTC48).widthType(WidthType.WIDTH_57).coreType(CoreType.CORE_12).state(RollState.REMOVED).build());
         rollList.add(Roll.builder().id(2L).sku("LEN5715").mainValue(BigDecimal.valueOf(15.0).setScale(1, RoundingMode.HALF_UP)).rollType(RollType.LENGTH).paper(Paper.NTC48).widthType(WidthType.WIDTH_57).coreType(CoreType.CORE_12).state(RollState.ACTIVE).build());
         rollList.add(Roll.builder().id(3L).sku("LEN5717").mainValue(BigDecimal.valueOf(17.0).setScale(1, RoundingMode.HALF_UP)).rollType(RollType.LENGTH).paper(Paper.NTC48).widthType(WidthType.WIDTH_57).coreType(CoreType.CORE_12).state(RollState.ACTIVE).build());
         rollList.add(Roll.builder().id(4L).sku("LEN5719").mainValue(BigDecimal.valueOf(19.0).setScale(1, RoundingMode.HALF_UP)).rollType(RollType.LENGTH).paper(Paper.NTC48).widthType(WidthType.WIDTH_57).coreType(CoreType.CORE_12).state(RollState.ACTIVE).build());
@@ -153,7 +153,7 @@ public class RollModelTest {
         rollList.add(Roll.builder().id(25L).sku("DIA15026").mainValue(BigDecimal.valueOf(150.0).setScale(1, RoundingMode.HALF_UP)).rollType(RollType.DIAMETER).paper(Paper.NTC58).widthType(WidthType.WIDTH_80).coreType(CoreType.CORE_26).state(RollState.ACTIVE).build());
         rollList.add(Roll.builder().id(26L).sku("DIA11026").mainValue(BigDecimal.valueOf(110.0).setScale(1, RoundingMode.HALF_UP)).rollType(RollType.DIAMETER).paper(Paper.NTC55).widthType(WidthType.WIDTH_80).coreType(CoreType.CORE_26).state(RollState.ACTIVE).build());
         rollList.add(Roll.builder().id(27L).sku("DIA18026").mainValue(BigDecimal.valueOf(180.0).setScale(1, RoundingMode.HALF_UP)).rollType(RollType.DIAMETER).paper(Paper.NTC55).widthType(WidthType.WIDTH_80).coreType(CoreType.CORE_26).state(RollState.ACTIVE).build());
-        rollList.add(Roll.builder().id(28L).sku("DIA20018").mainValue(BigDecimal.valueOf(200.0).setScale(1, RoundingMode.HALF_UP)).rollType(RollType.DIAMETER).paper(Paper.NTC55).widthType(WidthType.WIDTH_80).coreType(CoreType.CORE_18).state(RollState.DELETED).build());
+        rollList.add(Roll.builder().id(28L).sku("DIA20018").mainValue(BigDecimal.valueOf(200.0).setScale(1, RoundingMode.HALF_UP)).rollType(RollType.DIAMETER).paper(Paper.NTC55).widthType(WidthType.WIDTH_80).coreType(CoreType.CORE_18).state(RollState.REMOVED).build());
 
         String json = jsonUtil.writeObject(rollList, CouldNotDeserializeJsonException::new);
         assertNotNull(json);

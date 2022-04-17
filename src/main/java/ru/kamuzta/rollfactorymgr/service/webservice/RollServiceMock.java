@@ -86,9 +86,9 @@ public class RollServiceMock implements RollService {
 
     @Override
     public boolean removeRollBySku(@NotNull String sku) throws WebServiceException {
-        Roll rollToDelete = findRollBySku(sku);
-        rollToDelete.setState(RollState.DELETED);
-        updateRoll(rollToDelete);
+        Roll rollToRemove = findRollBySku(sku);
+        rollToRemove.setState(RollState.REMOVED);
+        updateRoll(rollToRemove);
         return true;
     }
 

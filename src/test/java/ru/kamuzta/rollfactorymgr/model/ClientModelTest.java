@@ -146,7 +146,7 @@ public class ClientModelTest {
                 .creationDate(OffsetDateTime.of(2022,3,3,3,3,3,3, ZoneOffset.of("+09:00")))
                 .companyName("OneRoll - OnePunch").city("Tokyo").address("Onepunchman 21")
                 .buyerName("Saitama").phone("78001234567").email("one@punch.man")
-                .state(ClientState.DELETED)
+                .state(ClientState.REMOVED)
                 .build());
 
         String json = jsonUtil.writeObject(clientList, CouldNotDeserializeJsonException::new);

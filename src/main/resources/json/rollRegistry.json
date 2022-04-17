@@ -267,7 +267,7 @@
         "widthType": "WIDTH_80",
         "coreType": "CORE_26",
         "mainValue": 180.0,
-        "state": "DELETED"
+        "state": "REMOVED"
     },
     {
         "id": 28,
@@ -277,6 +277,6 @@
         "widthType": "WIDTH_80",
         "coreType": "CORE_18",
         "mainValue": 200.0,
-        "state": "DELETED"
+        "state": "REMOVED"
     }
 ]

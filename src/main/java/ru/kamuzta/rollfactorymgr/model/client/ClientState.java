@@ -2,7 +2,7 @@ package ru.kamuzta.rollfactorymgr.model.client;
 
 public enum ClientState {
     ACTIVE,
-    DELETED;
+    REMOVED;
 
     @Override
     public String toString() {

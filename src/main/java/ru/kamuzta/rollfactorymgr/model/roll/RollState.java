@@ -2,7 +2,7 @@ package ru.kamuzta.rollfactorymgr.model.roll;
 
 public enum RollState {
     ACTIVE,
-    DELETED;
+    REMOVED;
 
     @Override
     public String toString() {

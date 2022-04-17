@@ -8,16 +8,18 @@ import ru.kamuzta.rollfactorymgr.model.client.Client;
 import ru.kamuzta.rollfactorymgr.model.order.Order;
 import ru.kamuzta.rollfactorymgr.model.order.OrderLine;
 import ru.kamuzta.rollfactorymgr.model.order.OrderState;
+import ru.kamuzta.rollfactorymgr.model.roll.Roll;
 
 import java.time.OffsetDateTime;
 import java.util.List;
 
 @ImplementedBy(OrderServiceMock.class)
 public interface OrderService {
+
     /**
      * Update local cached Registry by values from server
      *
-     * @throws WebServiceException
+     * @throws WebServiceException on connection problems
      */
     void updateRegistryFromServer() throws WebServiceException;
 
@@ -25,7 +27,7 @@ public interface OrderService {
      * Get local cached Registry
      *
      * @return local cached Registry
-     * @throws WebServiceException
+     * @throws WebServiceException on connection problems
      */
     List<Order> getLocalRegistry();
 
@@ -34,7 +36,7 @@ public interface OrderService {
      *
      * @param id id of Order
      * @return found Order
-     * @throws WebServiceException
+     * @throws WebServiceException on connection problems
      */
     Order findOrderById(@NotNull Long id) throws WebServiceException;
 
@@ -43,7 +45,7 @@ public interface OrderService {
      *
      * @param companyName name/part of name of Client order owner
      * @return list of matched Orders
-     * @throws WebServiceException
+     * @throws WebServiceException on connection problems
      */
     List<Order> findOrderByCompanyNamePattern(@NotNull String companyName) throws WebServiceException;
 
@@ -55,11 +57,11 @@ public interface OrderService {
      * @param creationDateFrom order creation date from
      * @param creationDateTo   order creation date to
      * @param state            order state
-     * @param lines            order lines
+     * @param rollSku          roll in order
      * @return list of matched Orders
-     * @throws WebServiceException
+     * @throws WebServiceException on connection problems
      */
-    List<Order> findOrderByParams(@Nullable Long id, @Nullable String companyName, @Nullable OffsetDateTime creationDateFrom, @Nullable OffsetDateTime creationDateTo, @Nullable OrderState state, @Nullable List<OrderLine> lines) throws WebServiceException;
+    List<Order> findOrderByParams(@Nullable Long id, @Nullable String companyName, @Nullable OffsetDateTime creationDateFrom, @Nullable OffsetDateTime creationDateTo, @Nullable OrderState state, @Nullable String rollSku) throws WebServiceException;
 
     /**
      * Create Order on Server Registry
@@ -68,7 +70,7 @@ public interface OrderService {
      * @param client       client
      * @param lines        order lines
      * @return new Order
-     * @throws WebServiceException if validation fail
+     * @throws WebServiceException on connection problems or remote validation fail
      */
     Order createOrder(@Nullable OffsetDateTime creationDate, @NotNull Client client, @NotNull List<OrderLine> lines) throws WebServiceException;
 
@@ -77,7 +79,7 @@ public interface OrderService {
      *
      * @param id id of Order to remove
      * @return true if success
-     * @throws WebServiceException if Order with specified id was not found or it is producing right now
+     * @throws WebServiceException on connection problems or remote validation fail
      */
     boolean removeOrderById(@NotNull Long id) throws WebServiceException;
 
@@ -86,8 +88,7 @@ public interface OrderService {
      *
      * @param order - Order with same id but diffirent parameters
      * @return updated Order
-     * @throws WebServiceException if validation fail or all parameters are equals
+     * @throws WebServiceException on connection problems or remote validation fail
      */
     Order updateOrder(@NotNull Order order) throws WebServiceException;
-
 }

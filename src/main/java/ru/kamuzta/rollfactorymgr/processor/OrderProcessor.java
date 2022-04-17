@@ -1,7 +1,6 @@
 package ru.kamuzta.rollfactorymgr.processor;
 
-import com.google.inject.Inject;
-import lombok.extern.slf4j.Slf4j;
+import com.google.inject.ImplementedBy;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.kamuzta.rollfactorymgr.exception.ValidationException;
@@ -10,117 +9,100 @@ import ru.kamuzta.rollfactorymgr.model.client.Client;
 import ru.kamuzta.rollfactorymgr.model.order.Order;
 import ru.kamuzta.rollfactorymgr.model.order.OrderLine;
 import ru.kamuzta.rollfactorymgr.model.order.OrderState;
-import ru.kamuzta.rollfactorymgr.service.webservice.ClientService;
-import ru.kamuzta.rollfactorymgr.service.webservice.OrderService;
-import ru.kamuzta.rollfactorymgr.service.webservice.RollService;
+import ru.kamuzta.rollfactorymgr.model.roll.Roll;
 
 import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.Optional;
 
-@Slf4j
-public class OrderProcessor {
-    @Inject
-    OrderService orderService;
+@ImplementedBy(OrderProcessorImpl.class)
+public interface OrderProcessor {
 
-    @Inject
-    RollService rollService;
+    /**
+     * Update local cached Registry by values from server
+     *
+     * @throws WebServiceException on connection problems
+     */
+    void updateRegistryFromServer() throws WebServiceException;
 
-    @Inject
-    ClientService clientService;
+    /**
+     * Get local cached Registry
+     *
+     * @return local cached Registry
+     * @throws WebServiceException on connection problems
+     */
+    List<Order> getLocalRegistry();
 
-    public void updateRegistryFromServer() {
-        orderService.updateRegistryFromServer();
-    }
+    /**
+     * Find Order by id in local cached Registry
+     *
+     * @param id id of Order
+     * @return found Order
+     * @throws WebServiceException on connection problems
+     */
+    Order findOrderById(@NotNull Long id) throws WebServiceException;
 
-    public List<Order> getLocalRegistry() {
-        return orderService.getLocalRegistry();
-    }
+    /**
+     * Find Order by companyName pattern in local cached Registry
+     *
+     * @param companyName name/part of name of Client order owner
+     * @return list of matched Orders
+     * @throws WebServiceException on connection problems
+     */
+    List<Order> findOrderByCompanyNamePattern(@NotNull String companyName) throws WebServiceException;
 
-    public Order findOrderById(@NotNull Long id) throws WebServiceException {
-        return orderService.findOrderById(id);
-    }
+    /**
+     * Find Order by parameters in local cached Registry
+     *
+     * @param id               part of order id
+     * @param companyName      part of client's company name
+     * @param creationDateFrom order creation date from
+     * @param creationDateTo   order creation date to
+     * @param state            order state
+     * @param rollSku          roll in order
+     * @return list of matched Orders
+     * @throws WebServiceException on connection problems
+     */
+    List<Order> findOrderByParams(@Nullable Long id, @Nullable String companyName, @Nullable OffsetDateTime creationDateFrom, @Nullable OffsetDateTime creationDateTo, @Nullable OrderState state, @Nullable String rollSku) throws WebServiceException;
 
-    public List<Order> findOrderByCompanyNamePattern(@NotNull String companyName) throws WebServiceException {
-        return orderService.findOrderByCompanyNamePattern(companyName);
-    }
+    /**
+     * Create Order on Server Registry
+     *
+     * @param creationDate dateTime of creation
+     * @param client       client
+     * @param lines        order lines
+     * @return new Order
+     * @throws WebServiceException on connection problems or remote validation fail
+     * @throws ValidationException if local validation fail
+     */
+    Order createOrder(@Nullable OffsetDateTime creationDate, @NotNull Client client, @NotNull List<OrderLine> lines) throws WebServiceException;
 
-    public List<Order> findOrderByParams(@Nullable Long id, @Nullable String companyName, @Nullable OffsetDateTime creationDateFrom, @Nullable OffsetDateTime creationDateTo, @Nullable OrderState state, @Nullable List<OrderLine> lines) throws WebServiceException {
-        return orderService.findOrderByParams(id, companyName, creationDateFrom, creationDateTo, state, lines);
-    }
+    /**
+     * Remove Order on Server Registry by id
+     *
+     * @param id id of Order to remove
+     * @return true if success
+     * @throws WebServiceException on connection problems or remote validation fail
+     * @throws ValidationException if Order with specified id was not found or it is producing right now
+     */
+    boolean removeOrderById(@NotNull Long id) throws WebServiceException;
 
-    public Order createOrder(@Nullable OffsetDateTime creationDate, @NotNull Client client, @NotNull List<OrderLine> lines) throws WebServiceException, ValidationException {
-        validateCreateOrder(creationDate, client, lines);
-        return orderService.createOrder(creationDate, client, lines);
-    }
+    /**
+     * Update Order on Server Registry with new parameters
+     *
+     * @param order - Order with same id but diffirent parameters
+     * @return updated Order
+     * @throws WebServiceException on connection problems or remote validation fail
+     * @throws ValidationException if validation fail or all parameters are equals
+     */
+    Order updateOrder(@NotNull Order order) throws WebServiceException;
 
-    public boolean removeOrderById(@NotNull Long id) throws WebServiceException, ValidationException {
-        validateRemoveOrder(id);
-        return orderService.removeOrderById(id);
-    }
+    void validateCreateOrder(@Nullable OffsetDateTime creationDate, @NotNull Client client, @NotNull List<OrderLine> lines) throws ValidationException;
 
-    public Order updateOrder(@NotNull Order order) throws WebServiceException, ValidationException {
-        validateUpdateOrder(order);
-        return orderService.updateOrder(order);
-    }
+    void validateUpdateOrder(Order order) throws ValidationException;
 
-    private void validateCreateOrder(@Nullable OffsetDateTime creationDate, @NotNull Client client, @NotNull List<OrderLine> lines) throws ValidationException {
-        if (creationDate != null && creationDate.isAfter(OffsetDateTime.now())) {
-            throw new ValidationException("creationDate could not be in future!");
-        }
+    void validateRemoveOrder(Long id) throws ValidationException;
 
-        validateCommonOrderParams(client, lines);
+    void validateCommonOrderParams(Client client, List<OrderLine> lines);
 
-        List<Order> foundDuplicate = orderService.findOrderByParams(null, client.getCompanyName(), null, null, null, lines);
-        Optional<Order> optionalOrder = foundDuplicate.stream().filter(o -> o.getState() != OrderState.COMPLETED).findFirst();
-        if (optionalOrder.isPresent()) {
-            throw new ValidationException("Error while trying create duplicate order for companyName " + optionalOrder.get().getClient().getCompanyName());
-        }
-    }
-
-    private void validateCommonOrderParams(Client client, List<OrderLine> lines) throws ValidationException {
-        if (lines.isEmpty()) {
-            throw new ValidationException("There is must be at least one line in order!");
-        }
-
-        if (lines.stream().mapToInt(OrderLine::getQuantity).anyMatch(q -> q <= 0)) {
-            throw new ValidationException("There is a line with non-positive quantity!");
-        }
-
-        //will throw exception if has unknown roll
-        lines.stream().map(OrderLine::getId).forEach(rollService::findRollById);
-        //will throw exception if has unknown client
-        clientService.findClientById(client.getId());
-    }
-
-    private void validateUpdateOrder(Order order) throws ValidationException {
-        if (orderService.getLocalRegistry().stream().noneMatch(c -> c.getId().equals(order.getId()))) {
-            throw new ValidationException("Order with id " + order.getId() + " was not found, there is nothing to update");
-        }
-
-        validateIfOrderInProgress(order.getId());
-
-        validateCommonOrderParams(order.getClient(), order.getLines());
-
-        List<Order> foundDuplicate = orderService.findOrderByParams(null, order.getClient().getCompanyName(), null, null, null, order.getLines());
-        Optional<Order> optionalOrder = foundDuplicate.stream().filter(o -> o.getState() != OrderState.COMPLETED).findFirst();
-        if (optionalOrder.isPresent()) {
-            throw new ValidationException("Error while trying create duplicate order for companyName " + optionalOrder.get().getClient().getCompanyName());
-        }
-    }
-
-    private void validateRemoveOrder(Long id) throws ValidationException {
-        if (orderService.getLocalRegistry().stream().noneMatch(o -> o.getId().equals(id))) {
-            throw new ValidationException("Order with id " + id + " was not found, there is nothing to remove");
-        }
-        validateIfOrderInProgress(id);
-    }
-
-    private void validateIfOrderInProgress(Long id) throws ValidationException {
-        if (orderService.findOrderById(id).getState() == OrderState.INPROGRESS) {
-            throw new ValidationException("Order with id " + id + " is in progress at this moment");
-        } else {
-            log.info("Order with id " + id + " is not in progress");
-        }
-    }
+    void validateIfOrderInProgress(Long id) throws ValidationException;
 }

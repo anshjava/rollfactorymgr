@@ -29,6 +29,7 @@ public class RollProcessorImpl implements RollProcessor {
     @Override
     public void updateRegistryFromServer() throws WebServiceException {
         rollService.updateRegistryFromServer();
+        orderService.updateRegistryFromServer();
     }
 
     @Override

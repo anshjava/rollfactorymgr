@@ -94,10 +94,10 @@ public class ClientServiceMock implements ClientService {
 
     @Override
     public boolean removeClientById(@NotNull Long id) throws WebServiceException {
-        Client clientToDelete = findClientById(id);
-        clientToDelete.setState(ClientState.DELETED);
-        Client oldClient = findClientById(clientToDelete.getId());
-        remoteClientRegistry.set(remoteClientRegistry.indexOf(oldClient), clientToDelete);
+        Client clientToRemove = findClientById(id);
+        clientToRemove.setState(ClientState.REMOVED);
+        Client oldClient = findClientById(clientToRemove.getId());
+        remoteClientRegistry.set(remoteClientRegistry.indexOf(oldClient), clientToRemove);
         return true;
     }
 

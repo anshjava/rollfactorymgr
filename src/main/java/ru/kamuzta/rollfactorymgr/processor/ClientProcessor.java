@@ -1,16 +1,18 @@
-package ru.kamuzta.rollfactorymgr.service.webservice;
+package ru.kamuzta.rollfactorymgr.processor;
 
 import com.google.inject.ImplementedBy;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.kamuzta.rollfactorymgr.exception.ValidationException;
 import ru.kamuzta.rollfactorymgr.exception.WebServiceException;
 import ru.kamuzta.rollfactorymgr.model.client.Client;
 
 import java.time.OffsetDateTime;
 import java.util.List;
 
-@ImplementedBy(ClientServiceMock.class)
-public interface ClientService {
+@ImplementedBy(ClientProcessorImpl.class)
+public interface ClientProcessor {
+
     /**
      * Update local cached Registry by values from server
      *
@@ -74,8 +76,10 @@ public interface ClientService {
      * @param email        client's buyer email
      * @return new Client
      * @throws WebServiceException on connection problems or remote validation fail
+     * @throws ValidationException if local validation fail
      */
-    Client createClient(@Nullable OffsetDateTime creationDate, @NotNull String companyName, @NotNull String city, @NotNull String address, @NotNull String buyerName, @NotNull String phone, @NotNull String email) throws WebServiceException;
+    Client createClient(@Nullable OffsetDateTime creationDate, @NotNull String companyName, @NotNull String city,
+                        @NotNull String address, @NotNull String buyerName, @NotNull String phone, @NotNull String email) throws WebServiceException, ValidationException;
 
     /**
      * Remove Client on Server Registry by id
@@ -83,8 +87,9 @@ public interface ClientService {
      * @param id id of Client to remove
      * @return true if success
      * @throws WebServiceException on connection problems or remote validation fail
+     * @throws ValidationException if Client with specified id was not found or there is some orders by this client
      */
-    boolean removeClientById(@NotNull Long id) throws WebServiceException;
+    boolean removeClientById(@NotNull Long id) throws WebServiceException, ValidationException;
 
     /**
      * Update Client on Server Registry with new parameters
@@ -92,7 +97,15 @@ public interface ClientService {
      * @param client - Client with same id but diffirent parameters
      * @return updated Client
      * @throws WebServiceException on connection problems or remote validation fail
+     * @throws ValidationException if local validation fail or all parameters are equals
      */
-    Client updateClient(@NotNull Client client) throws WebServiceException;
+    Client updateClient(@NotNull Client client) throws WebServiceException, ValidationException;
+
+    void validateCreateClient(@Nullable OffsetDateTime creationDate, @NotNull String companyName, @NotNull String city, @NotNull String address,
+                              @NotNull String buyerName, @NotNull String phone, @NotNull String email) throws ValidationException;
+    void validateUpdateClient(Client client) throws ValidationException;
+    void validateRemoveClient(Long id) throws ValidationException;
+    void validateCommonClientParams(String city, String address, String buyerName, String phone, String email) throws ValidationException;
+    void validateIfClientInWorkflow(Long id) throws ValidationException;
 
 }

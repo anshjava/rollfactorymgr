@@ -4,7 +4,6 @@ import com.google.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.kamuzta.rollfactorymgr.exception.ValidationException;
 import ru.kamuzta.rollfactorymgr.exception.WebServiceException;
 import ru.kamuzta.rollfactorymgr.model.client.Client;
 import ru.kamuzta.rollfactorymgr.model.client.ClientState;
@@ -35,7 +34,6 @@ public class ClientServiceMock implements ClientService {
 
     @Override
     public List<Client> getActiveClientsLocal() {
-        updateRegistryFromServer();
         return localClientRegistry.stream()
                 .filter(client -> client.getState() == ClientState.ACTIVE)
                 .map(Client::new)
@@ -79,122 +77,45 @@ public class ClientServiceMock implements ClientService {
     }
 
     @Override
-    public Client createClient(@Nullable OffsetDateTime creationDate, @NotNull String companyName, @NotNull String city, @NotNull String address, @NotNull String buyerName, @NotNull String phone, @NotNull String email) throws WebServiceException {
-        try {
-            validateCreateClient(creationDate, companyName, city, address, buyerName, phone, email);
-            Client newClient = new Client(count.incrementAndGet(),
-                    creationDate != null ? creationDate : OffsetDateTime.now(),
-                    companyName,
-                    city,
-                    address,
-                    buyerName,
-                    phone,
-                    email,
-                    ClientState.ACTIVE);
-            remoteClientRegistry.add(newClient);
-            updateRegistryFromServer();
-            return new Client(newClient);
-        } catch (ValidationException e) {
-            throw new WebServiceException(e.getMessage(), e);
-        }
+    public Client createClient(@Nullable OffsetDateTime creationDate, @NotNull String companyName, @NotNull String city,
+                               @NotNull String address, @NotNull String buyerName, @NotNull String phone, @NotNull String email) throws WebServiceException {
+        Client newClient = new Client(count.incrementAndGet(),
+                creationDate != null ? creationDate : OffsetDateTime.now(),
+                companyName,
+                city,
+                address,
+                buyerName,
+                phone,
+                email,
+                ClientState.ACTIVE);
+        remoteClientRegistry.add(newClient);
+        return new Client(newClient);
     }
 
     @Override
     public boolean removeClientById(@NotNull Long id) throws WebServiceException {
-        try {
-            validateRemoveClient(id);
-            Client clientToDelete = findClientById(id);
-            clientToDelete.setState(ClientState.DELETED);
-            Client oldClient = findClientById(clientToDelete.getId());
-            remoteClientRegistry.set(remoteClientRegistry.indexOf(oldClient), clientToDelete);
-            updateRegistryFromServer();
-            return true;
-        } catch (ValidationException e) {
-            throw new WebServiceException(e.getMessage(), e);
-        }
+        Client clientToDelete = findClientById(id);
+        clientToDelete.setState(ClientState.DELETED);
+        Client oldClient = findClientById(clientToDelete.getId());
+        remoteClientRegistry.set(remoteClientRegistry.indexOf(oldClient), clientToDelete);
+        return true;
     }
 
     @Override
     public Client updateClient(@NotNull Client client) throws WebServiceException {
-        try {
-            validateUpdateClient(client);
-            Client oldClient = findClientById(client.getId());
-            remoteClientRegistry.set(remoteClientRegistry.indexOf(oldClient), client);
-            updateRegistryFromServer();
-            return new Client(client);
-        } catch (ValidationException e) {
-            throw new WebServiceException(e.getMessage(), e);
-        }
+        Client oldClient = findClientById(client.getId());
+        remoteClientRegistry.set(remoteClientRegistry.indexOf(oldClient), client);
+        return new Client(client);
     }
 
 
-    private void validateCreateClient(@Nullable OffsetDateTime creationDate, @NotNull String companyName, @NotNull String city, @NotNull String address, @NotNull String buyerName, @NotNull String phone, @NotNull String email) throws ValidationException {
-        if (creationDate != null && creationDate.isAfter(OffsetDateTime.now())) {
-            throw new ValidationException("creationDate could not be in future!");
-        }
-        if (!companyName.matches("[A-Za-z0-9\\-. ]+")) {
-            throw new ValidationException("companyName has wrong format! Must contains only A-Z, a-z, 0-9 and .- ");
-        }
 
-        if (localClientRegistry.stream().anyMatch(r -> r.getCompanyName().equals(companyName))) {
-            throw new ValidationException("Client with companyName " + companyName + " is already exists!");
-        }
 
-        validateCommonClientParams(city, address, buyerName, phone, email);
 
-        List<Client> foundDuplicate = findClientByParams(null, null, null, null, city, address, buyerName, phone, email);
-        Optional<Client> optionalClient = foundDuplicate.stream().findFirst();
-        if (optionalClient.isPresent()) {
-            throw new ValidationException("Error while trying create duplicate client of clientName " + optionalClient.get().getCompanyName());
-        }
-    }
 
-    private void validateCommonClientParams(String city, String address, String buyerName, String phone, String email) throws ValidationException {
-        if (!city.matches("[A-Za-z\\- ]+")) {
-            throw new ValidationException("City has wrong format! Must contains only A-Z, a-z and - ");
-        }
-        if (!address.matches("[A-Za-z0-9\\-., ]+")) {
-            throw new ValidationException("Address has wrong format! Must contains only A-Z, a-z, 0-9 and -., ");
-        }
-        if (!buyerName.matches("[A-Za-z\\- ]+")) {
-            throw new ValidationException("BuyerName has wrong format! Must contains only A-Z, a-z ");
-        }
-        if (!phone.matches("7[0-9]{10}")) {
-            throw new ValidationException("Phone has wrong format! Must starts with 7 and contains 11 digits total");
-        }
-        if (!email.matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")) {
-            throw new ValidationException("Email has wrong format!");
-        }
-    }
 
-    private void validateUpdateClient(Client client) throws ValidationException {
-        if (remoteClientRegistry.stream().noneMatch(c -> c.getId().equals(client.getId()))) {
-            throw new ValidationException("Client with id " + client.getId() + " was not found, there is nothing to update");
-        }
 
-        validateIfClientInWorkflow(client.getId());
 
-        validateCommonClientParams(client.getCity(), client.getAddress(), client.getBuyerName(), client.getPhone(), client.getEmail());
 
-        List<Client> foundDuplicate = findClientByParams(null, null, null, null, client.getCity(), client.getAddress(), client.getBuyerName(), client.getPhone(), client.getEmail());
-        Optional<Client> optionalClient = foundDuplicate.stream().findFirst();
-        if (optionalClient.isPresent()) {
-            throw new ValidationException("Error while trying create duplicate client of clientName " + optionalClient.get().getCompanyName());
-        }
-    }
 
-    private void validateRemoveClient(Long id) throws ValidationException {
-        if (remoteClientRegistry.stream().noneMatch(r -> r.getId().equals(id))) {
-            throw new ValidationException("Client with id " + id + " was not found, there is nothing to remove");
-        }
-        validateIfClientInWorkflow(id);
-    }
-
-    private void validateIfClientInWorkflow(Long id) throws ValidationException {
-        if (id == 1L) {
-            throw new ValidationException("Client with id " + id + " is in workflow at this moment");
-        } else {
-            log.info("Client with id " + id + " is not in workflow");
-        }
-    }
 }

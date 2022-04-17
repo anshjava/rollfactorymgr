@@ -22,8 +22,6 @@ import java.util.TreeSet;
 @Slf4j
 public class RollModelTest {
     private JsonUtil jsonUtil = JsonUtil.getInstance();
-    private static RollCalculator rollCalculator;
-
 
     @Before
     public void before() {

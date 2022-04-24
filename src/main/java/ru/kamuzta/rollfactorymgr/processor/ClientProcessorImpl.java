@@ -12,6 +12,7 @@ import ru.kamuzta.rollfactorymgr.model.order.OrderState;
 import ru.kamuzta.rollfactorymgr.service.webservice.ClientService;
 import ru.kamuzta.rollfactorymgr.service.webservice.OrderService;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -47,14 +48,14 @@ public class ClientProcessorImpl implements ClientProcessor {
     }
 
     @Override
-    public List<Client> findClientByParams(@Nullable Long id, @Nullable String companyName, @Nullable OffsetDateTime creationDateFrom,
-                                           @Nullable OffsetDateTime creationDateTo, @Nullable String city, @Nullable String address,
+    public List<Client> findClientByParams(@Nullable Long id, @Nullable String companyName, @Nullable LocalDate creationDateFrom,
+                                           @Nullable LocalDate creationDateTo, @Nullable String city, @Nullable String address,
                                            @Nullable String buyerName, @Nullable String phone, @Nullable String email) throws WebServiceException {
         return clientService.findClientByParams(id, companyName, creationDateFrom, creationDateTo, city, address, buyerName, phone, email);
     }
 
     @Override
-    public Client createClient(@Nullable OffsetDateTime creationDate, @NotNull String companyName, @NotNull String city, @NotNull String address,
+    public Client createClient(@Nullable LocalDate creationDate, @NotNull String companyName, @NotNull String city, @NotNull String address,
                                @NotNull String buyerName, @NotNull String phone, @NotNull String email) throws WebServiceException, ValidationException {
         validateCreateClient(creationDate, companyName, city, address, buyerName, phone, email);
         Client newClient = clientService.createClient(creationDate, companyName, city, address, buyerName, phone, email);
@@ -79,8 +80,8 @@ public class ClientProcessorImpl implements ClientProcessor {
     }
 
     @Override
-    public void validateCreateClient(@Nullable OffsetDateTime creationDate, @NotNull String companyName, @NotNull String city, @NotNull String address, @NotNull String buyerName, @NotNull String phone, @NotNull String email) throws ValidationException {
-        if (creationDate != null && creationDate.isAfter(OffsetDateTime.now())) {
+    public void validateCreateClient(@Nullable LocalDate creationDate, @NotNull String companyName, @NotNull String city, @NotNull String address, @NotNull String buyerName, @NotNull String phone, @NotNull String email) throws ValidationException {
+        if (creationDate != null && creationDate.isAfter(LocalDate.now())) {
             throw new ValidationException("creationDate could not be in future!");
         }
         if (!companyName.matches("[A-Za-z0-9\\-. ]+")) {

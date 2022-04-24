@@ -13,6 +13,7 @@ import ru.kamuzta.rollfactorymgr.model.client.ClientState;
 import ru.kamuzta.rollfactorymgr.modules.EventBusModule;
 import ru.kamuzta.rollfactorymgr.processor.ClientProcessor;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Collections;
@@ -114,19 +115,19 @@ public class ClientProcessorTest {
         result2.forEach(client -> log.info(client.toString()));
         assertEquals(4, result2.size());
 
-        List<Client> result3 = clientProcessor.findClientByParams(null, null, OffsetDateTime.of(2020, 1, 1, 1, 1, 0, 0, ZoneOffset.of("+09:00")), null, null, null, null, "7800", null);
+        List<Client> result3 = clientProcessor.findClientByParams(null, null, LocalDate.of(2019, 12, 31), null, null, null, null, "7800", null);
         assertNotNull(result3);
         log.info("Result3:");
         result3.forEach(client -> log.info(client.toString()));
         assertEquals(2, result3.size());
 
-        List<Client> result4 = clientProcessor.findClientByParams(null, null, null, OffsetDateTime.of(1997, 3, 5, 8, 59, 31, 300, ZoneOffset.of("-07:00")), null, null, null, null, null);
+        List<Client> result4 = clientProcessor.findClientByParams(null, null, null, LocalDate.of(1997, 3, 6), null, null, null, null, null);
         assertNotNull(result4);
         log.info("Result4:");
         result4.forEach(client -> log.info(client.toString()));
         assertEquals(3, result4.size());
 
-        List<Client> result5 = clientProcessor.findClientByParams(null, null, OffsetDateTime.of(2010, 1, 1, 1, 1, 0, 0, ZoneOffset.of("+03:00")), OffsetDateTime.of(2012, 3, 3, 3, 3, 4, 4, ZoneOffset.of("+03:00")), null, null, null, null, null);
+        List<Client> result5 = clientProcessor.findClientByParams(null, null, LocalDate.of(2009, 12, 31), LocalDate.of(2012, 3, 4), null, null, null, null, null);
         assertNotNull(result5);
         log.info("Result5:");
         result5.forEach(client -> log.info(client.toString()));

@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.kamuzta.rollfactorymgr.exception.WebServiceException;
 import ru.kamuzta.rollfactorymgr.model.client.Client;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @ImplementedBy(ClientServiceMock.class)
@@ -59,7 +59,7 @@ public interface ClientService {
      * @return list of matched Clients
      * @throws WebServiceException on connection problems
      */
-    List<Client> findClientByParams(@Nullable Long id, @Nullable String companyName, @Nullable OffsetDateTime creationDateFrom, @Nullable OffsetDateTime creationDateTo,
+    List<Client> findClientByParams(@Nullable Long id, @Nullable String companyName, @Nullable LocalDate creationDateFrom, @Nullable LocalDate creationDateTo,
                                     @Nullable String city, @Nullable String address, @Nullable String buyerName, @Nullable String phone, @Nullable String email) throws WebServiceException;
 
     /**
@@ -75,7 +75,7 @@ public interface ClientService {
      * @return new Client
      * @throws WebServiceException on connection problems or remote validation fail
      */
-    Client createClient(@Nullable OffsetDateTime creationDate, @NotNull String companyName, @NotNull String city, @NotNull String address, @NotNull String buyerName, @NotNull String phone, @NotNull String email) throws WebServiceException;
+    Client createClient(@Nullable LocalDate creationDate, @NotNull String companyName, @NotNull String city, @NotNull String address, @NotNull String buyerName, @NotNull String phone, @NotNull String email) throws WebServiceException;
 
     /**
      * Remove Client on Server Registry by id

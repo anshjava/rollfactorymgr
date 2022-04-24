@@ -1,11 +1,17 @@
 package ru.kamuzta.rollfactorymgr.model.client;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.google.common.collect.ComparisonChain;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -19,7 +25,10 @@ public class Client implements Comparable<Client>{
     @NotNull
     private Long id;
     @NotNull
-    private OffsetDateTime creationDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate creationDate;
     @NotNull
     private String companyName;
     @NotNull
@@ -81,7 +90,7 @@ public class Client implements Comparable<Client>{
                 address,
                 id,
                 companyName,
-                creationDate,
+                creationDate.format(DateTimeFormatter.ISO_LOCAL_DATE),
                 buyerName,
                 phone,
                 email);

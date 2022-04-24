@@ -2,19 +2,22 @@ package ru.kamuzta.rollfactorymgr.ui.client;
 
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.util.StringConverter;
 import ru.kamuzta.rollfactorymgr.model.client.ClientProperty;
 import ru.kamuzta.rollfactorymgr.model.client.ClientState;
+import ru.kamuzta.rollfactorymgr.model.roll.CoreType;
 import ru.kamuzta.rollfactorymgr.ui.menu.HeaderMenuView;
 import ru.kamuzta.rollfactorymgr.ui.table.*;
 
+import java.math.BigDecimal;
 import java.net.URL;
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class ClientRegistryView implements FxmlView<ClientRegistryViewModel>, Initializable {
@@ -39,21 +42,37 @@ public class ClientRegistryView implements FxmlView<ClientRegistryViewModel>, In
     @FXML
     private TableColumn<ClientProperty, Long> idColumn;
     @FXML
-    private TableColumn<ClientProperty, OffsetDateTime> creationDateColumn;
+    private TableColumn<ClientProperty, LocalDate> creationDateColumn;
     @FXML
     private TableColumn<ClientProperty, String> companyNameColumn;
     @FXML
     private TableColumn<ClientProperty, String> cityColumn;
     @FXML
-    private TableColumn<ClientProperty, String> addressColumn;
-    @FXML
-    private TableColumn<ClientProperty, String> buyerNameColumn;
-    @FXML
-    private TableColumn<ClientProperty, String> phoneColumn;
-    @FXML
-    private TableColumn<ClientProperty, String> emailColumn;
-    @FXML
     private TableColumn<ClientProperty, ClientState> stateColumn;
+
+    @FXML
+    private VBox detailsBox;
+    @FXML
+    private Label detailsTitle;
+    @FXML
+    private TextField detailsId;
+    @FXML
+    private DatePicker detailsCreationDate;
+    @FXML
+    private TextField detailsCompanyName;
+    @FXML
+    private TextField detailsCity;
+    @FXML
+    private TextField detailsAddress;
+    @FXML
+    private TextField detailsBuyerName;
+    @FXML
+    private TextField detailsPhone;
+    @FXML
+    private TextField detailsEmail;
+    @FXML
+    private ComboBox<ClientState> detailsState;
+
 
     @InjectViewModel
     private ClientRegistryViewModel viewModel;
@@ -67,15 +86,11 @@ public class ClientRegistryView implements FxmlView<ClientRegistryViewModel>, In
 
         idColumn.setCellValueFactory(column -> column.getValue().getId());
 
-        creationDateColumn.setCellFactory(column -> new OffsetDateTimeCell<>());
+        creationDateColumn.setCellFactory(column -> new LocalDateCell<>());
         creationDateColumn.setCellValueFactory(column -> column.getValue().getCreationDate());
 
         companyNameColumn.setCellValueFactory(column -> column.getValue().getCompanyName());
         cityColumn.setCellValueFactory(column -> column.getValue().getCity());
-        addressColumn.setCellValueFactory(column -> column.getValue().getAddress());
-        buyerNameColumn.setCellValueFactory(column -> column.getValue().getBuyerName());
-        phoneColumn.setCellValueFactory(column -> column.getValue().getPhone());
-        emailColumn.setCellValueFactory(column -> column.getValue().getEmail());
 
         stateColumn.setCellFactory(column -> new ClientStateCell<>());
         stateColumn.setCellValueFactory(column -> column.getValue().getState());
@@ -85,6 +100,42 @@ public class ClientRegistryView implements FxmlView<ClientRegistryViewModel>, In
         editClientButton.managedProperty().bind(editClientButton.visibleProperty());
         removeClientButton.visibleProperty().bind(editClientButton.visibleProperty());
         removeClientButton.managedProperty().bind(removeClientButton.visibleProperty());
+
+        //configure detailsBox
+        detailsBox.visibleProperty().bind(editClientButton.visibleProperty());
+        detailsBox.managedProperty().bind(detailsBox.visibleProperty());
+        detailsTitle.setText("Client details:");
+
+        detailsState.setItems(FXCollections.observableArrayList(ClientState.values()));
+        detailsState.setConverter(new StringConverter<ClientState>() {
+            @Override
+            public String toString(ClientState clientState) {
+                return clientState.toString();
+            }
+
+            @Override
+            public ClientState fromString(String clientState) {
+                return ClientState.valueOf(clientState);
+            }
+        });
+
+        clientRegistryTableView.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+                    int selectedIndex = clientRegistryTableView.getSelectionModel().getSelectedIndex();
+                    if (selectedIndex >= 0) {
+                        ClientProperty clientProperty = clientRegistryTableView.getItems().get(selectedIndex);
+                        detailsId.textProperty().set(clientProperty.getId().getValue().toString());
+                        detailsCreationDate.setValue(clientProperty.getCreationDate().getValue());
+                        detailsCompanyName.textProperty().set(clientProperty.getCompanyName().getValue());
+                        detailsCity.textProperty().set(clientProperty.getCity().getValue());
+                        detailsAddress.textProperty().set(clientProperty.getAddress().getValue());
+                        detailsBuyerName.textProperty().set(clientProperty.getBuyerName().getValue());
+                        detailsEmail.textProperty().set(clientProperty.getEmail().getValue());
+                        detailsPhone.textProperty().set(clientProperty.getPhone().getValue());
+                        detailsState.valueProperty().set(clientProperty.getState().getValue());
+                    }
+                }
+        );
+
     }
 
     @FXML

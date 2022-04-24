@@ -7,7 +7,7 @@ import javafx.beans.property.StringProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 
 /**
  * Client wrapper for FX
@@ -16,7 +16,7 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 public class ClientProperty {
     private final ObjectProperty<Long> id;
-    private final ObjectProperty<OffsetDateTime> creationDate;
+    private final ObjectProperty<LocalDate> creationDate;
     private final StringProperty companyName;
     private final StringProperty city;
     private final StringProperty address;
@@ -41,7 +41,7 @@ public class ClientProperty {
     public static ClientProperty getSample() {
         return new ClientProperty(
                 new SimpleObjectProperty<>(null),
-                new SimpleObjectProperty<>(OffsetDateTime.now()),
+                new SimpleObjectProperty<>(LocalDate.now()),
                 new SimpleStringProperty(""),
                 new SimpleStringProperty(""),
                 new SimpleStringProperty(""),

@@ -10,7 +10,7 @@ import ru.kamuzta.rollfactorymgr.model.client.ClientState;
 import ru.kamuzta.rollfactorymgr.utils.json.CouldNotDeserializeJsonException;
 import ru.kamuzta.rollfactorymgr.utils.json.JsonUtil;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -60,14 +60,14 @@ public class ClientServiceMock implements ClientService {
     }
 
     @Override
-    public List<Client> findClientByParams(@Nullable Long id, @Nullable String companyName, @Nullable OffsetDateTime creationDateFrom, @Nullable OffsetDateTime creationDateTo,
+    public List<Client> findClientByParams(@Nullable Long id, @Nullable String companyName, @Nullable LocalDate creationDateFrom, @Nullable LocalDate creationDateTo,
                                            @Nullable String city, @Nullable String address, @Nullable String buyerName, @Nullable String phone, @Nullable String email) throws WebServiceException {
         return localClientRegistry.stream()
                 .filter(c -> c.getState() == ClientState.ACTIVE)
                 .filter(c -> String.valueOf(c.getId()).contains((Optional.ofNullable(id).map(String::valueOf)).orElse(String.valueOf(c.getId()))))
                 .filter(c -> c.getCompanyName().contains(Optional.ofNullable(companyName).orElse(c.getCompanyName())))
-                .filter(c -> c.getCreationDate().isAfter(Optional.ofNullable(creationDateFrom).orElse(c.getCreationDate().minusSeconds(1L))))
-                .filter(c -> c.getCreationDate().isBefore(Optional.ofNullable(creationDateTo).orElse(c.getCreationDate().plusSeconds(1L))))
+                .filter(c -> c.getCreationDate().isAfter(Optional.ofNullable(creationDateFrom).orElse(c.getCreationDate().minusDays(1L))))
+                .filter(c -> c.getCreationDate().isBefore(Optional.ofNullable(creationDateTo).orElse(c.getCreationDate().plusDays(1L))))
                 .filter(c -> c.getCity().contains(Optional.ofNullable(city).orElse(c.getCity())))
                 .filter(c -> c.getAddress().contains(Optional.ofNullable(address).orElse(c.getAddress())))
                 .filter(c -> c.getBuyerName().contains(Optional.ofNullable(buyerName).orElse(c.getBuyerName())))
@@ -77,10 +77,10 @@ public class ClientServiceMock implements ClientService {
     }
 
     @Override
-    public Client createClient(@Nullable OffsetDateTime creationDate, @NotNull String companyName, @NotNull String city,
+    public Client createClient(@Nullable LocalDate creationDate, @NotNull String companyName, @NotNull String city,
                                @NotNull String address, @NotNull String buyerName, @NotNull String phone, @NotNull String email) throws WebServiceException {
         Client newClient = new Client(count.incrementAndGet(),
-                creationDate != null ? creationDate : OffsetDateTime.now(),
+                creationDate != null ? creationDate : LocalDate.now(),
                 companyName,
                 city,
                 address,

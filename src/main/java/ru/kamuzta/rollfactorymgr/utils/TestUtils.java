@@ -16,6 +16,7 @@ import ru.kamuzta.rollfactorymgr.utils.json.JsonUtil;
 
 import java.math.BigDecimal;
 import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
@@ -130,7 +131,7 @@ public class TestUtils {
     }
 
     public static Client getRandomClient() {
-        OffsetDateTime creationDate = OffsetDateTime.now();
+        LocalDate creationDate = LocalDate.now();
         String companyName = getRandomString(5);
         String city = getRandomCity();
         String address = getRandomString(1);

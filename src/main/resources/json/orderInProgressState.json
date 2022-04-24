@@ -1,0 +1,33 @@
+{
+    "id": 5,
+    "creationDate": "2022-04-10T23:14:18.888+03:00",
+    "client": {
+        "id": 1,
+        "creationDate": "1990-02-18T06:30:30.000000365-07:00",
+        "companyName": "RollTrade Inc.",
+        "city": "Los Angeles",
+        "address": "Broadway 57",
+        "buyerName": "Antonio Banderos",
+        "phone": "79217770666",
+        "email": "antonio@rolltrade.com",
+        "state": "ACTIVE"
+    },
+    "lines": [
+        {
+            "id": 5,
+            "roll": {
+                "id": 5,
+                "sku": "LEN5721",
+                "rollType": "LENGTH",
+                "paper": "NTC48",
+                "widthType": "WIDTH_57",
+                "coreType": "CORE_12",
+                "mainValue": 21.0,
+                "state": "ACTIVE"
+            },
+            "quantity": 500,
+            "state": "INPROGRESS"
+        }
+    ],
+    "state": "INPROGRESS"
+}

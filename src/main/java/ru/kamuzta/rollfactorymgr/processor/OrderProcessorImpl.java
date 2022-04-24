@@ -84,12 +84,12 @@ public class OrderProcessorImpl implements OrderProcessor {
 
         List<Order> foundDuplicate = orderService.findOrderByCompanyNamePattern(client.getCompanyName());
         Optional<Order> optionalOrder = foundDuplicate.stream()
-                .filter(o -> o.getState() != OrderState.COMPLETED)
-                .filter(o -> o.getClient().getCompanyName().equals(client.getCompanyName()))
+                .filter(o -> o.getState() != OrderState.COMPLETED && o.getState() != OrderState.CANCELED)
+                .filter(o -> o.getClient().equals(client))
                 .filter(o -> o.getLines().equals(lines))
                 .findFirst();
         if (optionalOrder.isPresent()) {
-            throw new ValidationException("Error while trying create duplicate order for companyName " + optionalOrder.get().getClient().getCompanyName());
+            throw new ValidationException("Error while trying create duplicate order for client " + optionalOrder.get().getClient().getCompanyName() + " order id " + optionalOrder.get().getId());
         }
     }
 
@@ -105,12 +105,13 @@ public class OrderProcessorImpl implements OrderProcessor {
 
         List<Order> foundDuplicate = orderService.findOrderByCompanyNamePattern(order.getClient().getCompanyName());
         Optional<Order> optionalOrder = foundDuplicate.stream()
-                .filter(o -> o.getState() != OrderState.COMPLETED)
-                .filter(o -> o.getClient().getCompanyName().equals(order.getClient().getCompanyName()))
+                .filter(o -> o.getState() != OrderState.COMPLETED && o.getState() != OrderState.CANCELED)
+                .filter(o -> o.getClient().equals(order.getClient()))
                 .filter(o -> o.getLines().equals(order.getLines()))
+                .filter(o -> o.getCreationDate().equals(order.getCreationDate()))
                 .findFirst();
         if (optionalOrder.isPresent()) {
-            throw new ValidationException("Error while trying create duplicate order for companyName " + optionalOrder.get().getClient().getCompanyName());
+            throw new ValidationException("Error while trying create duplicate order for client " + optionalOrder.get().getClient().getCompanyName() + " order id " + optionalOrder.get().getId());
         }
     }
 
@@ -132,18 +133,36 @@ public class OrderProcessorImpl implements OrderProcessor {
             throw new ValidationException("There is a line with non-positive quantity!");
         }
 
-        //will throw exception if has unknown roll
-        lines.stream().map(OrderLine::getId).forEach(rollService::findRollById);
+        //will throw exception if has unknown roll or removed roll
+        try {
+            lines.stream().map(OrderLine::getRoll).map(Roll::getId).forEach(rollService::findRollById);
+        } catch (WebServiceException e) {
+            throw new ValidationException("There is unkwnown or removed roll in order lines!", e);
+        }
         //will throw exception if has unknown client
-        clientService.findClientById(client.getId());
+        try {
+            clientService.findClientById(client.getId());
+        } catch (WebServiceException e) {
+            throw new ValidationException("There is unkwnown or removed client in order!", e);
+        }
     }
 
     @Override
     public void validateIfOrderInProgress(Long id) throws ValidationException {
-        if (orderService.findOrderById(id).getState() == OrderState.INPROGRESS) {
-            throw new ValidationException("Order with id " + id + " is in progress at this moment");
-        } else {
-            log.info("Order with id " + id + " is not in progress");
+        OrderState state = orderService.findOrderById(id).getState();
+        switch (state) {
+            case NEW:
+            case QUEUED:
+                log.info("Order with id " + id + " is not in progress");
+                break;
+            case INPROGRESS:
+                throw new ValidationException("Order with id " + id + " is in progress at this moment");
+            case COMPLETED:
+                throw new ValidationException("Order with id " + id + " is completed at this moment");
+            case CANCELED:
+                throw new ValidationException("Order with id " + id + " is canceled at this moment");
+            default:
+                throw new IllegalArgumentException("state is illegal " + state);
         }
     }
 }

@@ -1,0 +1,10 @@
+{
+    "id": 35,
+    "sku": "DIA20026",
+    "rollType": "DIAMETER",
+    "paper": "NTC55",
+    "widthType": "WIDTH_80",
+    "coreType": "CORE_26",
+    "mainValue": 200.0,
+    "state": "ACTIVE"
+}

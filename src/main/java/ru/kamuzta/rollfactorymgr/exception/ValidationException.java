@@ -12,4 +12,9 @@ public class ValidationException extends UserFriendlyException {
         log.warn("ValidationError: " + errorDescription);
     }
 
+    public ValidationException(String errorDescription, Throwable e) {
+        super(errorDescription, e);
+        log.warn("ValidationError: " + errorDescription + "Exception cause: " + e);
+    }
+
 }

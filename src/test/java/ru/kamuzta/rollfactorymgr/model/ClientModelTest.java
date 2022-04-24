@@ -77,6 +77,7 @@ public class ClientModelTest {
                 .state(ClientState.ACTIVE)
                 .build();
         String json = jsonUtil.writeObject(client1, CouldNotSeserializeToJsonException::new);
+        log.info(json);
         Client client2 = jsonUtil.readValue(json, Client.class, CouldNotDeserializeJsonException::new);
         log.info(client1.toString());
         log.info(client2.toString());

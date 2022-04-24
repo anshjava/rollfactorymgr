@@ -7,17 +7,24 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import ru.kamuzta.rollfactorymgr.GuiceJUnitRunner;
+import ru.kamuzta.rollfactorymgr.exception.ValidationException;
 import ru.kamuzta.rollfactorymgr.exception.WebServiceException;
 import ru.kamuzta.rollfactorymgr.model.client.Client;
 import ru.kamuzta.rollfactorymgr.model.order.Order;
+import ru.kamuzta.rollfactorymgr.model.order.OrderLine;
 import ru.kamuzta.rollfactorymgr.model.order.OrderState;
+import ru.kamuzta.rollfactorymgr.model.roll.Roll;
 import ru.kamuzta.rollfactorymgr.modules.EventBusModule;
 import ru.kamuzta.rollfactorymgr.processor.OrderProcessor;
+import ru.kamuzta.rollfactorymgr.utils.json.CouldNotDeserializeJsonException;
+import ru.kamuzta.rollfactorymgr.utils.json.JsonUtil;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -25,6 +32,7 @@ import static org.junit.Assert.*;
 @RunWith(GuiceJUnitRunner.class)
 @GuiceJUnitRunner.GuiceModules({EventBusModule.class})
 public class OrderProcessorTest {
+    JsonUtil jsonUtil = JsonUtil.getInstance();
 
     @Inject
     OrderProcessor orderProcessor;
@@ -70,9 +78,9 @@ public class OrderProcessorTest {
 
         Order order3 = null;
         try {
-            order3 = orderProcessor.findOrderById(101L);
+            order3 = orderProcessor.findOrderById(200L);
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.warn(e.getMessage());
             assertTrue(e instanceof WebServiceException);
         }
         assertNull(order3);
@@ -83,12 +91,12 @@ public class OrderProcessorTest {
      */
     @Test
     public void findOrderByCompanyNamePatternTest() {
-        System.out.println("_________ START findOrderByCompanyNamePatternTest _________");
+        log.info("_________ START findOrderByCompanyNamePatternTest _________");
 
-        List<Order> result1 = orderProcessor.findOrderByCompanyNamePattern("Roll");
+        List<Order> result1 = orderProcessor.findOrderByCompanyNamePattern("Mega");
         assertNotNull(result1);
         result1.forEach(order -> log.info(order.toString()));
-        assertEquals(56, result1.size());
+        assertEquals(12, result1.size());
 
         List<Order> result2 = orderProcessor.findOrderByCompanyNamePattern("Best");
         assertNotNull(result2);
@@ -113,24 +121,23 @@ public class OrderProcessorTest {
         result1.forEach(order -> log.info(order.toString()));
         assertEquals(1, result1.size());
 
-        List<Order> result2 = orderProcessor.findOrderByParams(null, "Roll", null, null, null, null);
+        List<Order> result2 = orderProcessor.findOrderByParams(null, "Mega", null, null, null, null);
         assertNotNull(result2);
         log.info("Result2:");
         result2.forEach(order -> log.info(order.toString()));
-        assertEquals(56, result2.size());
+        assertEquals(12, result2.size());
 
-        List<Order> result3 = orderProcessor.findOrderByParams(null, null, OffsetDateTime.of(2022, 4, 10, 23, 14, 18, 0, ZoneOffset.of("+03:00")), null, null, null);
+        List<Order> result3 = orderProcessor.findOrderByParams(null, null, OffsetDateTime.of(2022, 4, 23, 23, 14, 18, 0, ZoneOffset.of("+03:00")), null, null, null);
         assertNotNull(result3);
         log.info("Result3:");
         result3.forEach(order -> log.info(order.toString()));
-        assertEquals(93, result3.size());
+        assertEquals(3, result3.size());
 
-
-        List<Order> result4 = orderProcessor.findOrderByParams(null, null, null, OffsetDateTime.of(2021, 4, 10, 23, 14, 19, 0, ZoneOffset.of("+03:00")), null, null);
+        List<Order> result4 = orderProcessor.findOrderByParams(null, null, null, OffsetDateTime.of(1995, 4, 10, 23, 14, 19, 0, ZoneOffset.of("+03:00")), null, null);
         assertNotNull(result4);
         log.info("Result4:");
         result4.forEach(order -> log.info(order.toString()));
-        assertEquals(7, result4.size());
+        assertEquals(2, result4.size());
 
         List<Order> result5 = orderProcessor.findOrderByParams(null, null, OffsetDateTime.of(2020, 1, 1, 0, 0, 0, 0, ZoneOffset.of("+03:00")), OffsetDateTime.of(2020, 1, 1, 0, 0, 4, 4, ZoneOffset.of("+03:00")), null, null);
         assertNotNull(result5);
@@ -144,284 +151,262 @@ public class OrderProcessorTest {
         result6.forEach(order -> log.info(order.toString()));
         assertEquals(3, result6.size());
 
-        List<Order> result7 = orderProcessor.findOrderByParams(null, null, null, null, null, "LEN5719");
+        List<Order> result7 = orderProcessor.findOrderByParams(null, null, null, null, null, "LEN8050");
         assertNotNull(result7);
         log.info("Result7:");
         result7.forEach(order -> log.info(order.toString()));
-        assertEquals(14, result7.size());
+        assertEquals(10, result7.size());
     }
-//
-//    /**
-//     * Testing removing client by id
-//     */
-//    @Test
-//    public void removeClientByIdTest() {
-//        System.out.println("_________ START removeClientByIdTest _________");
-//
-//        int countBefore = orderProcessor.getLocalRegistry().size();
-//        assertTrue(orderProcessor.removeClientById(5L));
-//
-//        //try to delete same client again
-//        try {
-//            assertFalse(orderProcessor.removeClientById(5L));
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            assertTrue(e instanceof WebServiceException);
-//        }
-//
-//        //try to delete client that is in workflow
-//        try {
-//            assertFalse(orderProcessor.removeClientById(1L));
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            assertTrue(e instanceof WebServiceException);
-//        }
-//
-//        //9-1=8
-//        int countAfter = orderProcessor.getLocalRegistry().size();
-//        assertEquals(countBefore - 1, countAfter);
-//        System.out.println("countBefore: " + countBefore + " countAfter: " + countAfter);
-//    }
-//
-//    /**
-//     * Testing creating new client
-//     */
-//    @Test
-//    public void createClientTest() {
-//        System.out.println("_________ START createClientTest _________");
-//
-//        int countBefore = orderProcessor.getLocalRegistry().size();
-//
-//        //same companyName
-//        Client client1 = null;
-//        try {
-//            client1 = orderProcessor.createClient(null, "OptTrade", "Bobruysk", "Lenina 45", "Vladimir", "79140789975", "vladimir@yandex.ru");
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            assertTrue(e instanceof WebServiceException);
-//        }
-//        assertNull(client1);
-//
-//        //wrong companyName format
-//        Client client2 = null;
-//        try {
-//            client2 = orderProcessor.createClient(null, "~!cawabanga!~", "Bobruysk", "Lenina 45", "Vladimir", "79140789975", "vladimir@yandex.ru");
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            assertTrue(e instanceof WebServiceException);
-//        }
-//        assertNull(client2);
-//
-//        //wrong city format
-//        Client client3 = null;
-//        try {
-//            client3 = orderProcessor.createClient(null, "Cawabanga", "!~Bobriysk<>", "Lenina 45", "Vladimir", "79140789975", "vladimir@yandex.ru");
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            assertTrue(e instanceof WebServiceException);
-//        }
-//        assertNull(client3);
-//
-//        //wrong address format
-//        Client client4 = null;
-//        try {
-//            client4 = orderProcessor.createClient(null, "Cawabanga", "Bobriysk", "Lenina 45!", "Vladimir", "79140789975", "vladimir@yandex.ru");
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            assertTrue(e instanceof WebServiceException);
-//        }
-//        assertNull(client4);
-//
-//        //wrong buyerName format
-//        Client client5 = null;
-//        try {
-//            client5 = orderProcessor.createClient(null, "Cawabanga", "Bobriysk", "Lenina 45", "Vladimir2", "79140789975", "vladimir@yandex.ru");
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            assertTrue(e instanceof WebServiceException);
-//        }
-//        assertNull(client5);
-//
-//        //wrong phone format
-//        Client client6 = null;
-//        try {
-//            client6 = orderProcessor.createClient(null, "Cawabanga", "Bobriysk", "Lenina 45", "Vladimir", "+79140789975", "vladimir@yandex.ru");
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            assertTrue(e instanceof WebServiceException);
-//        }
-//        assertNull(client6);
-//
-//        //wrong email format
-//        Client client7 = null;
-//        try {
-//            client7 = orderProcessor.createClient(null, "Cawabanga", "Bobriysk", "Lenina 45", "Vladimir", "79140789975", "vladimir@yandex.ru.");
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            assertTrue(e instanceof WebServiceException);
-//        }
-//        assertNull(client7);
-//
-//        //creating duplicate client
-//        Client client8 = null;
-//        try {
-//            client8 = orderProcessor.createClient(null, "NinjaRoll", "Tokyo", "Naruto 33", "Naruto Naruto", "71234567889", "naruto@tokyo.jp");
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            assertTrue(e instanceof WebServiceException);
-//        }
-//        assertNull(client8);
-//
-//        //create good new clients
-//        Client client9 = orderProcessor.createClient(null, "RollCompany", "Monaco", "BigStreet 1", "Paul", "79140782275", "paul@monaco.com");
-//        assertNotNull(client9);
-//        Client client10 = orderProcessor.createClient(null, "MyRoll", "Barselona", "Travaha 15", "Antonio", "79122789915", "antonio@travaha.es");
-//        assertNotNull(client10);
-//
-//        int countAfter = orderProcessor.getLocalRegistry().size();
-//
-//        assertEquals(countBefore + 2, countAfter);
-//        System.out.println("countBefore: " + countBefore + " countAfter: " + countAfter);
-//    }
-//
-//
-//    /**
-//     * Testing updating client parameters
-//     */
-//    @Test
-//    public void updateClientTest() {
-//        System.out.println("_________ START updateClientTest _________");
-//
-//        int countBefore = orderProcessor.getLocalRegistry().size();
-//
-//        //try to change client that is not existed
-//        Client client1 = orderProcessor.findClientById(1L);
-//        assertNotNull(client1);
-//        System.out.println(client1);
-//        client1.setId(100L);
-//        Client client1AfterUpdate = null;
-//        try {
-//            client1AfterUpdate = orderProcessor.updateClient(client1);
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            assertTrue(e instanceof WebServiceException);
-//        }
-//        assertNull(client1AfterUpdate);
-//
-//        //try to change client that is in workflow
-//        Client client2 = orderProcessor.findClientById(7L);
-//        assertNotNull(client2);
-//        System.out.println(client2);
-//        client2.setCity("St.Petersburg");
-//        Client client2AfterUpdate = null;
-//        try {
-//            client2AfterUpdate = orderProcessor.updateClient(client2);
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            assertTrue(e instanceof WebServiceException);
-//        }
-//        assertNull(client2AfterUpdate);
-//
-//        //try to change client that has same parameters of another client
-//        Client client3 = orderProcessor.findClientById(3L);
-//        assertNotNull(client3);
-//        System.out.println(client3);
-//        client3.setId(30L);
-//        Client client3AfterUpdate = null;
-//        try {
-//            client3AfterUpdate = orderProcessor.updateClient(client3);
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            assertTrue(e instanceof WebServiceException);
-//        }
-//        assertNull(client3AfterUpdate);
-//
-//        //try to change client with invalid city
-//        Client client4 = orderProcessor.findClientById(4L);
-//        assertNotNull(client4);
-//        System.out.println(client4);
-//        client4.setCity("798");
-//        Client client4AfterUpdate = null;
-//        try {
-//            client4AfterUpdate = orderProcessor.updateClient(client4);
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            assertTrue(e instanceof WebServiceException);
-//        }
-//        assertNull(client4AfterUpdate);
-//
-//        //try to change client with invalid address
-//        Client client5 = orderProcessor.findClientById(5L);
-//        assertNotNull(client5);
-//        System.out.println(client5);
-//        client5.setAddress("!~Address");
-//        Client client5AfterUpdate = null;
-//        try {
-//            client5AfterUpdate = orderProcessor.updateClient(client5);
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            assertTrue(e instanceof WebServiceException);
-//        }
-//        assertNull(client5AfterUpdate);
-//
-//        //try to change client with invalid buyerName
-//        Client client6 = orderProcessor.findClientById(6L);
-//        assertNotNull(client6);
-//        System.out.println(client6);
-//        client6.setBuyerName("Buyer88");
-//        Client client6AfterUpdate = null;
-//        try {
-//            client6AfterUpdate = orderProcessor.updateClient(client6);
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            assertTrue(e instanceof WebServiceException);
-//        }
-//        assertNull(client6AfterUpdate);
-//
-//        //try to change client with invalid buyer phone
-//        Client client7 = orderProcessor.findClientById(8L);
-//        assertNotNull(client7);
-//        System.out.println(client7);
-//        client7.setPhone("875245698745");
-//        Client client7AfterUpdate = null;
-//        try {
-//            client7AfterUpdate = orderProcessor.updateClient(client7);
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            assertTrue(e instanceof WebServiceException);
-//        }
-//        assertNull(client7AfterUpdate);
-//
-//        //try to change client with invalid buyer email
-//        Client client8 = orderProcessor.findClientById(9L);
-//        assertNotNull(client8);
-//        System.out.println(client8);
-//        client8.setEmail("mymail!@ggdkm.ru");
-//        Client client8AfterUpdate = null;
-//        try {
-//            client8AfterUpdate = orderProcessor.updateClient(client8);
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            assertTrue(e instanceof WebServiceException);
-//        }
-//        assertNull(client8AfterUpdate);
-//
-//        //update successfully
-//        Client client9 = orderProcessor.findClientById(2L);
-//        assertNotNull(client9);
-//        System.out.println(client9);
-//        Client client9Cloned = new Client(client9);
-//        client9Cloned.setEmail("newmail@newdomail.new");
-//        Client client9AfterUpdate = orderProcessor.updateClient(client9Cloned);
-//        assertNotNull(client9AfterUpdate);
-//        System.out.println(client9AfterUpdate);
-//        assertNotNull(client9AfterUpdate);
-//        assertEquals(client9Cloned.getEmail(), client9AfterUpdate.getEmail());
-//        assertNotEquals(client9, client9AfterUpdate);
-//
-//        int countAfter = orderProcessor.getLocalRegistry().size();
-//        assertEquals(countBefore, countAfter);
-//        System.out.println("countBefore: " + countBefore + " countAfter: " + countAfter);
-//    }
+
+    /**
+     * Testing removing order by id
+     */
+    @Test
+    public void removeOrderByIdTest() {
+        log.info("_________ START removeOrderByIdTest _________");
+
+        long countBefore = orderProcessor.getLocalRegistry().stream()
+                .filter(o -> o.getState() == OrderState.CANCELED).count();
+
+        assertTrue(orderProcessor.removeOrderById(4L));
+
+        //try to remove same order again
+        try {
+            assertFalse(orderProcessor.removeOrderById(4L));
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+            assertTrue(e instanceof ValidationException);
+        }
+
+        //try to remove order that is in workflow
+        try {
+            assertFalse(orderProcessor.removeOrderById(5L));
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+            assertTrue(e instanceof ValidationException);
+        }
+
+        //50+1=51
+        long countAfter = orderProcessor.getLocalRegistry().stream()
+                .filter(o -> o.getState() == OrderState.CANCELED).count();
+        assertEquals(countBefore + 1, countAfter);
+        log.info("countBefore: " + countBefore + " countAfter: " + countAfter);
+    }
+
+    /**
+     * Testing creating new order
+     */
+    @Test
+    public void createOrderTest() {
+        log.info("_________ START createClientTest _________");
+
+        int countBefore = orderProcessor.getLocalRegistry().size();
+
+        Client activeClient = jsonUtil.getObjectFromJson("activeClient.json", Client.class, CouldNotDeserializeJsonException::new);
+        List<OrderLine> lines = jsonUtil.getListFromJson("orderLineExampleList.json", OrderLine.class, CouldNotDeserializeJsonException::new);
+        Client unknownClient = jsonUtil.getObjectFromJson("unknownClient.json", Client.class, CouldNotDeserializeJsonException::new);
+        Roll unknownRoll = jsonUtil.getObjectFromJson("unknownRoll.json", Roll.class, CouldNotDeserializeJsonException::new);
+
+
+        //date from future
+        Order order1 = null;
+        try {
+            order1 = orderProcessor.createOrder(OffsetDateTime.now().plusDays(1), activeClient, lines);
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+            assertTrue(e instanceof ValidationException);
+        }
+        assertNull(order1);
+
+        //same client has equal order that is not completed
+        Order inProgressOrder = orderProcessor.findOrderByCompanyNamePattern(activeClient.getCompanyName()).stream()
+                .filter(o -> activeClient.equals(o.getClient()) && o.getState() == OrderState.NEW).findFirst().orElseThrow(() -> new IllegalArgumentException("Opps"));
+        Order order2 = null;
+        try {
+            order2 = orderProcessor.createOrder(null, inProgressOrder.getClient(), inProgressOrder.getLines());
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+            assertTrue(e instanceof ValidationException);
+        }
+        assertNull(order2);
+
+        //orderLines is empty
+        Order order3 = null;
+        try {
+            order3 = orderProcessor.createOrder(null, activeClient, new ArrayList<>());
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+            assertTrue(e instanceof ValidationException);
+        }
+        assertNull(order3);
+
+        //has line with wrong quantity
+        lines.get(0).setQuantity(0);
+        Order order4 = null;
+        try {
+            order4 = orderProcessor.createOrder(null, activeClient, lines);
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+            assertTrue(e instanceof ValidationException);
+        }
+        assertNull(order4);
+        lines.remove(0);
+
+        //has unknown roll
+        lines.add(0, new OrderLine(1L, unknownRoll, 10, OrderState.NEW));
+        Order order5 = null;
+        try {
+            order5 = orderProcessor.createOrder(null, activeClient, lines);
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+            assertTrue(e instanceof ValidationException);
+        }
+        assertNull(order5);
+        lines.remove(0);
+
+        //has unknown client
+        Order order6 = null;
+        try {
+            order6 = orderProcessor.createOrder(null, unknownClient, lines);
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+            assertTrue(e instanceof ValidationException);
+        }
+        assertNull(order6);
+
+        //create good new orders
+        lines.remove(11);
+        Order order7 = orderProcessor.createOrder(OffsetDateTime.of(1997, 2, 18, 15, 30, 0, 0, ZoneOffset.of("+03:00")), activeClient, lines);
+        assertNotNull(order7);
+        List<OrderLine> copyOrderLines = lines.stream().map(OrderLine::new).collect(Collectors.toList());
+        copyOrderLines.remove(11);
+        Order order8 = orderProcessor.createOrder(OffsetDateTime.of(1997, 2, 18, 15, 30, 0, 0, ZoneOffset.of("+03:00")), activeClient, copyOrderLines);
+        assertNotNull(order8);
+
+
+        int countAfter = orderProcessor.getLocalRegistry().size();
+
+        assertEquals(countBefore + 2, countAfter);
+        log.info("countBefore: " + countBefore + " countAfter: " + countAfter);
+    }
+
+
+    /**
+     * Testing updating order parameters
+     */
+    @Test
+    public void updateOrderTest() {
+        log.info("_________ START updateOrderTest _________");
+
+        int countBefore = orderProcessor.getLocalRegistry().size();
+
+        Order orderInNewState = jsonUtil.getObjectFromJson("orderInNewState.json", Order.class, CouldNotDeserializeJsonException::new);
+        Order orderInProgressState = jsonUtil.getObjectFromJson("orderInProgressState.json", Order.class, CouldNotDeserializeJsonException::new);
+        Client unknownClient = jsonUtil.getObjectFromJson("unknownClient.json", Client.class, CouldNotDeserializeJsonException::new);
+        Roll unknownRoll = jsonUtil.getObjectFromJson("unknownRoll.json", Roll.class, CouldNotDeserializeJsonException::new);
+
+        //wrong order id
+        Order clonedOrder1 = new Order(orderInNewState);
+        clonedOrder1.setId(200L);
+        Order resultOrder1 = null;
+        try {
+            resultOrder1 = orderProcessor.updateOrder(clonedOrder1);
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+            assertTrue(e instanceof ValidationException);
+        }
+        assertNull(resultOrder1);
+
+        //order is in progress, completed or canceled
+        Order clonedOrder2 = new Order(orderInProgressState);
+        clonedOrder2.getLines().get(0).setQuantity(100);
+        Order resultOrder2 = null;
+        try {
+            resultOrder2 = orderProcessor.updateOrder(clonedOrder2);
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+            assertTrue(e instanceof ValidationException);
+        }
+        assertNull(resultOrder2);
+
+        //orderLines is empty
+        Order clonedOrder3 = new Order(orderInNewState);
+        clonedOrder3.setLines(new ArrayList<>());
+        Order resultOrder3 = null;
+        try {
+            resultOrder3 = orderProcessor.updateOrder(clonedOrder3);
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+            assertTrue(e instanceof ValidationException);
+        }
+        assertNull(resultOrder3);
+
+        //has line with wrong quantity
+        Order clonedOrder4 = new Order(orderInNewState);
+        clonedOrder4.getLines().get(0).setQuantity(0);
+        Order resultOrder4 = null;
+        try {
+            resultOrder4 = orderProcessor.updateOrder(clonedOrder4);
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+            assertTrue(e instanceof ValidationException);
+        }
+        assertNull(resultOrder4);
+
+        //has unknown roll
+        Order clonedOrder5 = new Order(orderInNewState);
+        clonedOrder5.getLines().get(0).setRoll(unknownRoll);
+        Order resultOrder5 = null;
+        try {
+            resultOrder5 = orderProcessor.updateOrder(clonedOrder5);
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+            assertTrue(e instanceof ValidationException);
+        }
+        assertNull(resultOrder5);
+
+        //has unknown client
+        Order clonedOrder6 = new Order(orderInNewState);
+        clonedOrder6.setClient(unknownClient);
+        Order resultOrder6 = null;
+        try {
+            resultOrder6 = orderProcessor.updateOrder(clonedOrder6);
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+            assertTrue(e instanceof ValidationException);
+        }
+        assertNull(resultOrder6);
+
+        //same client has equal to new modified order that is not completed
+        Order clonedOrder7 = new Order(orderInNewState);
+        Order resultOrder7 = null;
+        try {
+            resultOrder7 = orderProcessor.updateOrder(clonedOrder7);
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+            assertTrue(e instanceof ValidationException);
+        }
+        assertNull(resultOrder7);
+
+        //update successfully
+        List<Order> orderList = orderProcessor.getLocalRegistry();
+
+        Order order8 = orderList.get(0);
+        Order order8Cloned = new Order(order8);
+        order8Cloned.setCreationDate(OffsetDateTime.now());
+        Order order8AfterUpdate = orderProcessor.updateOrder(order8Cloned);
+        assertNotNull(order8AfterUpdate);
+        assertEquals(order8Cloned.getCreationDate(), order8AfterUpdate.getCreationDate());
+        Order order9 = orderList.get(1);
+        Order order9Cloned = new Order(order9);
+        order9Cloned.getLines().get(0).setQuantity(100);
+        Order order9AfterUpdate = orderProcessor.updateOrder(order9Cloned);
+        assertNotNull(order9AfterUpdate);
+        assertEquals(order9Cloned.getLines(), order9AfterUpdate.getLines());
+
+        int countAfter = orderProcessor.getLocalRegistry().size();
+        assertEquals(countBefore, countAfter);
+        log.info("countBefore: " + countBefore + " countAfter: " + countAfter);
+    }
 
 }

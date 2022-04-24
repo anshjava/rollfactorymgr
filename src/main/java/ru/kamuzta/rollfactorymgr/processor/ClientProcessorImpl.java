@@ -7,7 +7,10 @@ import org.jetbrains.annotations.Nullable;
 import ru.kamuzta.rollfactorymgr.exception.ValidationException;
 import ru.kamuzta.rollfactorymgr.exception.WebServiceException;
 import ru.kamuzta.rollfactorymgr.model.client.Client;
+import ru.kamuzta.rollfactorymgr.model.order.Order;
+import ru.kamuzta.rollfactorymgr.model.order.OrderState;
 import ru.kamuzta.rollfactorymgr.service.webservice.ClientService;
+import ru.kamuzta.rollfactorymgr.service.webservice.OrderService;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -19,9 +22,13 @@ public class ClientProcessorImpl implements ClientProcessor {
     @Inject
     ClientService clientService;
 
+    @Inject
+    OrderService orderService;
+
     @Override
     public void updateRegistryFromServer() throws WebServiceException {
         clientService.updateRegistryFromServer();
+        orderService.updateRegistryFromServer();
     }
 
     @Override
@@ -140,8 +147,15 @@ public class ClientProcessorImpl implements ClientProcessor {
 
     @Override
     public void validateIfClientInWorkflow(Long id) throws ValidationException {
-        if (id == 1L) {
-            throw new ValidationException("Client with id " + id + " is in workflow at this moment");
+        Client client = findClientById(id);
+        Optional<Order> optionalOrder = orderService.findOrderByParams(null,client.getCompanyName(), null, null, null, null)
+                .stream()
+                .filter(o -> o.getClient().equals(client))
+                .filter(o -> o.getState() != OrderState.COMPLETED && o.getState() != OrderState.CANCELED)
+                .findFirst();
+
+        if (optionalOrder.isPresent()) {
+            throw new ValidationException("Client with id " + id + " is in workflow at this moment, it has order " + optionalOrder.get().getId() + " in state " + optionalOrder.get().getState());
         } else {
             log.info("Client with id " + id + " is not in workflow");
         }

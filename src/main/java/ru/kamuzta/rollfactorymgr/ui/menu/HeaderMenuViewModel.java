@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import ru.kamuzta.rollfactorymgr.event.*;
 import ru.kamuzta.rollfactorymgr.ui.Screen;
+import ru.kamuzta.rollfactorymgr.ui.client.ClientRegistryView;
 import ru.kamuzta.rollfactorymgr.ui.dialog.DialogHelper;
 import ru.kamuzta.rollfactorymgr.ui.roll.RollFindView;
 import ru.kamuzta.rollfactorymgr.ui.roll.RollRegistryView;
@@ -45,6 +46,7 @@ public class HeaderMenuViewModel implements ViewModel, DisposableByEvent {
 
     void onClientRegistry() {
         log.info("Screen ["+screen+"] Action: " + "onClientRegistry");
+        eventBus.post(new ShowFullScreenEvent<>(Screen.CLIENT_REGISTRY, ClientRegistryView.class));
     }
 
     void onClientFind() {

@@ -154,11 +154,11 @@ public class ClientProcessorTest {
 
         int countBefore = clientProcessor.getActiveClientsLocal().size();
         assertEquals(10, countBefore);
-        assertTrue(clientProcessor.removeClientById(5L));
+        assertTrue(clientProcessor.removeClientById(6L));
 
         //try to delete same client again
         try {
-            assertFalse(clientProcessor.removeClientById(5L));
+            assertFalse(clientProcessor.removeClientById(6L));
         } catch (Exception e) {
             log.info(e.getMessage());
             assertTrue(e instanceof ValidationException);
@@ -305,7 +305,7 @@ public class ClientProcessorTest {
         assertNull(client1AfterUpdate);
 
         //try to change client that is in workflow
-        Client client2 = clientProcessor.findClientById(7L);
+        Client client2 = clientProcessor.findClientById(2L);
         assertNotNull(client2);
         log.info(client2.toString());
         client2.setCity("St.Petersburg");
@@ -403,7 +403,7 @@ public class ClientProcessorTest {
         assertNull(client8AfterUpdate);
 
         //update successfully
-        Client client9 = clientProcessor.findClientById(2L);
+        Client client9 = clientProcessor.findClientById(7L);
         assertNotNull(client9);
         log.info(client9.toString());
         Client client9Cloned = new Client(client9);

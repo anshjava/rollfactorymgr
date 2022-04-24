@@ -10,53 +10,53 @@
     <top>
         <VBox>
             <HBox styleClass="menuPane">
-                <SplitMenuButton fx:id="rollSplitMenuButton" mnemonicParsing="false" text="Ассортимент">
+                <SplitMenuButton fx:id="rollSplitMenuButton" mnemonicParsing="false" text="Rolls">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#onRollRegistry" text="Каталог роликов" />
-                        <MenuItem mnemonicParsing="false" onAction="#onRollFind" text="Найти ролик" />
-                        <MenuItem mnemonicParsing="false" onAction="#onRollCreate" text="Создать ролик" />
+                        <MenuItem mnemonicParsing="false" onAction="#onRollRegistry" text="Roll's registry" />
+                        <MenuItem mnemonicParsing="false" onAction="#onRollFind" text="Find roll" />
+                        <MenuItem mnemonicParsing="false" onAction="#onRollCreate" text="Create roll" />
                     </items>
                     <styleClass>
                         <String fx:value="primary" />
                         <String fx:value="first" />
                     </styleClass>
                 </SplitMenuButton>
-                <SplitMenuButton fx:id="clientSplitMenuButton" mnemonicParsing="false" text="Клиенты">
+                <SplitMenuButton fx:id="clientSplitMenuButton" mnemonicParsing="false" text="Clients">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#onClientRegistry" text="Справочник клиентов" />
-                        <MenuItem mnemonicParsing="false" onAction="#onClientFind" text="Найти клиента" />
-                        <MenuItem mnemonicParsing="false" onAction="#onClientCreate" text="Создать клиента" />
+                        <MenuItem mnemonicParsing="false" onAction="#onClientRegistry" text="Client's registry" />
+                        <MenuItem mnemonicParsing="false" onAction="#onClientFind" text="Find client" />
+                        <MenuItem mnemonicParsing="false" onAction="#onClientCreate" text="Create client" />
                     </items>
                     <styleClass>
                         <String fx:value="primary" />
                         <String fx:value="middle" />
                     </styleClass>
                 </SplitMenuButton>
-                <SplitMenuButton fx:id="orderSplitMenuButton" mnemonicParsing="false" text="Заказы">
+                <SplitMenuButton fx:id="orderSplitMenuButton" mnemonicParsing="false" text="Orders">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#onOrderRegistry" text="Заказы в работе" />
-                        <MenuItem mnemonicParsing="false" onAction="#onOrderFind" text="Найти заказ" />
-                        <MenuItem mnemonicParsing="false" onAction="#onOrderCreate" text="Разместить заказ" />
+                        <MenuItem mnemonicParsing="false" onAction="#onOrderRegistry" text="Orders at work" />
+                        <MenuItem mnemonicParsing="false" onAction="#onOrderFind" text="Find order" />
+                        <MenuItem mnemonicParsing="false" onAction="#onOrderCreate" text="Create order" />
                     </items>
                     <styleClass>
                         <String fx:value="primary" />
                         <String fx:value="middle" />
                     </styleClass>
                 </SplitMenuButton>
-                <SplitMenuButton fx:id="configSplitMenuButton" mnemonicParsing="false" text="Настройки">
+                <SplitMenuButton fx:id="configSplitMenuButton" mnemonicParsing="false" text="Settings">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#onConfigManager" text="Данные менеджера" />
+                        <MenuItem mnemonicParsing="false" onAction="#onConfigManager" text="Manager data" />
                         <MenuItem mnemonicParsing="false" onAction="#onConfigWorkplace"
                                   text="Настройки рабочего места" />
-                        <MenuItem mnemonicParsing="false" onAction="#onConfigConnection" text="Настройки подключения" />
-                        <MenuItem mnemonicParsing="false" onAction="#onAbout" text="О программе" />
+                        <MenuItem mnemonicParsing="false" onAction="#onConfigConnection" text="Connection settings" />
+                        <MenuItem mnemonicParsing="false" onAction="#onAbout" text="About" />
                     </items>
                     <styleClass>
                         <String fx:value="primary" />
                         <String fx:value="middle" />
                     </styleClass>
                 </SplitMenuButton>
-                <Button fx:id="exitButton" onAction="#onExit" text="Выход">
+                <Button fx:id="exitButton" onAction="#onExit" text="Exit">
                     <styleClass>
                         <String fx:value="primary" />
                         <String fx:value="last" />

@@ -42,7 +42,7 @@ public class RollProperty {
                 new SimpleObjectProperty<>(Paper.NTC44),
                 new SimpleObjectProperty<>(WidthType.WIDTH_57),
                 new SimpleObjectProperty<>(CoreType.CORE_12),
-                new SimpleObjectProperty<>(null),
+                new SimpleObjectProperty<>(BigDecimal.ZERO),
                 new SimpleObjectProperty<>(RollState.ACTIVE)
         );
     }

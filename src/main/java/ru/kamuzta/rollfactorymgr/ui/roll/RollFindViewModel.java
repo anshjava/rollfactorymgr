@@ -90,7 +90,6 @@ public class RollFindViewModel implements ViewModel, DisposableByEvent {
     void onEditRoll(RollProperty rollProperty) {
         log.info("Screen [" + screen + "] Action: " + "onEditRoll");
         eventBus.post(new ShowEditRollEvent(rollProperty));
-        //TODO update table afterEdit
     }
 
     void onRemoveRoll(String sku) {

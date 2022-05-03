@@ -38,6 +38,19 @@ public class ClientProperty {
         this.state = new SimpleObjectProperty<>(that.state.getValue());
     }
 
+    //from Client constructor
+    public ClientProperty(Client client) {
+        this.id = new SimpleObjectProperty<>(client.getId());
+        this.creationDate = new SimpleObjectProperty<>(client.getCreationDate());
+        this.companyName = new SimpleStringProperty(client.getCompanyName());
+        this.city = new SimpleStringProperty(client.getCity());
+        this.address = new SimpleStringProperty(client.getAddress());
+        this.buyerName = new SimpleStringProperty(client.getBuyerName());
+        this.phone = new SimpleStringProperty(client.getPhone());
+        this.email = new SimpleStringProperty(client.getEmail());
+        this.state = new SimpleObjectProperty<>(client.getState());
+    }
+
     public static ClientProperty getSample() {
         return new ClientProperty(
                 new SimpleObjectProperty<>(null),
@@ -50,6 +63,20 @@ public class ClientProperty {
                 new SimpleStringProperty(""),
                 new SimpleObjectProperty<>(ClientState.ACTIVE)
         );
+    }
+
+    public Client toClient() {
+        return Client.builder()
+                .id(id.getValue())
+                .creationDate(creationDate.get())
+                .companyName(companyName.get())
+                .city(city.get())
+                .address(address.get())
+                .buyerName(buyerName.get())
+                .phone(phone.get())
+                .email(email.get())
+                .state(state.get())
+                .build();
     }
 
 }

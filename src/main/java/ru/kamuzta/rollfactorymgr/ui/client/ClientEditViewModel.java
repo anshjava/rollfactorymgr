@@ -13,15 +13,9 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import ru.kamuzta.rollfactorymgr.event.*;
-import ru.kamuzta.rollfactorymgr.model.client.Client;
 import ru.kamuzta.rollfactorymgr.model.client.ClientProperty;
-import ru.kamuzta.rollfactorymgr.model.roll.Roll;
-import ru.kamuzta.rollfactorymgr.model.roll.RollProperty;
 import ru.kamuzta.rollfactorymgr.processor.ClientProcessor;
-import ru.kamuzta.rollfactorymgr.processor.RollProcessor;
 import ru.kamuzta.rollfactorymgr.ui.Screen;
-
-import java.math.BigDecimal;
 
 @Slf4j
 public class ClientEditViewModel implements ViewModel, DisposableByEvent {
@@ -43,17 +37,7 @@ public class ClientEditViewModel implements ViewModel, DisposableByEvent {
 
     void editClient() {
         log.info("Screen [" + screen + "] Action: " + "editClient");
-        clientProcessor.updateClient(
-                Client.builder().id(clientProperty.getValue().getId().getValue())
-                        .creationDate(clientProperty.getValue().getCreationDate().get())
-                        .companyName(clientProperty.getValue().getCompanyName().get())
-                        .city(clientProperty.getValue().getCity().get())
-                        .address(clientProperty.getValue().getAddress().get())
-                        .buyerName(clientProperty.getValue().getBuyerName().get())
-                        .phone(clientProperty.getValue().getPhone().get())
-                        .email(clientProperty.getValue().getEmail().get())
-                        .state(clientProperty.getValue().getState().get()).build()
-        );
+        clientProcessor.updateClient(clientProperty.get().toClient());
         Platform.runLater(() -> eventBus.post(new UpdateClientTableEvent()));
     }
 

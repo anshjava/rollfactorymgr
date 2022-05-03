@@ -6,7 +6,6 @@ import lombok.Getter;
 import ru.kamuzta.rollfactorymgr.utils.RollCalculator;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 /**
  * Roll wrapper for FX

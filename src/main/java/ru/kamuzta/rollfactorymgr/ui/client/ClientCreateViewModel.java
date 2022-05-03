@@ -12,12 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import ru.kamuzta.rollfactorymgr.event.*;
 import ru.kamuzta.rollfactorymgr.model.client.ClientProperty;
-import ru.kamuzta.rollfactorymgr.model.roll.RollProperty;
 import ru.kamuzta.rollfactorymgr.processor.ClientProcessor;
-import ru.kamuzta.rollfactorymgr.processor.RollProcessor;
 import ru.kamuzta.rollfactorymgr.ui.Screen;
-
-import java.math.BigDecimal;
 
 @Slf4j
 public class ClientCreateViewModel implements ViewModel, DisposableByEvent {

@@ -24,6 +24,8 @@ public enum Screen {
 
     CLIENT_CREATE,
 
+    CLIENT_EDIT,
+
     ERROR_DIALOG,
 
     HEADER_MENU,

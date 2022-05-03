@@ -123,32 +123,8 @@ public class RollEditView implements FxmlView<RollEditViewModel>, Initializable 
 
     @FXML
     void onApplyChanges(ActionEvent actionEvent) {
-        Roll editedRoll = Roll.builder()
-                .id(Long.parseLong(id.getText()))
-                .sku(sku.getText())
-                .rollType(rollType.getValue())
-                .paper(paper.getValue())
-                .widthType(widthType.getValue())
-                .coreType(coreType.getValue())
-                .mainValue(getValueByRollType(rollType.getValue()))
-                .build();
-        viewModel.editRoll(editedRoll);
+        viewModel.editRoll();
         viewModel.close(actionEvent);
-    }
-
-    private BigDecimal getValueByRollType(RollType rollType) {
-        try {
-            switch (rollType) {
-                case LENGTH:
-                    return new BigDecimal(rollLength.textProperty().get());
-                case DIAMETER:
-                    return new BigDecimal(rollDiameter.textProperty().get());
-                default:
-                    throw new IllegalArgumentException(rollType.getTypeName());
-            }
-        } catch (NumberFormatException e) {
-            return BigDecimal.ZERO;
-        }
     }
 
     @FXML
@@ -165,8 +141,8 @@ public class RollEditView implements FxmlView<RollEditViewModel>, Initializable 
 
     private void setInitialParameters() {
         RollProperty rollProperty = viewModel.getRollProperty().get();
-        id.textProperty().bind(rollProperty.getId().asString());
-        sku.textProperty().bind(rollProperty.getSku());
+        id.textProperty().setValue(rollProperty.getId().getValue().toString());
+        sku.textProperty().bindBidirectional(rollProperty.getSku());
         rollType.valueProperty().bindBidirectional(rollProperty.getRollType());
         paper.valueProperty().bindBidirectional(rollProperty.getPaper());
         widthType.valueProperty().bindBidirectional(rollProperty.getWidthType());

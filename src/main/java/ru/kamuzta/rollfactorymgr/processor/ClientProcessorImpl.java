@@ -113,7 +113,7 @@ public class ClientProcessorImpl implements ClientProcessor {
 
         List<Client> foundDuplicate = findClientByParams(null, null, null, null, client.getCity(),
                 client.getAddress(), client.getBuyerName(), client.getPhone(), client.getEmail());
-        Optional<Client> optionalClient = foundDuplicate.stream().findFirst();
+        Optional<Client> optionalClient = foundDuplicate.stream().filter(c -> !c.getId().equals(client.getId())).findFirst();
         if (optionalClient.isPresent()) {
             throw new ValidationException("Error while trying create duplicate client of clientName " + optionalClient.get().getCompanyName());
         }

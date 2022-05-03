@@ -2,22 +2,19 @@ package ru.kamuzta.rollfactorymgr.ui.client;
 
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.util.StringConverter;
 import ru.kamuzta.rollfactorymgr.model.client.ClientProperty;
 import ru.kamuzta.rollfactorymgr.model.client.ClientState;
-import ru.kamuzta.rollfactorymgr.model.roll.CoreType;
 import ru.kamuzta.rollfactorymgr.ui.menu.HeaderMenuView;
 import ru.kamuzta.rollfactorymgr.ui.table.*;
 
-import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class ClientRegistryView implements FxmlView<ClientRegistryViewModel>, Initializable {
@@ -55,23 +52,23 @@ public class ClientRegistryView implements FxmlView<ClientRegistryViewModel>, In
     @FXML
     private Label detailsTitle;
     @FXML
-    private TextField detailsId;
+    private Label detailsId;
     @FXML
-    private DatePicker detailsCreationDate;
+    private Label detailsCreationDate;
     @FXML
-    private TextField detailsCompanyName;
+    private Label detailsCompanyName;
     @FXML
-    private TextField detailsCity;
+    private Label detailsCity;
     @FXML
-    private TextField detailsAddress;
+    private Label detailsAddress;
     @FXML
-    private TextField detailsBuyerName;
+    private Label detailsBuyerName;
     @FXML
-    private TextField detailsPhone;
+    private Label detailsPhone;
     @FXML
-    private TextField detailsEmail;
+    private Label detailsEmail;
     @FXML
-    private ComboBox<ClientState> detailsState;
+    private Label detailsState;
 
 
     @InjectViewModel
@@ -106,32 +103,19 @@ public class ClientRegistryView implements FxmlView<ClientRegistryViewModel>, In
         detailsBox.managedProperty().bind(detailsBox.visibleProperty());
         detailsTitle.setText("Client details:");
 
-        detailsState.setItems(FXCollections.observableArrayList(ClientState.values()));
-        detailsState.setConverter(new StringConverter<ClientState>() {
-            @Override
-            public String toString(ClientState clientState) {
-                return clientState.toString();
-            }
-
-            @Override
-            public ClientState fromString(String clientState) {
-                return ClientState.valueOf(clientState);
-            }
-        });
-
         clientRegistryTableView.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
                     int selectedIndex = clientRegistryTableView.getSelectionModel().getSelectedIndex();
                     if (selectedIndex >= 0) {
                         ClientProperty clientProperty = clientRegistryTableView.getItems().get(selectedIndex);
                         detailsId.textProperty().set(clientProperty.getId().getValue().toString());
-                        detailsCreationDate.setValue(clientProperty.getCreationDate().getValue());
+                        detailsCreationDate.textProperty().set(clientProperty.getCreationDate().getValue().format(DateTimeFormatter.ISO_LOCAL_DATE));
                         detailsCompanyName.textProperty().set(clientProperty.getCompanyName().getValue());
                         detailsCity.textProperty().set(clientProperty.getCity().getValue());
                         detailsAddress.textProperty().set(clientProperty.getAddress().getValue());
                         detailsBuyerName.textProperty().set(clientProperty.getBuyerName().getValue());
                         detailsEmail.textProperty().set(clientProperty.getEmail().getValue());
                         detailsPhone.textProperty().set(clientProperty.getPhone().getValue());
-                        detailsState.valueProperty().set(clientProperty.getState().getValue());
+                        detailsState.textProperty().set(clientProperty.getState().getValue().toString());
                     }
                 }
         );

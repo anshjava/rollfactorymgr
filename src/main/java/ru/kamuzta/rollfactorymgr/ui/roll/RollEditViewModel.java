@@ -40,9 +40,17 @@ public class RollEditViewModel implements ViewModel, DisposableByEvent {
         eventBus.register(this);
     }
 
-    void editRoll(Roll editedRoll) {
+    void editRoll() {
         log.info("Screen [" + screen + "] Action: " + "editRoll");
-        rollProcessor.updateRoll(editedRoll);
+        rollProcessor.updateRoll(Roll.builder().id(rollProperty.getValue().getId().getValue())
+                .sku(rollProperty.getValue().getSku().getValue())
+                .rollType(rollProperty.getValue().getRollType().getValue())
+                .paper(rollProperty.getValue().getPaper().getValue())
+                .widthType(rollProperty.getValue().getWidthType().getValue())
+                .coreType(rollProperty.getValue().getCoreType().getValue())
+                .mainValue(rollProperty.getValue().getMainValue().getValue())
+                .state(rollProperty.getValue().getState().getValue())
+                .build());
         Platform.runLater(() -> eventBus.post(new UpdateRollTableEvent()));
     }
 

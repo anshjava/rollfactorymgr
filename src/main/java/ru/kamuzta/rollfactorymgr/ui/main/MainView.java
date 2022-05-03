@@ -42,6 +42,10 @@ import org.jetbrains.annotations.Nullable;
 import ru.kamuzta.rollfactorymgr.event.*;
 import ru.kamuzta.rollfactorymgr.exception.UserFriendlyException;
 import ru.kamuzta.rollfactorymgr.ui.*;
+import ru.kamuzta.rollfactorymgr.ui.client.ClientCreateView;
+import ru.kamuzta.rollfactorymgr.ui.client.ClientCreateViewModel;
+import ru.kamuzta.rollfactorymgr.ui.client.ClientEditView;
+import ru.kamuzta.rollfactorymgr.ui.client.ClientEditViewModel;
 import ru.kamuzta.rollfactorymgr.ui.dialog.DialogAlert;
 import ru.kamuzta.rollfactorymgr.ui.dialog.DialogHelper;
 import ru.kamuzta.rollfactorymgr.ui.dialog.WaitDialogView;
@@ -420,6 +424,17 @@ public class MainView {
     @Subscribe
     public void onEvent(@NotNull ShowCreateRollEvent event) {
         RollCreateViewModel model = showDialog(Screen.ROLL_CREATE, RollCreateView.class);
+    }
+
+    @Subscribe
+    public void onEvent(@NotNull ShowEditClientEvent event) {
+        ClientEditViewModel model = showDialog(Screen.CLIENT_EDIT, ClientEditView.class);
+        model.setClientProperty(event.getClientProperty());
+    }
+
+    @Subscribe
+    public void onEvent(@NotNull ShowCreateClientEvent event) {
+        ClientCreateViewModel model = showDialog(Screen.CLIENT_CREATE, ClientCreateView.class);
     }
 
     @Subscribe

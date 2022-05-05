@@ -33,7 +33,7 @@ public class RollFindViewModel implements ViewModel, DisposableByEvent {
     @Getter
     private RollProperty rollProperty = RollProperty.getSample();
 
-    private ListProperty<RollProperty> rollProperties = new SimpleListProperty<>();
+    private ListProperty<RollProperty> rollProperties = new SimpleListProperty<>(FXCollections.observableArrayList());
     @Getter
     private ListProperty<RollFilter> availableFilters = new SimpleListProperty<>(FXCollections.observableArrayList(RollFilter.values()));
     @Getter

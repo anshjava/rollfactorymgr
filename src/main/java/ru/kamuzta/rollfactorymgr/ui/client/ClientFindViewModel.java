@@ -5,8 +5,7 @@ import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.application.Platform;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.Getter;
@@ -15,26 +14,35 @@ import org.jetbrains.annotations.NotNull;
 import ru.kamuzta.rollfactorymgr.event.*;
 import ru.kamuzta.rollfactorymgr.model.client.ClientFilter;
 import ru.kamuzta.rollfactorymgr.model.client.ClientProperty;
+import ru.kamuzta.rollfactorymgr.model.client.ClientState;
 import ru.kamuzta.rollfactorymgr.processor.ClientProcessor;
 import ru.kamuzta.rollfactorymgr.ui.Screen;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
+@Getter
 public class ClientFindViewModel implements ViewModel, DisposableByEvent {
 
     private final ClientProcessor clientProcessor;
     private final EventBus eventBus;
     private final Screen screen;
 
-    @Getter
-    private ClientProperty clientProperty = ClientProperty.getSample();
+    //search filters
+    private final ObjectProperty<Long> id = new SimpleObjectProperty<>(null);
+    private final ObjectProperty<LocalDate> creationDateFrom = new SimpleObjectProperty<>(LocalDate.now());
+    private final ObjectProperty<LocalDate> creationDateTo = new SimpleObjectProperty<>(LocalDate.now());
+    private final StringProperty companyName = new SimpleStringProperty("");
+    private final StringProperty city = new SimpleStringProperty("");
+    private final StringProperty address = new SimpleStringProperty("");
+    private final StringProperty buyerName = new SimpleStringProperty("");
+    private final StringProperty phone = new SimpleStringProperty("");
+    private final StringProperty email = new SimpleStringProperty("");
 
-    private ListProperty<ClientProperty> clientProperties = new SimpleListProperty<>();
-    @Getter
+    private ListProperty<ClientProperty> clientProperties = new SimpleListProperty<>(FXCollections.observableArrayList());
     private ListProperty<ClientFilter> availableFilters = new SimpleListProperty<>(FXCollections.observableArrayList(ClientFilter.values()));
-    @Getter
     private ListProperty<ClientFilter> selectedFilters = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     @Inject
@@ -43,15 +51,6 @@ public class ClientFindViewModel implements ViewModel, DisposableByEvent {
         this.eventBus = eventBus;
         this.screen = Screen.CLIENT_FIND;
         eventBus.register(this);
-    }
-
-
-    public ObservableList<ClientProperty> getClientProperties() {
-        return clientProperties.get();
-    }
-
-    public ListProperty<ClientProperty> clientPropertiesProperty() {
-        return clientProperties;
     }
 
     public void setClientProperties(ObservableList<ClientProperty> clientProperties) {
@@ -69,15 +68,15 @@ public class ClientFindViewModel implements ViewModel, DisposableByEvent {
         clientProcessor.updateRegistryFromServer();
         ObservableList<ClientFilter> clientFilters = selectedFilters.getValue();
         List<ClientProperty> clientPropertyList = clientProcessor.findClientByParams(
-                clientFilters.contains(ClientFilter.ID) ? clientProperty.getId().getValue() : null,
-                clientFilters.contains(ClientFilter.COMPANY_NAME) ? clientProperty.getCompanyName().getValue() : null,
-                clientFilters.contains(ClientFilter.CREATION_DATE) ? clientProperty.getCreationDate().getValue() : null,
-                clientFilters.contains(ClientFilter.CREATION_DATE) ? clientProperty.getCreationDate().getValue() : null,
-                clientFilters.contains(ClientFilter.CITY) ? clientProperty.getCity().getValue() : null,
-                clientFilters.contains(ClientFilter.ADDRESS) ? clientProperty.getAddress().getValue() : null,
-                clientFilters.contains(ClientFilter.BUYER_NAME) ? clientProperty.getBuyerName().getValue() : null,
-                clientFilters.contains(ClientFilter.PHONE) ? clientProperty.getPhone().getValue() : null,
-                clientFilters.contains(ClientFilter.EMAIL) ? clientProperty.getEmail().getValue() : null
+                clientFilters.contains(ClientFilter.ID) ? id.getValue() : null,
+                clientFilters.contains(ClientFilter.COMPANY_NAME) ? companyName.getValue() : null,
+                clientFilters.contains(ClientFilter.CREATION_DATE) ? creationDateFrom.getValue() : null,
+                clientFilters.contains(ClientFilter.CREATION_DATE) ? creationDateTo.getValue() : null,
+                clientFilters.contains(ClientFilter.CITY) ? city.getValue() : null,
+                clientFilters.contains(ClientFilter.ADDRESS) ? address.getValue() : null,
+                clientFilters.contains(ClientFilter.BUYER_NAME) ? buyerName.getValue() : null,
+                clientFilters.contains(ClientFilter.PHONE) ? phone.getValue() : null,
+                clientFilters.contains(ClientFilter.EMAIL) ? email.getValue() : null
         ).stream().map(ClientProperty::new).collect(Collectors.toList());
         setClientProperties(FXCollections.observableArrayList(clientPropertyList));
     }

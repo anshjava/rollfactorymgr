@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane styleClass="background-active" stylesheets="/bootstrap3.css, /mystyle.css"
+<BorderPane fx:id="mainPane" styleClass="background-active" stylesheets="/bootstrap3.css, /mystyle.css"
             xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="ru.kamuzta.rollfactorymgr.ui.client.ClientFindView">
     <top>
@@ -11,16 +11,16 @@
     </top>
     <center>
         <VBox alignment="TOP_CENTER" styleClass="standard-padding-spacing">
-            <TitledPane fx:id="filtersPane" minHeight="0.0" styleClass="info" text="Select filters" VBox.vgrow="ALWAYS">
+            <TitledPane fx:id="filtersPane" minHeight="200.0" styleClass="info" text="Select filters" VBox.vgrow="ALWAYS">
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="770.0">
                     <HBox styleClass="standard-padding" alignment="CENTER" minHeight="0.0"
                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <ListView fx:id="availableFilters" prefHeight="100" prefWidth="150" />
-                        <ListView fx:id="selectedFilters" prefHeight="100" prefWidth="150" />
+                        <ListView fx:id="availableFilters" prefHeight="150" prefWidth="150" />
+                        <ListView fx:id="selectedFilters" prefHeight="150" prefWidth="150" />
                         <Pane HBox.hgrow="ALWAYS" />
-                        <VBox>
-                            <GridPane alignment="CENTER" prefWidth="290.0" maxWidth="290">
+                        <VBox fx:id="filterContainer" styleClass="standard-spacing">
+                            <GridPane alignment="CENTER_RIGHT" prefWidth="290.0" maxWidth="290">
                                 <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0"
                                                        prefWidth="120.0" />
@@ -64,7 +64,7 @@
                     </HBox>
                 </AnchorPane>
             </TitledPane>
-            <TitledPane fx:id="resultPane" maxHeight="200" styleClass="success" text="View search result"
+            <TitledPane fx:id="resultPane" minHeight="30" styleClass="success" text="View search result"
                         VBox.vgrow="SOMETIMES">
                 <VBox>
                     <HBox>
@@ -72,11 +72,11 @@
                                 styleClass="success, first" />
                         <Button fx:id="removeClientButton" onAction="#onRemoveClient" text="Remove"
                                 styleClass="success, last" />
+                        <Pane HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="detailsTitle" />
                     </HBox>
                     <HBox>
-                        <TableView fx:id="resultTableView" layoutX="53.0" layoutY="-71.0"
-                                   prefWidth="410.0" fixedCellSize="25"
-                                   tableMenuButtonVisible="true">
+                        <TableView fx:id="resultTableView" prefWidth="420.0" fixedCellSize="25" tableMenuButtonVisible="true">
                             <columns>
                                 <TableColumn fx:id="idColumn" prefWidth="30.0" text="#" />
                                 <TableColumn fx:id="creationDateColumn" prefWidth="80.0" text="created" />
@@ -88,7 +88,6 @@
                         <Pane HBox.hgrow="ALWAYS" />
                         <VBox fx:id="detailsBox" styleClass="standard-padding-spacing, background-active"
                               prefWidth="310.0">
-                            <Label fx:id="detailsTitle" />
                             <GridPane alignment="CENTER" prefWidth="380.0" maxWidth="380">
                                 <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0"

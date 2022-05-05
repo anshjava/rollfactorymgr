@@ -2,12 +2,15 @@ package ru.kamuzta.rollfactorymgr.ui.roll;
 
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import ru.kamuzta.rollfactorymgr.model.roll.*;
 import ru.kamuzta.rollfactorymgr.ui.menu.HeaderMenuView;
@@ -15,11 +18,14 @@ import ru.kamuzta.rollfactorymgr.ui.table.*;
 
 import java.math.BigDecimal;
 import java.net.URL;
-import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class RollFindView implements FxmlView<RollFindViewModel>, Initializable {
+
+    @FXML
+    public BorderPane mainPane;
+
+    private static final  DoubleProperty MAX_HEIGHT = new SimpleDoubleProperty(600.0);
 
     @FXML
     public BorderPane headerPane;
@@ -39,6 +45,8 @@ public class RollFindView implements FxmlView<RollFindViewModel>, Initializable 
     @FXML
     private ListView<RollFilter> selectedFilters;
 
+    @FXML
+    VBox filterContainer;
     @FXML
     TextField id;
     @FXML
@@ -115,6 +123,39 @@ public class RollFindView implements FxmlView<RollFindViewModel>, Initializable 
 
         removeRollButton.visibleProperty().bind(editRollButton.visibleProperty());
         removeRollButton.managedProperty().bind(removeRollButton.visibleProperty());
+
+        //configure resultPane height
+        //TODO now its complicated. simplify with bindings
+        resultPane.setExpanded(false);
+        resultPane.prefHeightProperty().bind(MAX_HEIGHT.subtract(headerPane.heightProperty()).subtract(filtersPane.heightProperty()).subtract(40));
+
+
+        filtersPane.expandedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                resultPane.setExpanded(false);
+                filtersPane.minHeightProperty().set(200.0);
+                resultTableView.prefHeightProperty().set(Double.min(resultPane.getHeight() - 250.0,
+                        resultTableView.fixedCellSizeProperty().getValue()
+                        * resultTableView.getItems().size()
+                        + 45.0
+                ));
+            } else {
+                filtersPane.minHeightProperty().set(30.0);
+                resultTableView.prefHeightProperty().set(Double.min(MAX_HEIGHT.getValue() - headerPane.getHeight() - 150.0,
+                        resultTableView.fixedCellSizeProperty().getValue()
+                        * resultTableView.getItems().size()
+                        + 45.0
+                ));
+            }
+        });
+
+        resultPane.expandedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                filtersPane.setExpanded(false);
+            }
+        });
+
+
     }
 
     private void configureSelectFilterArea() {
@@ -128,7 +169,6 @@ public class RollFindView implements FxmlView<RollFindViewModel>, Initializable 
                 availableFilters.getItems().remove(clickedFilter);
                 availableFilters.getSelectionModel().clearSelection();
                 refreshFilterVisibility(selectedFilters.getItems());
-                reCalculateResultHeight();
             }
         });
 
@@ -141,7 +181,6 @@ public class RollFindView implements FxmlView<RollFindViewModel>, Initializable 
                 selectedFilters.getItems().remove(clickedFilter);
                 selectedFilters.getSelectionModel().clearSelection();
                 refreshFilterVisibility(selectedFilters.getItems());
-                reCalculateResultHeight();
             }
         });
     }
@@ -309,7 +348,8 @@ public class RollFindView implements FxmlView<RollFindViewModel>, Initializable 
     @FXML
     void onFindRoll() {
         viewModel.onFindRoll();
-        reCalculateResultHeight();
+        filtersPane.setExpanded(false);
+        resultPane.setExpanded(true);
     }
 
     @FXML
@@ -325,16 +365,7 @@ public class RollFindView implements FxmlView<RollFindViewModel>, Initializable 
         int selectedIndex = resultTableView.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             viewModel.onRemoveRoll(resultTableView.getItems().get(selectedIndex).getSku().getValue());
-            reCalculateResultHeight();
         }
-    }
-
-    //TODO do with bindings
-    private void reCalculateResultHeight() {
-        resultTableView.prefHeightProperty().set(Double.min(430 - headerPane.getHeight() - filtersPane.getHeight(),
-                resultTableView.fixedCellSizeProperty().getValue()
-                * (Optional.ofNullable(resultTableView.getItems()).map(List::size).orElse(0))
-                + 40.0));
     }
 
 }

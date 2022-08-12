@@ -15,7 +15,7 @@ import ru.kamuzta.rollfactorymgr.service.webservice.ClientService;
 import ru.kamuzta.rollfactorymgr.service.webservice.OrderService;
 import ru.kamuzta.rollfactorymgr.service.webservice.RollService;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,20 +49,20 @@ public class OrderProcessorImpl implements OrderProcessor {
         return orderService.findOrderByCompanyNamePattern(companyName);
     }
 
-    public List<Order> findOrderByParams(@Nullable Long id, @Nullable String companyName, @Nullable OffsetDateTime creationDateFrom, @Nullable OffsetDateTime creationDateTo, @Nullable OrderState state, @Nullable String rollSku) throws WebServiceException {
-        return orderService.findOrderByParams(id, companyName, creationDateFrom, creationDateTo, state, rollSku);
+    public List<Order> findOrderByParams(@Nullable Long id, @Nullable String companyName, @Nullable LocalDateTime creationDateTimeFrom, @Nullable LocalDateTime creationDateTimeTo, @Nullable OrderState state, @Nullable String rollSku) throws WebServiceException {
+        return orderService.findOrderByParams(id, companyName, creationDateTimeFrom, creationDateTimeTo, state, rollSku);
     }
 
-    public Order createOrder(@Nullable OffsetDateTime creationDate, @NotNull Client client, @NotNull List<OrderLine> lines) throws WebServiceException, ValidationException {
-        validateCreateOrder(creationDate, client, lines);
-        Order newOrder = orderService.createOrder(creationDate, client, lines);
+    public Order createOrder(@Nullable LocalDateTime creationDateTime, @NotNull Client client, @NotNull List<OrderLine> lines) throws WebServiceException, ValidationException {
+        validateCreateOrder(creationDateTime, client, lines);
+        Order newOrder = orderService.createOrder(creationDateTime, client, lines);
         updateRegistryFromServer();
         return newOrder;
     }
 
-    public boolean removeOrderById(@NotNull Long id) throws WebServiceException, ValidationException {
-        validateRemoveOrder(id);
-        boolean result = orderService.removeOrderById(id);
+    public boolean cancelOrderById(@NotNull Long id) throws WebServiceException, ValidationException {
+        validateCancelOrder(id);
+        boolean result = orderService.cancelOrderById(id);
         updateRegistryFromServer();
         return result;
     }
@@ -75,9 +75,9 @@ public class OrderProcessorImpl implements OrderProcessor {
     }
 
     @Override
-    public void validateCreateOrder(@Nullable OffsetDateTime creationDate, @NotNull Client client, @NotNull List<OrderLine> lines) throws ValidationException {
-        if (creationDate != null && creationDate.isAfter(OffsetDateTime.now())) {
-            throw new ValidationException("creationDate could not be in future!");
+    public void validateCreateOrder(@Nullable LocalDateTime creationDateTime, @NotNull Client client, @NotNull List<OrderLine> lines) throws ValidationException {
+        if (creationDateTime != null && creationDateTime.isAfter(LocalDateTime.now())) {
+            throw new ValidationException("creationDateTime could not be in future!");
         }
 
         validateCommonOrderParams(client, lines);
@@ -108,7 +108,7 @@ public class OrderProcessorImpl implements OrderProcessor {
                 .filter(o -> o.getState() != OrderState.COMPLETED && o.getState() != OrderState.CANCELED)
                 .filter(o -> o.getClient().equals(order.getClient()))
                 .filter(o -> o.getLines().equals(order.getLines()))
-                .filter(o -> o.getCreationDate().equals(order.getCreationDate()))
+                .filter(o -> o.getCreationDateTime().equals(order.getCreationDateTime()))
                 .findFirst();
         if (optionalOrder.isPresent()) {
             throw new ValidationException("Error while trying create duplicate order for client " + optionalOrder.get().getClient().getCompanyName() + " order id " + optionalOrder.get().getId());
@@ -116,7 +116,7 @@ public class OrderProcessorImpl implements OrderProcessor {
     }
 
     @Override
-    public void validateRemoveOrder(Long id) throws ValidationException {
+    public void validateCancelOrder(Long id) throws ValidationException {
         if (getLocalRegistry().stream().noneMatch(o -> o.getId().equals(id))) {
             throw new ValidationException("Order with id " + id + " was not found, there is nothing to remove");
         }

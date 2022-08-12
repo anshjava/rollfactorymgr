@@ -1,6 +1,6 @@
 {
     "id": 5,
-    "creationDate": "2022-04-10T23:14:18.888+03:00",
+    "creationDateTime": "2022-04-10 23:14:18",
     "client": {
         "id": 1,
         "creationDate": "1990-02-18",
@@ -12,6 +12,7 @@
         "email": "antonio@rolltrade.com",
         "state": "ACTIVE"
     },
+    "state": "INPROGRESS",
     "lines": [
         {
             "id": 5,
@@ -28,6 +29,5 @@
             "quantity": 500,
             "state": "INPROGRESS"
         }
-    ],
-    "state": "INPROGRESS"
+    ]
 }

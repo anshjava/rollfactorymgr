@@ -6,15 +6,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.kamuzta.rollfactorymgr.exception.WebServiceException;
 import ru.kamuzta.rollfactorymgr.model.client.Client;
-import ru.kamuzta.rollfactorymgr.model.client.ClientState;
 import ru.kamuzta.rollfactorymgr.model.order.Order;
 import ru.kamuzta.rollfactorymgr.model.order.OrderLine;
 import ru.kamuzta.rollfactorymgr.model.order.OrderState;
-import ru.kamuzta.rollfactorymgr.model.roll.Roll;
 import ru.kamuzta.rollfactorymgr.utils.json.CouldNotDeserializeJsonException;
 import ru.kamuzta.rollfactorymgr.utils.json.JsonUtil;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -55,30 +53,30 @@ public class OrderServiceMock implements OrderService {
     }
 
     @Override
-    public List<Order> findOrderByParams(@Nullable Long id, @Nullable String companyName, @Nullable OffsetDateTime creationDateFrom, @Nullable OffsetDateTime creationDateTo, @Nullable OrderState state, @Nullable String rollSku) throws WebServiceException {
+    public List<Order> findOrderByParams(@Nullable Long id, @Nullable String companyName, @Nullable LocalDateTime creationDateTimeFrom, @Nullable LocalDateTime creationDateTimeTo, @Nullable OrderState state, @Nullable String rollSku) throws WebServiceException {
         return localOrderRegistry.stream()
                 .filter(o -> String.valueOf(o.getId()).contains((Optional.ofNullable(id).map(String::valueOf)).orElse(String.valueOf(o.getId()))))
                 .filter(o -> o.getClient().getCompanyName().contains(Optional.ofNullable(companyName).orElse(o.getClient().getCompanyName())))
-                .filter(o -> o.getCreationDate().isAfter(Optional.ofNullable(creationDateFrom).orElse(o.getCreationDate().minusSeconds(1L))))
-                .filter(o -> o.getCreationDate().isBefore(Optional.ofNullable(creationDateTo).orElse(o.getCreationDate().plusSeconds(1L))))
+                .filter(o -> o.getCreationDateTime().isAfter(Optional.ofNullable(creationDateTimeFrom).orElse(o.getCreationDateTime().minusSeconds(1L))))
+                .filter(o -> o.getCreationDateTime().isBefore(Optional.ofNullable(creationDateTimeTo).orElse(o.getCreationDateTime().plusSeconds(1L))))
                 .filter(o -> o.getState() == Optional.ofNullable(state).orElse(o.getState()))
                 .filter(o -> o.getLines().stream().map(OrderLine::getRoll).anyMatch(r -> r.getSku().equals(Optional.ofNullable(rollSku).orElse(r.getSku()))))
                 .map(Order::new).collect(Collectors.toList());
     }
 
     @Override
-    public Order createOrder(@Nullable OffsetDateTime creationDate, @NotNull Client client, @NotNull List<OrderLine> lines) throws WebServiceException {
+    public Order createOrder(@Nullable LocalDateTime creationDateTime, @NotNull Client client, @NotNull List<OrderLine> lines) throws WebServiceException {
         Order newOrder = new Order(count.incrementAndGet(),
-                creationDate != null ? creationDate : OffsetDateTime.now(),
+                creationDateTime != null ? creationDateTime : LocalDateTime.now(),
                 client,
-                lines,
-                OrderState.NEW);
+                OrderState.NEW,
+                lines);
         remoteOrderRegistry.add(newOrder);
         return new Order(newOrder);
     }
 
     @Override
-    public boolean removeOrderById(@NotNull Long id) throws WebServiceException {
+    public boolean cancelOrderById(@NotNull Long id) throws WebServiceException {
         Order orderToRemove = findOrderById(id);
         orderToRemove.setState(OrderState.CANCELED);
         orderToRemove.getLines().forEach(line -> line.setState(OrderState.CANCELED));

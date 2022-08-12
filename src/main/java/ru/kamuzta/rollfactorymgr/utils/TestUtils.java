@@ -17,6 +17,7 @@ import ru.kamuzta.rollfactorymgr.utils.json.JsonUtil;
 import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
@@ -158,7 +159,7 @@ public class TestUtils {
     public static Order getRandomOrder() {
         Integer quantity = random.nextInt(20);
         List<OrderLine> orderLines = getRandomOrderLineList(quantity);
-        return new Order(count.incrementAndGet(), OffsetDateTime.now(), getRandomClient(), orderLines, OrderState.NEW);
+        return new Order(count.incrementAndGet(), LocalDateTime.now(), getRandomClient(), OrderState.NEW, orderLines);
     }
 
     public static Roll getRandomStandardRoll() {

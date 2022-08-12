@@ -19,8 +19,7 @@ import ru.kamuzta.rollfactorymgr.processor.OrderProcessor;
 import ru.kamuzta.rollfactorymgr.utils.json.CouldNotDeserializeJsonException;
 import ru.kamuzta.rollfactorymgr.utils.json.JsonUtil;
 
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -127,23 +126,23 @@ public class OrderProcessorTest {
         result2.forEach(order -> log.info(order.toString()));
         assertEquals(12, result2.size());
 
-        List<Order> result3 = orderProcessor.findOrderByParams(null, null, OffsetDateTime.of(2022, 4, 23, 23, 14, 18, 0, ZoneOffset.of("+03:00")), null, null, null);
+        List<Order> result3 = orderProcessor.findOrderByParams(null, null, LocalDateTime.of(2022, 4, 23, 23, 14, 18, 0), null, null, null);
         assertNotNull(result3);
         log.info("Result3:");
         result3.forEach(order -> log.info(order.toString()));
         assertEquals(3, result3.size());
 
-        List<Order> result4 = orderProcessor.findOrderByParams(null, null, null, OffsetDateTime.of(1995, 4, 10, 23, 14, 19, 0, ZoneOffset.of("+03:00")), null, null);
+        List<Order> result4 = orderProcessor.findOrderByParams(null, null, null, LocalDateTime.of(1995, 4, 10, 23, 14, 19, 0), null, null);
         assertNotNull(result4);
         log.info("Result4:");
         result4.forEach(order -> log.info(order.toString()));
         assertEquals(2, result4.size());
 
-        List<Order> result5 = orderProcessor.findOrderByParams(null, null, OffsetDateTime.of(2020, 1, 1, 0, 0, 0, 0, ZoneOffset.of("+03:00")), OffsetDateTime.of(2020, 1, 1, 0, 0, 4, 4, ZoneOffset.of("+03:00")), null, null);
+        List<Order> result5 = orderProcessor.findOrderByParams(null, null, LocalDateTime.of(2020, 1, 1, 0, 0, 0, 0), LocalDateTime.of(2020, 1, 1, 0, 0, 4, 0), null, null);
         assertNotNull(result5);
         log.info("Result5:");
         result5.forEach(order -> log.info(order.toString()));
-        assertEquals(3, result5.size());
+        assertEquals(4, result5.size());
 
         List<Order> result6 = orderProcessor.findOrderByParams(null, null, null, null, OrderState.INPROGRESS, null);
         assertNotNull(result6);
@@ -159,28 +158,28 @@ public class OrderProcessorTest {
     }
 
     /**
-     * Testing removing order by id
+     * Testing cancelling order by id
      */
     @Test
-    public void removeOrderByIdTest() {
-        log.info("_________ START removeOrderByIdTest _________");
+    public void cancelOrderByIdTest() {
+        log.info("_________ START cancelOrderByIdTest _________");
 
         long countBefore = orderProcessor.getLocalRegistry().stream()
                 .filter(o -> o.getState() == OrderState.CANCELED).count();
 
-        assertTrue(orderProcessor.removeOrderById(4L));
+        assertTrue(orderProcessor.cancelOrderById(4L));
 
-        //try to remove same order again
+        //try to cancel same order again
         try {
-            assertFalse(orderProcessor.removeOrderById(4L));
+            assertFalse(orderProcessor.cancelOrderById(4L));
         } catch (Exception e) {
             log.warn(e.getMessage());
             assertTrue(e instanceof ValidationException);
         }
 
-        //try to remove order that is in workflow
+        //try to cancel order that is in workflow
         try {
-            assertFalse(orderProcessor.removeOrderById(5L));
+            assertFalse(orderProcessor.cancelOrderById(5L));
         } catch (Exception e) {
             log.warn(e.getMessage());
             assertTrue(e instanceof ValidationException);
@@ -211,7 +210,7 @@ public class OrderProcessorTest {
         //date from future
         Order order1 = null;
         try {
-            order1 = orderProcessor.createOrder(OffsetDateTime.now().plusDays(1), activeClient, lines);
+            order1 = orderProcessor.createOrder(LocalDateTime.now().plusDays(1), activeClient, lines);
         } catch (Exception e) {
             log.warn(e.getMessage());
             assertTrue(e instanceof ValidationException);
@@ -276,11 +275,11 @@ public class OrderProcessorTest {
 
         //create good new orders
         lines.remove(11);
-        Order order7 = orderProcessor.createOrder(OffsetDateTime.of(1997, 2, 18, 15, 30, 0, 0, ZoneOffset.of("+03:00")), activeClient, lines);
+        Order order7 = orderProcessor.createOrder(LocalDateTime.of(1997, 2, 18, 15, 30, 0, 0), activeClient, lines);
         assertNotNull(order7);
         List<OrderLine> copyOrderLines = lines.stream().map(OrderLine::new).collect(Collectors.toList());
         copyOrderLines.remove(11);
-        Order order8 = orderProcessor.createOrder(OffsetDateTime.of(1997, 2, 18, 15, 30, 0, 0, ZoneOffset.of("+03:00")), activeClient, copyOrderLines);
+        Order order8 = orderProcessor.createOrder(LocalDateTime.of(1997, 2, 18, 15, 30, 0, 0), activeClient, copyOrderLines);
         assertNotNull(order8);
 
 
@@ -393,10 +392,10 @@ public class OrderProcessorTest {
 
         Order order8 = orderList.get(0);
         Order order8Cloned = new Order(order8);
-        order8Cloned.setCreationDate(OffsetDateTime.now());
+        order8Cloned.setCreationDateTime(LocalDateTime.now());
         Order order8AfterUpdate = orderProcessor.updateOrder(order8Cloned);
         assertNotNull(order8AfterUpdate);
-        assertEquals(order8Cloned.getCreationDate(), order8AfterUpdate.getCreationDate());
+        assertEquals(order8Cloned.getCreationDateTime(), order8AfterUpdate.getCreationDateTime());
         Order order9 = orderList.get(1);
         Order order9Cloned = new Order(order9);
         order9Cloned.getLines().get(0).setQuantity(100);

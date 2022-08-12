@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "creationDate": "1995-04-10T23:14:18.882+03:00",
+        "creationDateTime": "1995-04-10 23:14:18",
         "client": {
             "id": 1,
             "creationDate": "1990-02-18",
@@ -13,6 +13,7 @@
             "email": "antonio@rolltrade.com",
             "state": "ACTIVE"
         },
+        "state": "NEW",
         "lines": [
             {
                 "id": 1,
@@ -29,12 +30,11 @@
                 "quantity": 1000,
                 "state": "NEW"
             }
-        ],
-        "state": "NEW"
+        ]
     },
     {
         "id": 2,
-        "creationDate": "1995-04-10T23:14:18.887+03:00",
+        "creationDateTime": "1995-04-10 23:14:18",
         "client": {
             "id": 2,
             "creationDate": "1995-01-01",
@@ -46,6 +46,7 @@
             "email": "nicolas@bestrolls.net",
             "state": "ACTIVE"
         },
+        "state": "NEW",
         "lines": [
             {
                 "id": 1,
@@ -77,12 +78,11 @@
                 "quantity": 2000,
                 "state": "NEW"
             }
-        ],
-        "state": "NEW"
+        ]
     },
     {
         "id": 3,
-        "creationDate": "2022-04-10T23:14:18.888+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 4,
             "creationDate": "2010-01-01",
@@ -94,6 +94,7 @@
             "email": "bondarchuk@mail.ru",
             "state": "ACTIVE"
         },
+        "state": "QUEUED",
         "lines": [
             {
                 "id": 3,
@@ -110,12 +111,11 @@
                 "quantity": 3000,
                 "state": "QUEUED"
             }
-        ],
-        "state": "QUEUED"
+        ]
     },
     {
         "id": 4,
-        "creationDate": "2022-04-10T23:14:18.888+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 4,
             "creationDate": "2010-01-01",
@@ -127,6 +127,7 @@
             "email": "bondarchuk@mail.ru",
             "state": "ACTIVE"
         },
+        "state": "QUEUED",
         "lines": [
             {
                 "id": 3,
@@ -158,12 +159,11 @@
                 "quantity": 4000,
                 "state": "QUEUED"
             }
-        ],
-        "state": "QUEUED"
+        ]
     },
     {
         "id": 5,
-        "creationDate": "2022-04-10T23:14:18.888+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 1,
             "creationDate": "1990-02-18",
@@ -175,6 +175,7 @@
             "email": "antonio@rolltrade.com",
             "state": "ACTIVE"
         },
+        "state": "INPROGRESS",
         "lines": [
             {
                 "id": 5,
@@ -191,12 +192,11 @@
                 "quantity": 500,
                 "state": "INPROGRESS"
             }
-        ],
-        "state": "INPROGRESS"
+        ]
     },
     {
         "id": 6,
-        "creationDate": "2022-04-10T23:14:18.888+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 5,
             "creationDate": "2011-02-02",
@@ -208,6 +208,7 @@
             "email": "nagiev@yandex.ru",
             "state": "ACTIVE"
         },
+        "state": "INPROGRESS",
         "lines": [
             {
                 "id": 5,
@@ -239,12 +240,11 @@
                 "quantity": 600,
                 "state": "INPROGRESS"
             }
-        ],
-        "state": "INPROGRESS"
+        ]
     },
     {
         "id": 7,
-        "creationDate": "2022-04-10T23:14:18.888+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 3,
             "creationDate": "1997-03-05",
@@ -256,6 +256,7 @@
             "email": "dmoore@megaroll.org",
             "state": "ACTIVE"
         },
+        "state": "INPROGRESS",
         "lines": [
             {
                 "id": 14,
@@ -302,12 +303,11 @@
                 "quantity": 1600,
                 "state": "INPROGRESS"
             }
-        ],
-        "state": "INPROGRESS"
+        ]
     },
     {
         "id": 8,
-        "creationDate": "2022-04-10T23:14:18.888+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 2,
             "creationDate": "1995-01-01",
@@ -319,6 +319,7 @@
             "email": "nicolas@bestrolls.net",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 1,
@@ -335,12 +336,11 @@
                 "quantity": 1000,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 9,
-        "creationDate": "2022-04-10T23:14:18.888+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 1,
             "creationDate": "1990-02-18",
@@ -352,6 +352,7 @@
             "email": "antonio@rolltrade.com",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 10,
@@ -398,12 +399,11 @@
                 "quantity": 800,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 10,
-        "creationDate": "2022-04-10T23:14:18.888+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 8,
             "creationDate": "2021-02-02",
@@ -415,6 +415,7 @@
             "email": "guyver12@guyver.com",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 18,
@@ -461,12 +462,11 @@
                 "quantity": 1600,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 11,
-        "creationDate": "2022-04-10T23:14:18.889+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 1,
             "creationDate": "1990-02-18",
@@ -478,6 +478,7 @@
             "email": "antonio@rolltrade.com",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 20,
@@ -539,12 +540,11 @@
                 "quantity": 600,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 12,
-        "creationDate": "2022-04-10T23:14:18.889+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 5,
             "creationDate": "2011-02-02",
@@ -556,6 +556,7 @@
             "email": "nagiev@yandex.ru",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 9,
@@ -617,12 +618,11 @@
                 "quantity": 1800,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 13,
-        "creationDate": "2022-04-10T23:14:18.892+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 1,
             "creationDate": "1990-02-18",
@@ -634,6 +634,7 @@
             "email": "antonio@rolltrade.com",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 4,
@@ -680,12 +681,11 @@
                 "quantity": 2000,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 14,
-        "creationDate": "2022-04-10T23:14:18.892+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 4,
             "creationDate": "2010-01-01",
@@ -697,6 +697,7 @@
             "email": "bondarchuk@mail.ru",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 8,
@@ -713,12 +714,11 @@
                 "quantity": 800,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 15,
-        "creationDate": "2022-04-10T23:14:18.892+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 1,
             "creationDate": "1990-02-18",
@@ -730,6 +730,7 @@
             "email": "antonio@rolltrade.com",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 18,
@@ -791,12 +792,11 @@
                 "quantity": 800,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 16,
-        "creationDate": "2022-04-10T23:14:18.892+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 9,
             "creationDate": "2022-03-03",
@@ -808,6 +808,7 @@
             "email": "one@punch.man",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 20,
@@ -839,12 +840,11 @@
                 "quantity": 2000,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 17,
-        "creationDate": "2022-04-10T23:14:18.893+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 8,
             "creationDate": "2021-02-02",
@@ -856,6 +856,7 @@
             "email": "guyver12@guyver.com",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 11,
@@ -902,12 +903,11 @@
                 "quantity": 1800,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 18,
-        "creationDate": "2022-04-10T23:14:18.893+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 6,
             "creationDate": "2012-03-03",
@@ -919,6 +919,7 @@
             "email": "druz@rambler.ru",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 3,
@@ -935,12 +936,11 @@
                 "quantity": 3000,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 19,
-        "creationDate": "2022-04-10T23:14:18.893+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 6,
             "creationDate": "2012-03-03",
@@ -952,6 +952,7 @@
             "email": "druz@rambler.ru",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 18,
@@ -1013,12 +1014,11 @@
                 "quantity": 1400,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 20,
-        "creationDate": "2022-04-10T23:14:18.893+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 6,
             "creationDate": "2012-03-03",
@@ -1030,6 +1030,7 @@
             "email": "druz@rambler.ru",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 11,
@@ -1046,12 +1047,11 @@
                 "quantity": 1100,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 21,
-        "creationDate": "2022-04-10T23:14:18.893+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 2,
             "creationDate": "1995-01-01",
@@ -1063,6 +1063,7 @@
             "email": "nicolas@bestrolls.net",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 2,
@@ -1079,12 +1080,11 @@
                 "quantity": 2000,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 22,
-        "creationDate": "2022-04-10T23:14:18.893+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 9,
             "creationDate": "2022-03-03",
@@ -1096,6 +1096,7 @@
             "email": "one@punch.man",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 11,
@@ -1112,12 +1113,11 @@
                 "quantity": 1100,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 23,
-        "creationDate": "2022-04-10T23:14:18.893+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 1,
             "creationDate": "1990-02-18",
@@ -1129,6 +1129,7 @@
             "email": "antonio@rolltrade.com",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 11,
@@ -1160,12 +1161,11 @@
                 "quantity": 1800,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 24,
-        "creationDate": "2022-04-10T23:14:18.893+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 6,
             "creationDate": "2012-03-03",
@@ -1177,6 +1177,7 @@
             "email": "druz@rambler.ru",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 2,
@@ -1223,12 +1224,11 @@
                 "quantity": 1000,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 25,
-        "creationDate": "2022-04-10T23:14:18.893+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 5,
             "creationDate": "2011-02-02",
@@ -1240,6 +1240,7 @@
             "email": "nagiev@yandex.ru",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 16,
@@ -1286,12 +1287,11 @@
                 "quantity": 1100,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 26,
-        "creationDate": "2022-04-10T23:14:18.893+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 9,
             "creationDate": "2022-03-03",
@@ -1303,6 +1303,7 @@
             "email": "one@punch.man",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 8,
@@ -1349,12 +1350,11 @@
                 "quantity": 1600,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 27,
-        "creationDate": "2022-04-10T23:14:18.894+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 2,
             "creationDate": "1995-01-01",
@@ -1366,6 +1366,7 @@
             "email": "nicolas@bestrolls.net",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 7,
@@ -1382,12 +1383,11 @@
                 "quantity": 700,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 28,
-        "creationDate": "2022-04-10T23:14:18.894+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 1,
             "creationDate": "1990-02-18",
@@ -1399,6 +1399,7 @@
             "email": "antonio@rolltrade.com",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 9,
@@ -1430,12 +1431,11 @@
                 "quantity": 600,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 29,
-        "creationDate": "2022-04-10T23:14:18.894+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 5,
             "creationDate": "2011-02-02",
@@ -1447,6 +1447,7 @@
             "email": "nagiev@yandex.ru",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 20,
@@ -1478,12 +1479,11 @@
                 "quantity": 1200,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 30,
-        "creationDate": "2022-04-10T23:14:18.894+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 3,
             "creationDate": "1997-03-05",
@@ -1495,6 +1495,7 @@
             "email": "dmoore@megaroll.org",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 7,
@@ -1526,12 +1527,11 @@
                 "quantity": 4000,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 31,
-        "creationDate": "2022-04-10T23:14:18.894+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 6,
             "creationDate": "2012-03-03",
@@ -1543,6 +1543,7 @@
             "email": "druz@rambler.ru",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 13,
@@ -1559,12 +1560,11 @@
                 "quantity": 1300,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 32,
-        "creationDate": "2022-04-10T23:14:18.894+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 6,
             "creationDate": "2012-03-03",
@@ -1576,6 +1576,7 @@
             "email": "druz@rambler.ru",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 14,
@@ -1607,12 +1608,11 @@
                 "quantity": 1000,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 33,
-        "creationDate": "2022-04-10T23:14:18.894+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 7,
             "creationDate": "2020-01-01",
@@ -1624,6 +1624,7 @@
             "email": "naruto@tokyo.jp",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 18,
@@ -1670,12 +1671,11 @@
                 "quantity": 4000,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 34,
-        "creationDate": "2022-04-10T23:14:18.894+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 9,
             "creationDate": "2022-03-03",
@@ -1687,6 +1687,7 @@
             "email": "one@punch.man",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 18,
@@ -1718,12 +1719,11 @@
                 "quantity": 2000,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 35,
-        "creationDate": "2022-04-10T23:14:18.894+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 2,
             "creationDate": "1995-01-01",
@@ -1735,6 +1735,7 @@
             "email": "nicolas@bestrolls.net",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 14,
@@ -1751,12 +1752,11 @@
                 "quantity": 1400,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 36,
-        "creationDate": "2022-04-10T23:14:18.894+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 8,
             "creationDate": "2021-02-02",
@@ -1768,6 +1768,7 @@
             "email": "guyver12@guyver.com",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 2,
@@ -1784,12 +1785,11 @@
                 "quantity": 2000,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 37,
-        "creationDate": "2022-04-10T23:14:18.894+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 8,
             "creationDate": "2021-02-02",
@@ -1801,6 +1801,7 @@
             "email": "guyver12@guyver.com",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 2,
@@ -1862,12 +1863,11 @@
                 "quantity": 2000,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 38,
-        "creationDate": "2022-04-10T23:14:18.895+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 3,
             "creationDate": "1997-03-05",
@@ -1879,6 +1879,7 @@
             "email": "dmoore@megaroll.org",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 10,
@@ -1925,12 +1926,11 @@
                 "quantity": 4000,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 39,
-        "creationDate": "2022-04-10T23:14:18.895+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 3,
             "creationDate": "1997-03-05",
@@ -1942,6 +1942,7 @@
             "email": "dmoore@megaroll.org",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 15,
@@ -1958,12 +1959,11 @@
                 "quantity": 1500,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 40,
-        "creationDate": "2022-04-10T23:14:18.895+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 2,
             "creationDate": "1995-01-01",
@@ -1975,6 +1975,7 @@
             "email": "nicolas@bestrolls.net",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 19,
@@ -2036,12 +2037,11 @@
                 "quantity": 2000,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 41,
-        "creationDate": "2022-04-10T23:14:18.895+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 9,
             "creationDate": "2022-03-03",
@@ -2053,6 +2053,7 @@
             "email": "one@punch.man",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 14,
@@ -2114,12 +2115,11 @@
                 "quantity": 3000,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 42,
-        "creationDate": "2022-04-10T23:14:18.895+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 8,
             "creationDate": "2021-02-02",
@@ -2131,6 +2131,7 @@
             "email": "guyver12@guyver.com",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 18,
@@ -2147,12 +2148,11 @@
                 "quantity": 1800,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 43,
-        "creationDate": "2022-04-10T23:14:18.895+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 9,
             "creationDate": "2022-03-03",
@@ -2164,6 +2164,7 @@
             "email": "one@punch.man",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 2,
@@ -2195,12 +2196,11 @@
                 "quantity": 3000,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 44,
-        "creationDate": "2022-04-10T23:14:18.895+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 4,
             "creationDate": "2010-01-01",
@@ -2212,6 +2212,7 @@
             "email": "bondarchuk@mail.ru",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 14,
@@ -2258,12 +2259,11 @@
                 "quantity": 2000,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 45,
-        "creationDate": "2022-04-10T23:14:18.895+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 2,
             "creationDate": "1995-01-01",
@@ -2275,6 +2275,7 @@
             "email": "nicolas@bestrolls.net",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 5,
@@ -2291,12 +2292,11 @@
                 "quantity": 500,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 46,
-        "creationDate": "2022-04-10T23:14:18.895+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 6,
             "creationDate": "2012-03-03",
@@ -2308,6 +2308,7 @@
             "email": "druz@rambler.ru",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 4,
@@ -2324,12 +2325,11 @@
                 "quantity": 4000,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 47,
-        "creationDate": "2022-04-10T23:14:18.895+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 3,
             "creationDate": "1997-03-05",
@@ -2341,6 +2341,7 @@
             "email": "dmoore@megaroll.org",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 6,
@@ -2372,12 +2373,11 @@
                 "quantity": 1400,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 48,
-        "creationDate": "2022-04-10T23:14:18.895+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 9,
             "creationDate": "2022-03-03",
@@ -2389,6 +2389,7 @@
             "email": "one@punch.man",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 15,
@@ -2435,12 +2436,11 @@
                 "quantity": 500,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 49,
-        "creationDate": "2022-04-10T23:14:18.895+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 3,
             "creationDate": "1997-03-05",
@@ -2452,6 +2452,7 @@
             "email": "dmoore@megaroll.org",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 19,
@@ -2468,12 +2469,11 @@
                 "quantity": 1900,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 50,
-        "creationDate": "2022-04-10T23:14:18.896+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 5,
             "creationDate": "2011-02-02",
@@ -2485,6 +2485,7 @@
             "email": "nagiev@yandex.ru",
             "state": "ACTIVE"
         },
+        "state": "COMPLETED",
         "lines": [
             {
                 "id": 13,
@@ -2531,12 +2532,11 @@
                 "quantity": 1700,
                 "state": "COMPLETED"
             }
-        ],
-        "state": "COMPLETED"
+        ]
     },
     {
         "id": 51,
-        "creationDate": "2022-04-10T23:14:18.896+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 7,
             "creationDate": "2020-01-01",
@@ -2548,6 +2548,7 @@
             "email": "naruto@tokyo.jp",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 6,
@@ -2579,12 +2580,11 @@
                 "quantity": 1200,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 52,
-        "creationDate": "2022-04-10T23:14:18.896+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 8,
             "creationDate": "2021-02-02",
@@ -2596,6 +2596,7 @@
             "email": "guyver12@guyver.com",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 10,
@@ -2612,12 +2613,11 @@
                 "quantity": 1000,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 53,
-        "creationDate": "2022-04-10T23:14:18.896+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 6,
             "creationDate": "2012-03-03",
@@ -2629,6 +2629,7 @@
             "email": "druz@rambler.ru",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 4,
@@ -2675,12 +2676,11 @@
                 "quantity": 800,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 54,
-        "creationDate": "2022-04-10T23:14:18.896+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 5,
             "creationDate": "2011-02-02",
@@ -2692,6 +2692,7 @@
             "email": "nagiev@yandex.ru",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 7,
@@ -2723,12 +2724,11 @@
                 "quantity": 1400,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 55,
-        "creationDate": "2022-04-10T23:14:18.896+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 7,
             "creationDate": "2020-01-01",
@@ -2740,6 +2740,7 @@
             "email": "naruto@tokyo.jp",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 14,
@@ -2786,12 +2787,11 @@
                 "quantity": 1000,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 56,
-        "creationDate": "2022-04-10T23:14:18.896+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 9,
             "creationDate": "2022-03-03",
@@ -2803,6 +2803,7 @@
             "email": "one@punch.man",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 7,
@@ -2864,12 +2865,11 @@
                 "quantity": 1800,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 57,
-        "creationDate": "2022-04-10T23:14:18.896+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 6,
             "creationDate": "2012-03-03",
@@ -2881,6 +2881,7 @@
             "email": "druz@rambler.ru",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 3,
@@ -2927,12 +2928,11 @@
                 "quantity": 4000,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 58,
-        "creationDate": "2022-04-10T23:14:18.896+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 7,
             "creationDate": "2020-01-01",
@@ -2944,6 +2944,7 @@
             "email": "naruto@tokyo.jp",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 12,
@@ -2990,12 +2991,11 @@
                 "quantity": 1300,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 59,
-        "creationDate": "2022-04-10T23:14:18.896+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 6,
             "creationDate": "2012-03-03",
@@ -3007,6 +3007,7 @@
             "email": "druz@rambler.ru",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 14,
@@ -3023,12 +3024,11 @@
                 "quantity": 1400,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 60,
-        "creationDate": "2022-04-10T23:14:18.897+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 2,
             "creationDate": "1995-01-01",
@@ -3040,6 +3040,7 @@
             "email": "nicolas@bestrolls.net",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 19,
@@ -3056,12 +3057,11 @@
                 "quantity": 1900,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 61,
-        "creationDate": "2022-04-10T23:14:18.897+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 8,
             "creationDate": "2021-02-02",
@@ -3073,6 +3073,7 @@
             "email": "guyver12@guyver.com",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 16,
@@ -3089,12 +3090,11 @@
                 "quantity": 1600,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 62,
-        "creationDate": "2022-04-10T23:14:18.897+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 9,
             "creationDate": "2022-03-03",
@@ -3106,6 +3106,7 @@
             "email": "one@punch.man",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 12,
@@ -3152,12 +3153,11 @@
                 "quantity": 1500,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 63,
-        "creationDate": "2022-04-10T23:14:18.897+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 6,
             "creationDate": "2012-03-03",
@@ -3169,6 +3169,7 @@
             "email": "druz@rambler.ru",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 4,
@@ -3215,12 +3216,11 @@
                 "quantity": 1200,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 64,
-        "creationDate": "2022-04-10T23:14:18.897+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 2,
             "creationDate": "1995-01-01",
@@ -3232,6 +3232,7 @@
             "email": "nicolas@bestrolls.net",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 2,
@@ -3263,12 +3264,11 @@
                 "quantity": 1700,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 65,
-        "creationDate": "2022-04-10T23:14:18.897+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 3,
             "creationDate": "1997-03-05",
@@ -3280,6 +3280,7 @@
             "email": "dmoore@megaroll.org",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 13,
@@ -3341,12 +3342,11 @@
                 "quantity": 2000,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 66,
-        "creationDate": "2022-04-10T23:14:18.897+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 2,
             "creationDate": "1995-01-01",
@@ -3358,6 +3358,7 @@
             "email": "nicolas@bestrolls.net",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 19,
@@ -3374,12 +3375,11 @@
                 "quantity": 1900,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 67,
-        "creationDate": "2022-04-10T23:14:18.897+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 3,
             "creationDate": "1997-03-05",
@@ -3391,6 +3391,7 @@
             "email": "dmoore@megaroll.org",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 20,
@@ -3422,12 +3423,11 @@
                 "quantity": 1700,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 68,
-        "creationDate": "2022-04-10T23:14:18.897+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 9,
             "creationDate": "2022-03-03",
@@ -3439,6 +3439,7 @@
             "email": "one@punch.man",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 13,
@@ -3455,12 +3456,11 @@
                 "quantity": 1300,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 69,
-        "creationDate": "2022-04-10T23:14:18.898+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 1,
             "creationDate": "1990-02-18",
@@ -3472,6 +3472,7 @@
             "email": "antonio@rolltrade.com",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 3,
@@ -3488,12 +3489,11 @@
                 "quantity": 3000,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 70,
-        "creationDate": "2022-04-10T23:14:18.898+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 7,
             "creationDate": "2020-01-01",
@@ -3505,6 +3505,7 @@
             "email": "naruto@tokyo.jp",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 20,
@@ -3551,12 +3552,11 @@
                 "quantity": 1900,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 71,
-        "creationDate": "2022-04-10T23:14:18.898+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 8,
             "creationDate": "2021-02-02",
@@ -3568,6 +3568,7 @@
             "email": "guyver12@guyver.com",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 19,
@@ -3614,12 +3615,11 @@
                 "quantity": 1100,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 72,
-        "creationDate": "2022-04-10T23:14:18.898+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 9,
             "creationDate": "2022-03-03",
@@ -3631,6 +3631,7 @@
             "email": "one@punch.man",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 10,
@@ -3677,12 +3678,11 @@
                 "quantity": 1000,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 73,
-        "creationDate": "2022-04-10T23:14:18.898+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 3,
             "creationDate": "1997-03-05",
@@ -3694,6 +3694,7 @@
             "email": "dmoore@megaroll.org",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 19,
@@ -3740,12 +3741,11 @@
                 "quantity": 1200,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 74,
-        "creationDate": "2022-04-10T23:14:18.898+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 4,
             "creationDate": "2010-01-01",
@@ -3757,6 +3757,7 @@
             "email": "bondarchuk@mail.ru",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 1,
@@ -3818,12 +3819,11 @@
                 "quantity": 500,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 75,
-        "creationDate": "2022-04-10T23:14:18.898+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 1,
             "creationDate": "1990-02-18",
@@ -3835,6 +3835,7 @@
             "email": "antonio@rolltrade.com",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 8,
@@ -3896,12 +3897,11 @@
                 "quantity": 900,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 76,
-        "creationDate": "2022-04-10T23:14:18.898+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 7,
             "creationDate": "2020-01-01",
@@ -3913,6 +3913,7 @@
             "email": "naruto@tokyo.jp",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 4,
@@ -3959,12 +3960,11 @@
                 "quantity": 1600,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 77,
-        "creationDate": "2022-04-10T23:14:18.898+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 9,
             "creationDate": "2022-03-03",
@@ -3976,6 +3976,7 @@
             "email": "one@punch.man",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 1,
@@ -3992,12 +3993,11 @@
                 "quantity": 1000,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 78,
-        "creationDate": "2022-04-10T23:14:18.898+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 3,
             "creationDate": "1997-03-05",
@@ -4009,6 +4009,7 @@
             "email": "dmoore@megaroll.org",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 16,
@@ -4040,12 +4041,11 @@
                 "quantity": 1800,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 79,
-        "creationDate": "2022-04-10T23:14:18.898+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 8,
             "creationDate": "2021-02-02",
@@ -4057,6 +4057,7 @@
             "email": "guyver12@guyver.com",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 4,
@@ -4073,12 +4074,11 @@
                 "quantity": 4000,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 80,
-        "creationDate": "2022-04-10T23:14:18.898+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 8,
             "creationDate": "2021-02-02",
@@ -4090,6 +4090,7 @@
             "email": "guyver12@guyver.com",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 2,
@@ -4121,12 +4122,11 @@
                 "quantity": 800,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 81,
-        "creationDate": "2022-04-10T23:14:18.899+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 3,
             "creationDate": "1997-03-05",
@@ -4138,6 +4138,7 @@
             "email": "dmoore@megaroll.org",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 2,
@@ -4154,12 +4155,11 @@
                 "quantity": 2000,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 82,
-        "creationDate": "2022-04-10T23:14:18.899+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 8,
             "creationDate": "2021-02-02",
@@ -4171,6 +4171,7 @@
             "email": "guyver12@guyver.com",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 6,
@@ -4187,12 +4188,11 @@
                 "quantity": 600,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 83,
-        "creationDate": "2022-04-10T23:14:18.899+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 1,
             "creationDate": "1990-02-18",
@@ -4204,6 +4204,7 @@
             "email": "antonio@rolltrade.com",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 2,
@@ -4250,12 +4251,11 @@
                 "quantity": 1100,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 84,
-        "creationDate": "2022-04-10T23:14:18.899+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 8,
             "creationDate": "2021-02-02",
@@ -4267,6 +4267,7 @@
             "email": "guyver12@guyver.com",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 10,
@@ -4328,12 +4329,11 @@
                 "quantity": 1600,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 85,
-        "creationDate": "2022-04-10T23:14:18.899+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 4,
             "creationDate": "2010-01-01",
@@ -4345,6 +4345,7 @@
             "email": "bondarchuk@mail.ru",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 20,
@@ -4391,12 +4392,11 @@
                 "quantity": 2000,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 86,
-        "creationDate": "2022-04-10T23:14:18.899+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 4,
             "creationDate": "2010-01-01",
@@ -4408,6 +4408,7 @@
             "email": "bondarchuk@mail.ru",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 19,
@@ -4439,12 +4440,11 @@
                 "quantity": 700,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 87,
-        "creationDate": "2022-04-10T23:14:18.899+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 9,
             "creationDate": "2022-03-03",
@@ -4456,6 +4456,7 @@
             "email": "one@punch.man",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 3,
@@ -4487,12 +4488,11 @@
                 "quantity": 1300,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 88,
-        "creationDate": "2022-04-10T23:14:18.899+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 8,
             "creationDate": "2021-02-02",
@@ -4504,6 +4504,7 @@
             "email": "guyver12@guyver.com",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 19,
@@ -4535,12 +4536,11 @@
                 "quantity": 1600,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 89,
-        "creationDate": "2022-04-10T23:14:18.899+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 8,
             "creationDate": "2021-02-02",
@@ -4552,6 +4552,7 @@
             "email": "guyver12@guyver.com",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 1,
@@ -4613,12 +4614,11 @@
                 "quantity": 2000,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 90,
-        "creationDate": "2022-04-10T23:14:18.899+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 3,
             "creationDate": "1997-03-05",
@@ -4630,6 +4630,7 @@
             "email": "dmoore@megaroll.org",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 10,
@@ -4661,12 +4662,11 @@
                 "quantity": 1000,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 91,
-        "creationDate": "2022-04-10T23:14:18.899+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 5,
             "creationDate": "2011-02-02",
@@ -4678,6 +4678,7 @@
             "email": "nagiev@yandex.ru",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 14,
@@ -4739,12 +4740,11 @@
                 "quantity": 700,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 92,
-        "creationDate": "2022-04-10T23:14:18.9+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 9,
             "creationDate": "2022-03-03",
@@ -4756,6 +4756,7 @@
             "email": "one@punch.man",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 11,
@@ -4772,12 +4773,11 @@
                 "quantity": 1100,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 93,
-        "creationDate": "2022-04-10T23:14:18.9+03:00",
+        "creationDateTime": "2022-04-10 23:14:18",
         "client": {
             "id": 4,
             "creationDate": "2010-01-01",
@@ -4789,6 +4789,7 @@
             "email": "bondarchuk@mail.ru",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 16,
@@ -4850,12 +4851,11 @@
                 "quantity": 1800,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 94,
-        "creationDate": "2020-01-01T00:00:01.1+04:00",
+        "creationDateTime": "2020-01-01 00:00:01",
         "client": {
             "id": 6,
             "creationDate": "2012-03-03",
@@ -4867,6 +4867,7 @@
             "email": "druz@rambler.ru",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 2,
@@ -4883,12 +4884,11 @@
                 "quantity": 2000,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 95,
-        "creationDate": "2020-01-01T00:00:03.1+03:00",
+        "creationDateTime": "2020-01-01 00:00:03",
         "client": {
             "id": 7,
             "creationDate": "2020-01-01",
@@ -4900,6 +4900,7 @@
             "email": "naruto@tokyo.jp",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 10,
@@ -4916,12 +4917,11 @@
                 "quantity": 1000,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 96,
-        "creationDate": "2020-01-01T00:00:02.1+03:00",
+        "creationDateTime": "2020-01-01 00:00:02",
         "client": {
             "id": 1,
             "creationDate": "1990-02-18",
@@ -4933,6 +4933,7 @@
             "email": "antonio@rolltrade.com",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 4,
@@ -4949,12 +4950,11 @@
                 "quantity": 4000,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 97,
-        "creationDate": "2020-01-01T00:00:01.1+03:00",
+        "creationDateTime": "2020-01-01 00:00:01",
         "client": {
             "id": 5,
             "creationDate": "2011-02-02",
@@ -4966,6 +4966,7 @@
             "email": "nagiev@yandex.ru",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 10,
@@ -4982,12 +4983,11 @@
                 "quantity": 1000,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 98,
-        "creationDate": "2022-04-24T00:01:01.1+03:00",
+        "creationDateTime": "2022-04-24 00:01:01",
         "client": {
             "id": 8,
             "creationDate": "2021-02-02",
@@ -4999,6 +4999,7 @@
             "email": "guyver12@guyver.com",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 2,
@@ -5060,12 +5061,11 @@
                 "quantity": 1300,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 99,
-        "creationDate": "2022-04-24T00:01:01.1+03:00",
+        "creationDateTime": "2022-04-24 00:01:01",
         "client": {
             "id": 8,
             "creationDate": "2021-02-02",
@@ -5077,6 +5077,7 @@
             "email": "guyver12@guyver.com",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 6,
@@ -5108,12 +5109,11 @@
                 "quantity": 1200,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     },
     {
         "id": 100,
-        "creationDate": "2022-04-24T00:01:01.1+03:00",
+        "creationDateTime": "2022-04-24 00:01:01",
         "client": {
             "id": 9,
             "creationDate": "2022-03-03",
@@ -5125,6 +5125,7 @@
             "email": "one@punch.man",
             "state": "ACTIVE"
         },
+        "state": "CANCELED",
         "lines": [
             {
                 "id": 11,
@@ -5141,7 +5142,6 @@
                 "quantity": 1100,
                 "state": "CANCELED"
             }
-        ],
-        "state": "CANCELED"
+        ]
     }
 ]

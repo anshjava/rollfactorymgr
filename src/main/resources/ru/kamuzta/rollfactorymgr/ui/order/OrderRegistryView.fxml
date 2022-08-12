@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane styleClass="background-active" stylesheets="/bootstrap3.css, /mystyle.css"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ru.kamuzta.rollfactorymgr.ui.order.OrderRegistryView">
+    <top>
+        <fx:include fx:id="headerPane" source="../menu/HeaderMenuView.fxml"/>
+    </top>
+    <center>
+        <VBox alignment="TOP_CENTER" styleClass="standard-padding-spacing">
+            <HBox styleClass="standard-padding">
+                <Button fx:id="updateOrderRegistryButton" onAction="#onUpdateOrderRegistry" text="Update Order Registry" styleClass="warning"/>
+                <Pane HBox.hgrow="ALWAYS"/>
+                <Button fx:id="editOrderButton" onAction="#onEditOrder" text="Edit" styleClass="success, first"/>
+                <Button fx:id="cancelOrderButton" onAction="#onCancelOrder" text="Cancel" styleClass="success, last"/>
+            </HBox>
+            <TableView fx:id="orderRegistryTableView" prefHeight="450" prefWidth="770" maxWidth="770" tableMenuButtonVisible="true">
+                <columns>
+                    <TableColumn fx:id="idColumn" prefWidth="30.0" text="#"/>
+                    <TableColumn fx:id="creationDateTimeColumn" prefWidth="105.0" text="Created"/>
+                    <TableColumn fx:id="clientColumn" prefWidth="105.0" text="Client"/>
+                    <TableColumn fx:id="stateColumn" prefWidth="105.0" text="State"/>
+                    <TableColumn fx:id="weightColumn" prefWidth="95.0" text="weight, kg"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

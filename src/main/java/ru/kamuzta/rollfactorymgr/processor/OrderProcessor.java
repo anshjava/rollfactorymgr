@@ -9,9 +9,8 @@ import ru.kamuzta.rollfactorymgr.model.client.Client;
 import ru.kamuzta.rollfactorymgr.model.order.Order;
 import ru.kamuzta.rollfactorymgr.model.order.OrderLine;
 import ru.kamuzta.rollfactorymgr.model.order.OrderState;
-import ru.kamuzta.rollfactorymgr.model.roll.Roll;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ImplementedBy(OrderProcessorImpl.class)
@@ -53,38 +52,38 @@ public interface OrderProcessor {
     /**
      * Find Order by parameters in local cached Registry
      *
-     * @param id               part of order id
-     * @param companyName      part of client's company name
-     * @param creationDateFrom order creation date from
-     * @param creationDateTo   order creation date to
-     * @param state            order state
-     * @param rollSku          roll in order
+     * @param id                   part of order id
+     * @param companyName          part of client's company name
+     * @param creationDateTimeFrom order creation date from
+     * @param creationDateTimeTo   order creation date to
+     * @param state                order state
+     * @param rollSku              roll in order
      * @return list of matched Orders
      * @throws WebServiceException on connection problems
      */
-    List<Order> findOrderByParams(@Nullable Long id, @Nullable String companyName, @Nullable OffsetDateTime creationDateFrom, @Nullable OffsetDateTime creationDateTo, @Nullable OrderState state, @Nullable String rollSku) throws WebServiceException;
+    List<Order> findOrderByParams(@Nullable Long id, @Nullable String companyName, @Nullable LocalDateTime creationDateTimeFrom, @Nullable LocalDateTime creationDateTimeTo, @Nullable OrderState state, @Nullable String rollSku) throws WebServiceException;
 
     /**
      * Create Order on Server Registry
      *
-     * @param creationDate dateTime of creation
-     * @param client       client
-     * @param lines        order lines
+     * @param creationDateTime dateTime of creation
+     * @param client           client
+     * @param lines            order lines
      * @return new Order
      * @throws WebServiceException on connection problems or remote validation fail
      * @throws ValidationException if local validation fail
      */
-    Order createOrder(@Nullable OffsetDateTime creationDate, @NotNull Client client, @NotNull List<OrderLine> lines) throws WebServiceException;
+    Order createOrder(@Nullable LocalDateTime creationDateTime, @NotNull Client client, @NotNull List<OrderLine> lines) throws WebServiceException;
 
     /**
-     * Remove Order on Server Registry by id
+     * Cancel Order on Server Registry by id
      *
-     * @param id id of Order to remove
+     * @param id id of Order to cancel
      * @return true if success
      * @throws WebServiceException on connection problems or remote validation fail
      * @throws ValidationException if Order with specified id was not found or it is producing right now
      */
-    boolean removeOrderById(@NotNull Long id) throws WebServiceException;
+    boolean cancelOrderById(@NotNull Long id) throws WebServiceException;
 
     /**
      * Update Order on Server Registry with new parameters
@@ -96,11 +95,11 @@ public interface OrderProcessor {
      */
     Order updateOrder(@NotNull Order order) throws WebServiceException;
 
-    void validateCreateOrder(@Nullable OffsetDateTime creationDate, @NotNull Client client, @NotNull List<OrderLine> lines) throws ValidationException;
+    void validateCreateOrder(@Nullable LocalDateTime creationDateTime, @NotNull Client client, @NotNull List<OrderLine> lines) throws ValidationException;
 
     void validateUpdateOrder(Order order) throws ValidationException;
 
-    void validateRemoveOrder(Long id) throws ValidationException;
+    void validateCancelOrder(Long id) throws ValidationException;
 
     void validateCommonOrderParams(Client client, List<OrderLine> lines);
 

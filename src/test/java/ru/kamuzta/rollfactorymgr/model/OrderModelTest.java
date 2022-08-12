@@ -12,11 +12,9 @@ import ru.kamuzta.rollfactorymgr.utils.json.CouldNotDeserializeJsonException;
 import ru.kamuzta.rollfactorymgr.utils.json.CouldNotSeserializeToJsonException;
 import ru.kamuzta.rollfactorymgr.utils.json.JsonUtil;
 
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -69,7 +67,7 @@ public class OrderModelTest {
         log.info("_________ START orderSerializationTest _________");
         Order order1 = Order.builder()
                 .id(1L)
-                .creationDate(OffsetDateTime.now())
+                .creationDateTime(LocalDateTime.now().withNano(0))
                 .client(TestUtils.getRandomClient())
                 .lines(TestUtils.getRandomOrderLineList(5))
                 .state(OrderState.NEW)
@@ -96,7 +94,7 @@ public class OrderModelTest {
             int linesCount = Math.max(1, TestUtils.getRandom().nextInt(5));
             Order order = Order.builder()
                     .id((long) i)
-                    .creationDate(OffsetDateTime.now())
+                    .creationDateTime(LocalDateTime.now())
                     .client(TestUtils.getRandomElementFromList(clientListFromJson))
                     .lines(TestUtils.getRandomElementsFromList(orderLineListFromJson, linesCount).stream().map(OrderLine::new).collect(Collectors.toList()))
                     .state(OrderState.NEW)
@@ -151,6 +149,14 @@ public class OrderModelTest {
         assertFalse(orderListFromJson.isEmpty());
         Collections.sort(orderListFromJson);
         orderListFromJson.forEach(orderLine -> log.info(orderLine.toString()));
+        orderListFromJson.sort(new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                return o1.getId().compareTo(o2.getId());
+            }
+        });
+        String json = jsonUtil.writeObject(orderListFromJson, CouldNotDeserializeJsonException::new);
+        log.info(json);
     }
 
 }

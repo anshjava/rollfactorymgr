@@ -1,6 +1,6 @@
 {
     "id": 1,
-    "creationDate": "1995-04-10T23:14:18.882+03:00",
+    "creationDateTime": "1995-04-10 23:14:18",
     "client": {
         "id": 1,
         "creationDate": "1990-02-18",
@@ -12,6 +12,7 @@
         "email": "antonio@rolltrade.com",
         "state": "ACTIVE"
     },
+    "state": "NEW",
     "lines": [
         {
             "id": 1,
@@ -28,6 +29,5 @@
             "quantity": 1000,
             "state": "NEW"
         }
-    ],
-    "state": "NEW"
+    ]
 }

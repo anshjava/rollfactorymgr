@@ -34,7 +34,7 @@
                 </SplitMenuButton>
                 <SplitMenuButton fx:id="orderSplitMenuButton" mnemonicParsing="false" text="Orders">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#onOrderRegistry" text="Orders at work" />
+                        <MenuItem mnemonicParsing="false" onAction="#onOrderRegistry" text="Orders registry" />
                         <MenuItem mnemonicParsing="false" onAction="#onOrderFind" text="Find order" />
                         <MenuItem mnemonicParsing="false" onAction="#onOrderCreate" text="Create order" />
                     </items>

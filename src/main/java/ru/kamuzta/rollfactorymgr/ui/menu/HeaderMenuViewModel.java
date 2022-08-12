@@ -12,6 +12,7 @@ import ru.kamuzta.rollfactorymgr.ui.Screen;
 import ru.kamuzta.rollfactorymgr.ui.client.ClientFindView;
 import ru.kamuzta.rollfactorymgr.ui.client.ClientRegistryView;
 import ru.kamuzta.rollfactorymgr.ui.dialog.DialogHelper;
+import ru.kamuzta.rollfactorymgr.ui.order.OrderRegistryView;
 import ru.kamuzta.rollfactorymgr.ui.roll.RollFindView;
 import ru.kamuzta.rollfactorymgr.ui.roll.RollRegistryView;
 
@@ -62,6 +63,7 @@ public class HeaderMenuViewModel implements ViewModel, DisposableByEvent {
 
     void onOrderRegistry() {
         log.info("Screen ["+screen+"] Action: " + "onOrderRegistry");
+        eventBus.post(new ShowFullScreenEvent<>(Screen.ORDER_REGISTRY, OrderRegistryView.class));
     }
 
     void onOrderFind() {

@@ -1,6 +1,11 @@
 package ru.kamuzta.rollfactorymgr.model.order;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.google.common.collect.ComparisonChain;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
@@ -9,7 +14,7 @@ import ru.kamuzta.rollfactorymgr.utils.RollCalculator;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,30 +27,33 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Builder
-@JsonPropertyOrder({"id", "creationDate", "client", "lines", "state"})
+@JsonPropertyOrder({"id", "creationDateTime", "client", "state", "lines"})
 public class Order implements Comparable<Order> {
     @NotNull
     private Long id;
 
     @NotNull
-    private OffsetDateTime creationDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime creationDateTime;
 
     @NotNull
     private Client client;
 
     @NotNull
-    private List<OrderLine> lines;
+    private OrderState state;
 
     @NotNull
-    private OrderState state;
+    private List<OrderLine> lines;
 
     //copy constructor
     public Order(Order that) {
         this.id = that.id;
-        this.creationDate = that.creationDate;
+        this.creationDateTime = that.creationDateTime;
         this.client = that.client;
-        this.lines = that.lines.stream().map(OrderLine::new).collect(Collectors.toList());
         this.state = that.state;
+        this.lines = that.lines.stream().map(OrderLine::new).collect(Collectors.toList());
     }
 
     public BigDecimal calculateWeight() {
@@ -71,7 +79,7 @@ public class Order implements Comparable<Order> {
     public int compareTo(@NotNull Order that) {
         return ComparisonChain.start()
                 .compare(state, that.state)
-                .compare(creationDate, that.creationDate)
+                .compare(creationDateTime, that.creationDateTime)
                 .compare(client.getCompanyName(), that.client.getCompanyName())
                 .compare(id, that.id)
                 .result();
@@ -81,7 +89,7 @@ public class Order implements Comparable<Order> {
     public String toString() {
         return String.format("Order: [%d %s %s] [%s] [%dlines %dpcs %.0fkg]",
                 id,
-                creationDate,
+                creationDateTime,
                 state,
                 client.getCompanyName(),
                 calculateLinesCount(),
